@@ -17,21 +17,60 @@ import { Input } from "@/components/ui/input";
 
 import { registerSchema } from "@/types/validations";
 import { useState } from "react";
+import { BASE_URL } from "@/constants";
+import { useToast } from "../ui/use-toast";
 
 function RegisterForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      fullName: "",
+      fullname: "",
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    setSubmitting(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullname: values.fullname,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setSubmitting(false);
+
+        toast({
+          description: data.message,
+          variant: "destructive",
+        });
+      } else {
+        setSubmitting(false);
+        toast({
+          description: data.message,
+          variant: "success",
+        });
+        form.reset();
+      }
+    } catch (error: any) {
+      console.log(error);
+      setSubmitting(false);
+      throw new Error(error);
+    }
   }
 
   return (
@@ -50,7 +89,7 @@ function RegisterForm() {
           </section>
           <FormField
             control={form.control}
-            name="fullName"
+            name="fullname"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name</FormLabel>

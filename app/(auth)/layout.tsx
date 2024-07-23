@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AuthProvider from "@/AuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +17,10 @@ export default function AuthLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body>{children}</body>
+        <body>
+          {children}
+          <Toaster />
+        </body>
       </AuthProvider>
     </html>
   );
