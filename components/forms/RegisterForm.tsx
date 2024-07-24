@@ -67,7 +67,6 @@ function RegisterForm() {
         form.reset();
       }
     } catch (error: any) {
-      console.log(error);
       setSubmitting(false);
       throw new Error(error);
     }

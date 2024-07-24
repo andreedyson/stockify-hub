@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { registerSchema } from "@/types/validations";
 import bcrypt from "bcrypt";
 import { NextResponse } from "next/server";
 
@@ -19,22 +20,10 @@ export async function POST(req: Request) {
       );
     }
 
-    if (fullname.trim().length < 4) {
-      return NextResponse.json(
-        {
-          message: "Name should be at least 4 characters",
-        },
-        { status: 400 }
-      );
-    }
+    const validate = registerSchema.safeParse({ fullname, email, password });
 
-    if (password.length < 6) {
-      return NextResponse.json(
-        {
-          message: "Password should be at least 6 characters",
-        },
-        { status: 400 }
-      );
+    if (!validate.success) {
+      return NextResponse.json(validate.error.format(), { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
