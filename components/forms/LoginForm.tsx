@@ -68,7 +68,7 @@ function LoginForm() {
         setSubmitting(false);
       } else {
         setSubmitting(false);
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error: any) {
       setSubmitting(false);

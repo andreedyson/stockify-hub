@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt";
-import prisma from "@/lib/db";
-import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { NextResponse } from "next/server";
+import { NextAuthOptions } from "next-auth";
+import prisma from "@/lib/db";
+import bcrypt from "bcrypt";
+import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        if (!user) {
+        if (!user || !user.password) {
           return null;
         }
 
@@ -35,7 +35,13 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (isPasswordCorrect) {
-          return user;
+          return {
+            id: user.id,
+            name: user.fullname,
+            email: user.email,
+            image: user.image,
+            role: user.role,
+          };
         } else {
           return null;
         }
@@ -48,8 +54,34 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
-      const isAllowedToSignIn = true;
-      if (isAllowedToSignIn) {
+      console.log({ user, account });
+      if (account?.provider === "credentials") {
+        return true;
+      }
+
+      if (!user.email || !user.name) {
+        return false;
+      }
+
+      if (account?.provider === "google") {
+        const userExist = await prisma.user.findUnique({
+          where: {
+            email: user.email,
+          },
+        });
+
+        console.log(user);
+
+        if (!userExist) {
+          await prisma.user.create({
+            data: {
+              fullname: user.name,
+              email: user.email,
+              image: user.image,
+            },
+          });
+        }
+
         return true;
       } else {
         return false;
@@ -59,7 +91,24 @@ export const authOptions: NextAuthOptions = {
       return `${baseUrl}/`;
     },
     async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+      }
+
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          role: user.role,
+        };
+      }
+      return token;
     },
   },
   pages: {
