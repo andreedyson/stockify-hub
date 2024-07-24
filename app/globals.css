@@ -69,7 +69,15 @@
 }
 
 @layer utilities {
+  .logo {
+    @apply font-bold italic text-main;
+  }
+
   .header-2 {
-    @apply text-4xl font-bold;
+    @apply text-2xl font-bold md:text-3xl lg:text-4xl;
+  }
+
+  .desc-2 {
+    @apply text-sm text-desc md:text-base;
   }
 }

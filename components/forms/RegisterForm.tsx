@@ -19,9 +19,15 @@ import { registerSchema } from "@/types/validations";
 import { useState } from "react";
 import { BASE_URL } from "@/constants";
 import { useToast } from "../ui/use-toast";
+import { Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function RegisterForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -55,16 +61,19 @@ function RegisterForm() {
         setSubmitting(false);
 
         toast({
+          title: "Uh oh! Something went wrong",
           description: data.message,
           variant: "destructive",
         });
       } else {
         setSubmitting(false);
         toast({
+          title: "Success 🎉",
           description: data.message,
           variant: "success",
         });
         form.reset();
+        router.push("/signin");
       }
     } catch (error: any) {
       setSubmitting(false);
@@ -77,11 +86,14 @@ function RegisterForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 max-w-[480px]"
+          className="flex flex-col gap-4 sm:max-w-[380px]"
         >
+          <Link href={"/signin"}>
+            <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
+          </Link>
           <section className="space-y-2">
             <h2 className="header-2">Create an account 📦</h2>
-            <p className="text-desc">
+            <p className="desc-2">
               Fill out the form below to create your account and start managing
               your inventory with ease.
             </p>
@@ -92,13 +104,17 @@ function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="ex: Andre Edyson"
-                    {...field}
-                    autoComplete="off"
-                  />
-                </FormControl>
+                <div className="flex items-center justify-center rounded-md border border-input bg-zinc-700">
+                  <UserRound size={24} className="mx-2" />
+                  <FormControl>
+                    <Input
+                      placeholder="ex: Andre Edyson"
+                      {...field}
+                      autoComplete="off"
+                      className="rounded-l-none"
+                    />
+                  </FormControl>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
@@ -109,9 +125,17 @@ function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="user@mail.com" {...field} />
-                </FormControl>
+                <div className="flex items-center justify-center rounded-md border border-input bg-zinc-700">
+                  <Mail size={24} className="mx-2" />
+                  <FormControl>
+                    <Input
+                      placeholder="user@mail.com"
+                      {...field}
+                      autoComplete="off"
+                      className="rounded-l-none"
+                    />
+                  </FormControl>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
@@ -122,16 +146,39 @@ function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="*********" {...field} type="password" />
-                </FormControl>
+                <div className="relative flex items-center justify-center rounded-md border border-input bg-zinc-700">
+                  <Lock size={24} className="mx-2" />
+                  <FormControl>
+                    <Input
+                      placeholder={showPassword ? "Your Password" : "******"}
+                      {...field}
+                      autoComplete="off"
+                      type={showPassword ? "text" : "password"}
+                      className="rounded-l-none"
+                    />
+                  </FormControl>
+                  <div
+                    className="absolute right-3 cursor-pointer text-desc"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                  </div>
+                </div>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={submitting}>
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="hover:bg-second mt-2 w-full bg-main text-white"
+          >
             {submitting ? "Registering..." : "Register"}
           </Button>
+          <Link href={"/signin"} className="mt-2 text-center text-sm">
+            Already have an account?{" "}
+            <span className="font-medium text-main">Sign In</span>
+          </Link>
         </form>
       </Form>
     </>
