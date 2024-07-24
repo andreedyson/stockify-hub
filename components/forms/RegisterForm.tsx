@@ -88,10 +88,10 @@ function RegisterForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4 sm:max-w-[380px]"
         >
-          <Link href={"/signin"}>
-            <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
-          </Link>
-          <section className="space-y-2">
+          <section className="mb-2 space-y-2 text-center md:text-start">
+            <Link href={"/signin"}>
+              <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
+            </Link>
             <h2 className="header-2">Create an account 📦</h2>
             <p className="desc-2">
               Fill out the form below to create your account and start managing
@@ -171,14 +171,17 @@ function RegisterForm() {
           <Button
             type="submit"
             disabled={submitting}
-            className="hover:bg-second mt-2 w-full bg-main text-white"
+            className="mt-2 w-full bg-main text-white hover:bg-second"
           >
             {submitting ? "Registering..." : "Register"}
           </Button>
           <Link href={"/signin"} className="mt-2 text-center text-sm">
             Already have an account?{" "}
-            <span className="font-medium text-main">Sign In</span>
+            <span className="font-semibold text-second underline">Sign In</span>
           </Link>
+          <div className="mt-6 text-center text-sm text-desc md:mt-12 md:text-start">
+            <p>© 2024 StockifyHub</p>
+          </div>
         </form>
       </Form>
     </>

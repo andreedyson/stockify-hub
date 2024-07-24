@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     if (userExists) {
       return NextResponse.json(
         { message: "User with that email already exists" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { message: "User successfully Registered" },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json({ message: `${error}` }, { status: 500 });

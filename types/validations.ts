@@ -12,3 +12,11 @@ export const registerSchema = z.object({
     .min(6, { message: "Password should be atleast 6 characters" })
     .max(32, { message: "Password should be less than 32 characters" }),
 });
+
+export const loginSchema = z.object({
+  email: z.string().email({ message: "Email is invalid" }),
+  password: z
+    .string()
+    .min(6, { message: "Password should be atleast 6 characters" })
+    .max(32, { message: "Password should be less than 32 characters" }),
+});

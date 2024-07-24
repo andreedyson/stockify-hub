@@ -1,21 +1,40 @@
+import bcrypt from "bcrypt";
+import prisma from "@/lib/db";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
-      name: "Credentials",
+      name: "Email",
       credentials: {
-        fullname: { label: "Full Name", type: "text" },
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: {},
+        password: {},
       },
-      async authorize(credentials) {
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" };
+      async authorize(credentials, req) {
+        if (!credentials?.email) {
+          return null;
+        }
 
-        if (user) {
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(
+          credentials.password,
+          user.password,
+        );
+
+        if (isPasswordCorrect) {
           return user;
         } else {
           return null;
@@ -42,5 +61,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       return session;
     },
+  },
+  pages: {
+    signIn: "/signin",
   },
 };
