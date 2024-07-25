@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/types/validations";
 import { useEffect, useState } from "react";
 import { useToast } from "../ui/use-toast";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, Lock, Mail } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
@@ -83,9 +83,16 @@ function LoginForm() {
           className="flex flex-col gap-4 sm:max-w-[380px]"
         >
           <section className="mb-2 space-y-2 text-center md:text-start">
-            <Link href={"/signin"}>
-              <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
+            <Link
+              href={"/"}
+              className="mb-4 flex items-center gap-1 text-sm text-desc hover:text-slate-600"
+            >
+              <ArrowLeft size={16} />
+              Return to Homepage
             </Link>
+            <div>
+              <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
+            </div>
             <h2 className="header-2">Welcome back!👋</h2>
             <p className="desc-2">
               Enter your credentials to access the application.
@@ -97,7 +104,7 @@ function LoginForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
-                <div className="flex items-center justify-center rounded-md border border-input bg-zinc-700">
+                <div className="flex items-center justify-center rounded-md border border-input dark:bg-zinc-700">
                   <Mail size={24} className="mx-2" />
                   <FormControl>
                     <Input
@@ -118,7 +125,7 @@ function LoginForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Password</FormLabel>
-                <div className="relative flex items-center justify-center rounded-md border border-input bg-zinc-700">
+                <div className="relative flex items-center justify-center rounded-md border border-input dark:bg-zinc-700">
                   <Lock size={24} className="mx-2" />
                   <FormControl>
                     <Input
@@ -148,10 +155,10 @@ function LoginForm() {
           >
             {submitting ? "Logging In..." : "Login"}
           </Button>
-          <div className="my-6 flex items-center gap-6">
-            <div className="h-1 w-1/2 bg-primary-foreground/80" />
+          <div className="my-1 flex items-center gap-6">
+            <div className="h-1 w-1/2 bg-primary/20 dark:bg-primary-foreground/80" />
             <div>OR</div>
-            <div className="h-1 w-1/2 bg-primary-foreground/80" />
+            <div className="h-1 w-1/2 bg-primary/20 dark:bg-primary-foreground/80" />
           </div>
 
           {/* Google SignIn Button */}
