@@ -70,7 +70,7 @@
 
 @layer utilities {
   .logo {
-    @apply font-bold italic text-main;
+    @apply text-main-500 font-bold italic;
   }
 
   .header-2 {

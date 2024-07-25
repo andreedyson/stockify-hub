@@ -145,7 +145,7 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={submitting}
-            className="mt-2 w-full bg-main text-white hover:bg-second"
+            className="hover:bg-second mt-2 w-full bg-main-500 text-white"
           >
             {submitting ? "Logging In..." : "Login"}
           </Button>
@@ -176,11 +176,13 @@ function LoginForm() {
           </div>
           <Link href={"/register"} className="mt-2 text-center text-sm">
             Don&apos;t have an account?{" "}
-            <span className="font-semibold text-second underline">Sign Up</span>
+            <span className="font-semibold text-main-500 underline">
+              Sign Up
+            </span>
           </Link>
           <div className="mt-12 flex flex-col items-center gap-2 text-sm text-desc md:flex-row md:justify-between">
             <p>© 2024 StockifyHub</p>
-            <Link href={"/"} className="font-semibold text-main">
+            <Link href={"/"} className="font-semibold text-main-500">
               Admin
             </Link>
           </div>

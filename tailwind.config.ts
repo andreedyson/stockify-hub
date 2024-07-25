@@ -19,8 +19,20 @@ const config = {
     },
     extend: {
       colors: {
-        main: "#387bb8",
-        second: "#7AA7D0",
+        main: {
+          "50": "#f0f8fe",
+          "100": "#deeefb",
+          "200": "#c5e3f8",
+          "300": "#9cd2f4",
+          "400": "#6eb7ec",
+          "500": "#519ee6",
+          "600": "#3780d9",
+          "700": "#2e6bc7",
+          "800": "#2b57a2",
+          "900": "#284b80",
+          "950": "#1c2f4f",
+        },
+
         desc: "#A6A6A6",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

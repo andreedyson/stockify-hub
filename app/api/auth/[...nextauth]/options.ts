@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 import prisma from "@/lib/db";
 import bcrypt from "bcrypt";
-import { User } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -54,7 +53,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account }) {
-      console.log({ user, account });
       if (account?.provider === "credentials") {
         return true;
       }
