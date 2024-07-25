@@ -57,8 +57,6 @@ function LoginForm() {
         redirect: false,
       });
 
-      console.log(res);
-
       if (!res?.ok) {
         setSubmitting(false);
         toast({
@@ -68,7 +66,8 @@ function LoginForm() {
         setSubmitting(false);
       } else {
         setSubmitting(false);
-        router.push("/dashboard");
+        router.refresh();
+        router.replace("/dashboard");
       }
     } catch (error: any) {
       setSubmitting(false);

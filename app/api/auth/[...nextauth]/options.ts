@@ -68,8 +68,6 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
-        console.log(user);
-
         if (!userExist) {
           await prisma.user.create({
             data: {
@@ -86,7 +84,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
     async redirect({ baseUrl }: { baseUrl: string }) {
-      return `${baseUrl}/`;
+      return `${baseUrl}/signin`;
     },
     async session({ session, token }) {
       if (token) {

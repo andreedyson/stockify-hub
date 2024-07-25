@@ -19,18 +19,16 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className="max-w-[1920px]">
         <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark">
-            <Sidebar />
-            <div className="md:mx-6 lg:ml-[200px] lg:pl-6 xl:ml-[250px]">
-              <Header />
-              <MobileNav />
-              <div className="py-6 max-md:px-4">{children}</div>
-            </div>
-            <Toaster />
-          </ThemeProvider>
+          <Sidebar />
+          <div className="md:mx-6 lg:ml-[200px] lg:pl-6 xl:ml-[250px]">
+            <Header />
+            <MobileNav />
+            <div className="py-6 max-md:px-4">{children}</div>
+          </div>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

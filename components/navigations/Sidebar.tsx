@@ -36,9 +36,9 @@ function Sidebar() {
             </Link>
           ))}
         </div>
-        <div className="mt-auto px-6 py-3">
+        <div className="mt-auto px-6 py-4">
           <div
-            onClick={() => signOut()}
+            onClick={() => signOut({ redirect: true })}
             className="flex cursor-pointer items-center gap-2 font-semibold text-red-500"
           >
             <LogOut />
