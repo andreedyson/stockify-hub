@@ -2,6 +2,8 @@
 
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -9,8 +11,8 @@ function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed hidden min-h-screen w-[200px] border bg-background shadow-md shadow-accent/60 dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
-      <div className="mx-2 flex flex-col gap-6 xl:mx-4">
+    <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-background shadow-md shadow-accent/60 dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
+      <div className="mx-2 flex h-full flex-col gap-6 xl:mx-4">
         {/* Sidebar Header */}
         <div className="mt-10 px-4">
           <Link href={"/dashboard"} className="logo text-lg md:text-xl">
@@ -33,6 +35,15 @@ function Sidebar() {
               {link.title}
             </Link>
           ))}
+        </div>
+        <div className="mt-auto px-6 py-3">
+          <div
+            onClick={() => signOut()}
+            className="flex cursor-pointer items-center gap-2 font-semibold text-red-500"
+          >
+            <LogOut />
+            Logout
+          </div>
         </div>
       </div>
     </nav>
