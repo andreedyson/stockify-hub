@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={sans.className}>
+      <body className={`${sans.className} mx-auto max-w-[1920px]`}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="dark">
             {children}
