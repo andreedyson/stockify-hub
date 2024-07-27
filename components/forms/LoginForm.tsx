@@ -27,7 +27,6 @@ import Image from "next/image";
 function LoginForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
 
   const router = useRouter();
   const session = useSession();

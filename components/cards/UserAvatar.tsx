@@ -13,6 +13,7 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { LogOutIcon } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
+import Link from "next/link";
 
 function UserAvatar() {
   const { data: session } = useSession();
@@ -58,8 +59,9 @@ function UserAvatar() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            Profile
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            <Link href={"/profile"} className="w-full">
+              Profile
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => signOut()}
