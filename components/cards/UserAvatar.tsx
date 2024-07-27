@@ -10,8 +10,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOutIcon } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
+import { LogOutIcon } from "lucide-react";
+import { ThemeToggle } from "../ThemeToggle";
 
 function UserAvatar() {
   const { data: session } = useSession();
@@ -28,8 +29,11 @@ function UserAvatar() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="size-10">
+        <Button
+          variant="ghost"
+          className="relative size-8 rounded-full md:size-10"
+        >
+          <Avatar className="size-8 md:size-10">
             <AvatarImage
               src={session?.user.image || "assets/not-found.png"}
               alt={session?.user.name || "User Avatar"}
@@ -59,11 +63,17 @@ function UserAvatar() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => signOut()}
-            className="font-semibold text-red-500"
+            className="cursor-pointer font-semibold text-red-500"
           >
             Log out
             <DropdownMenuShortcut>
               <LogOutIcon size={16} />
+            </DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="lg:hidden">
+            Toggle Theme
+            <DropdownMenuShortcut>
+              <ThemeToggle />
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlignJustify, X } from "lucide-react";
-import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import UserAvatar from "../cards/UserAvatar";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
+import { AlignJustify, X } from "lucide-react";
 
 function MobileNav() {
   const [openNav, setOpenNav] = useState<boolean>(false);
@@ -62,8 +62,8 @@ function MobileNav() {
             StockifyHub
           </Link>
         </div>
-        <div>
-          <ThemeToggle />
+        <div className="flex items-center">
+          <UserAvatar />
         </div>
       </nav>
     </div>

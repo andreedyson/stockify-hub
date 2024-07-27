@@ -29,3 +29,42 @@ enum userRole {
   ADMIN
   USER
 }
+
+model Product {
+  id          String        @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  inventoryId String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Inventory   Inventory     @relation(fields: [inventoryId], references: [id])
+  Transaction Transaction[]
+}
+
+model Inventory {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  productId       String
+  quantity        Int
+  totalPrice      Float
+  transactionType TransactionType
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum TransactionType {
+  SALE
+  PURCHASE
+  RETURN
+}
