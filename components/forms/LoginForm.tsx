@@ -150,7 +150,7 @@ function LoginForm() {
           <Button
             type="submit"
             disabled={submitting}
-            className="hover:bg-second mt-2 w-full bg-main-500 text-white"
+            className="mt-2 w-full bg-main-500 text-white hover:bg-main-400"
           >
             {submitting ? "Logging In..." : "Login"}
           </Button>

@@ -3,8 +3,10 @@
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "../ThemeToggle";
 import UserAvatar from "../cards/UserAvatar";
+import { useSession } from "next-auth/react";
 
 function Header() {
+  const { data: session } = useSession();
   const pathname = usePathname();
   const pageName = pathname.split("/").join(" ");
 
@@ -13,7 +15,17 @@ function Header() {
       <h3 className="text-2xl font-bold capitalize">{pageName}</h3>
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <UserAvatar />
+        {session?.user && (
+          <UserAvatar
+            data={
+              session.user as {
+                name: string;
+                email: string;
+                image: string | null;
+              }
+            }
+          />
+        )}
       </div>
     </div>
   );

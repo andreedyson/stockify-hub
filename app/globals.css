@@ -73,11 +73,22 @@
     @apply font-bold italic text-main-500;
   }
 
+  .header-1 {
+    @apply text-3xl font-bold md:text-4xl lg:text-[56px];
+  }
+
   .header-2 {
     @apply text-2xl font-bold md:text-3xl lg:text-4xl;
   }
 
-  .desc-2 {
-    @apply text-sm text-desc md:text-base;
+  .header-3 {
+    @apply text-xl font-bold md:text-2xl lg:text-3xl;
   }
+
+  .desc-2 {
+    @apply text-sm text-zinc-500 dark:text-desc md:text-base;
+  }
+}
+.account-form_image-input {
+  @apply cursor-pointer border-none bg-transparent outline-none file:text-main-500 !important;
 }

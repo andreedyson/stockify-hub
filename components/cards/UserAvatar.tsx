@@ -15,13 +15,19 @@ import { LogOutIcon } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
 
-function UserAvatar() {
-  const { data: session } = useSession();
+type UserAvatarProps = {
+  data: {
+    name: string;
+    email: string;
+    image: string | null;
+  };
+};
 
+function UserAvatar({ data }: UserAvatarProps) {
   let nameInitial = "";
 
-  if (session?.user?.name) {
-    nameInitial = session.user.name
+  if (data?.name) {
+    nameInitial = data.name
       .split(" ")
       .map((name) => name[0].toUpperCase())
       .join("");
@@ -36,8 +42,8 @@ function UserAvatar() {
         >
           <Avatar className="size-8 md:size-10">
             <AvatarImage
-              src={session?.user.image || "assets/not-found.png"}
-              alt={session?.user.name || "User Avatar"}
+              src={data?.image || "assets/profile-not-found.svg"}
+              alt={data?.name || "User Avatar"}
             />
             <AvatarFallback className="bg-main-200 dark:bg-main-950">
               {nameInitial}
@@ -48,11 +54,9 @@ function UserAvatar() {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {session?.user.name}
-            </p>
+            <p className="text-sm font-medium leading-none">{data?.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {session?.user.email}
+              {data?.email}
             </p>
           </div>
         </DropdownMenuLabel>

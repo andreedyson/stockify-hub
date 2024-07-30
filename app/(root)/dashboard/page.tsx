@@ -1,8 +1,9 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import StatsCard from "@/components/cards/StatsCard";
-import RegisterForm from "@/components/forms/RegisterForm";
+import prisma from "@/lib/db";
 import { Blocks, Container, Package, Receipt } from "lucide-react";
 import { Metadata } from "next";
-import React from "react";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -35,7 +36,23 @@ const DUMMY_DATA = [
   },
 ];
 
-function DashboardPage() {
+async function DashboardPage() {
+  const session = await getServerSession(authOptions);
+  const userId = session?.user.id;
+
+  const inv = await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+    include: {
+      inventories: {
+        include: {
+          products: true,
+        },
+      },
+    },
+  });
+
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">

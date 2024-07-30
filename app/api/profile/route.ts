@@ -1,36 +1,37 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-  const { userId, name } = await req.json();
+export async function PUT(req: Request) {
+  const { fullname, email, image } = await req.json();
+
+  console.log({ fullname, email, image });
 
   try {
     const userExists = await prisma.user.findFirst({
       where: {
-        id: userId,
+        email: email,
       },
     });
 
     if (!userExists) {
       return NextResponse.json(
-        { message: "You need to be authenticated to add an inventory" },
-        { status: 401 },
+        { message: "User does not exist" },
+        { status: 404 },
       );
     }
 
-    await prisma.inventory.create({
+    await prisma.user.update({
+      where: {
+        email: email,
+      },
       data: {
-        name: name,
-        users: {
-          connect: {
-            id: userId,
-          },
-        },
+        fullname: fullname,
+        image: image,
       },
     });
 
     return NextResponse.json(
-      { message: "Inventory successfully Created" },
+      { message: "User successfully Updated" },
       { status: 200 },
     );
   } catch (error) {

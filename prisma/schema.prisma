@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   fullname  String
-  email     String    @unique
+  email     String   @unique
   password  String?
   image     String?
-  role      userRole? @default(USER)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  role      userRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   inventories   Inventory[]     @relation("UserInventories")
   UserInventory UserInventory[]
