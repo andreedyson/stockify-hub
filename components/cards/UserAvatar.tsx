@@ -10,7 +10,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { LogOutIcon } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";

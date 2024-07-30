@@ -7,10 +7,12 @@ import UserAvatar from "../cards/UserAvatar";
 import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
 import { AlignJustify, X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 function MobileNav() {
   const [openNav, setOpenNav] = useState<boolean>(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   useEffect(() => {
     function handleResize() {
@@ -63,7 +65,17 @@ function MobileNav() {
           </Link>
         </div>
         <div className="flex items-center">
-          <UserAvatar />
+          {session?.user && (
+            <UserAvatar
+              data={
+                session.user as {
+                  name: string;
+                  email: string;
+                  image: string | null;
+                }
+              }
+            />
+          )}
         </div>
       </nav>
     </div>
