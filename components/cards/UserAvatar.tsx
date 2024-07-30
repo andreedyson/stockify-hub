@@ -14,6 +14,7 @@ import { signOut, useSession } from "next-auth/react";
 import { LogOutIcon } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
+import Image from "next/image";
 
 type UserAvatarProps = {
   data: {
@@ -24,15 +25,6 @@ type UserAvatarProps = {
 };
 
 function UserAvatar({ data }: UserAvatarProps) {
-  let nameInitial = "";
-
-  if (data?.name) {
-    nameInitial = data.name
-      .split(" ")
-      .map((name) => name[0].toUpperCase())
-      .join("");
-  }
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,7 +38,14 @@ function UserAvatar({ data }: UserAvatarProps) {
               alt={data?.name || "User Avatar"}
             />
             <AvatarFallback className="bg-main-200 dark:bg-main-950">
-              {nameInitial}
+              <Image
+                src={"/assets/profile-not-found.svg"}
+                alt="profile_photo"
+                width={150}
+                height={150}
+                priority
+                className="size-20 rounded-full object-cover md:size-[150px]"
+              />
             </AvatarFallback>
           </Avatar>
         </Button>
