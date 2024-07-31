@@ -8,6 +8,7 @@ declare module "next-auth/jwt" {
     id: string;
     role: userRole | null;
     image: string | null;
+    createAt: string;
   }
 }
 
@@ -21,6 +22,7 @@ declare module "next-auth" {
     user: User & {
       id: string;
       image: string | null;
+      createAt: string;
     };
   }
 }

@@ -11,6 +11,7 @@ async function ProfilePage() {
   }
 
   const user = session.user;
+  console.log(user);
 
   return (
     <div>
@@ -18,6 +19,7 @@ async function ProfilePage() {
         email={user.email as string}
         fullname={user.name as string}
         profile_photo={user.image as string}
+        createdAt={user.createAt as string}
       />
     </div>
   );

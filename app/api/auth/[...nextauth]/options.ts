@@ -93,6 +93,7 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.role = token.role;
         session.user.image = token.image;
+        session.user.createAt = token.createAt;
       }
 
       return session;

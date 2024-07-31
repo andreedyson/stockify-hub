@@ -21,7 +21,7 @@ import { BASE_URL } from "@/constants";
 import { useToast } from "../ui/use-toast";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { isBase64Image } from "@/lib/utils";
+import { formatDate, isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 import { Mail, UserRound } from "lucide-react";
 
@@ -29,9 +29,15 @@ type EditProfileProps = {
   email: string;
   fullname: string;
   profile_photo: string;
+  createdAt: string;
 };
 
-function EditProfileForm({ email, fullname, profile_photo }: EditProfileProps) {
+function EditProfileForm({
+  email,
+  fullname,
+  profile_photo,
+  createdAt,
+}: EditProfileProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -190,7 +196,9 @@ function EditProfileForm({ email, fullname, profile_photo }: EditProfileProps) {
                 </div>
                 <div className="space-y-1 font-semibold md:space-y-2">
                   <h4 className="desc-2 line-clamp-1">Acccount Created</h4>
-                  <p className="text-sm md:text-base">22 Jul 2024</p>
+                  <p className="text-sm md:text-base">
+                    {formatDate(new Date(createdAt))}
+                  </p>
                 </div>
               </div>
             </div>
