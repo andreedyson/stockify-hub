@@ -114,7 +114,7 @@ function EditProfileForm({ email, fullname, profile_photo }: EditProfileProps) {
           description: data.message,
           variant: "success",
         });
-        router.refresh();
+        router.replace("/");
       }
     } catch (error: any) {
       setSubmitting(false);

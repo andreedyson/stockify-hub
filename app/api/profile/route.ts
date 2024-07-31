@@ -1,10 +1,9 @@
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { UTApi } from "uploadthing/server";
 
 export async function PUT(req: Request) {
   const { fullname, email, image } = await req.json();
-
-  console.log({ fullname, email, image });
 
   try {
     const userExists = await prisma.user.findFirst({
@@ -18,6 +17,17 @@ export async function PUT(req: Request) {
         { message: "User does not exist" },
         { status: 404 },
       );
+    }
+
+    const newImgkey = image.split("https://utfs.io/f/")[1];
+    const userImgKey = userExists.image?.split(
+      "https://utfs.io/f/",
+    )[1] as string;
+
+    if (newImgkey !== userImgKey) {
+      const utapi = new UTApi();
+
+      await utapi.deleteFiles(userImgKey);
     }
 
     await prisma.user.update({

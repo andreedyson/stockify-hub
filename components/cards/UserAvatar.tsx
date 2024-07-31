@@ -41,10 +41,10 @@ function UserAvatar({ data }: UserAvatarProps) {
               <Image
                 src={"/assets/profile-not-found.svg"}
                 alt="profile_photo"
-                width={150}
-                height={150}
+                width={64}
+                height={64}
                 priority
-                className="size-20 rounded-full object-cover md:size-[150px]"
+                className="size-8 rounded-full object-cover md:size-10"
               />
             </AvatarFallback>
           </Avatar>
