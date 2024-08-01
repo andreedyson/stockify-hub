@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { getCurrentUser } from "@/server/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -6,21 +7,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: params.id,
-      },
-      select: {
-        fullname: true,
-        image: true,
-        email: true,
-        createdAt: true,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
+    const user = await getCurrentUser(params.id);
 
     return NextResponse.json({ user: user }, { status: 200 });
   } catch (error) {
