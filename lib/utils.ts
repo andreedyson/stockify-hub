@@ -11,11 +11,11 @@ export function isBase64Image(imageData: string) {
 }
 
 export function formatDate(date: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
     month: "short",
+    day: "numeric",
     year: "numeric",
-  };
+  });
 
-  return new Intl.DateTimeFormat("en-US", options).format(date);
+  return formattedDate;
 }

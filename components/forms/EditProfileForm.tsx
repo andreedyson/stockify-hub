@@ -29,7 +29,7 @@ type EditProfileProps = {
   email: string;
   fullname: string;
   profile_photo: string;
-  createdAt: string;
+  createdAt: string | Date;
 };
 
 function EditProfileForm({
