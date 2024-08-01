@@ -1,3 +1,4 @@
+import useSWR, { useSWRConfig } from "swr";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,16 +16,34 @@ import { LogOutIcon } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
 import Image from "next/image";
+import Loader from "../ui/loader";
 
 type UserAvatarProps = {
-  data: {
+  userData: {
+    id: string;
     name: string;
     email: string;
     image: string | null;
   };
 };
 
-function UserAvatar({ data }: UserAvatarProps) {
+function UserAvatar({ userData }: UserAvatarProps) {
+  const fetcher = () =>
+    fetch(`/api/user/${userData.id}`).then((res) => res.json());
+
+  const { data, isLoading } = useSWR("/api/user/id", fetcher);
+  const { mutate } = useSWRConfig();
+
+  mutate("api/user/id");
+
+  if (isLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,8 +53,8 @@ function UserAvatar({ data }: UserAvatarProps) {
         >
           <Avatar className="size-8 md:size-10">
             <AvatarImage
-              src={data?.image || "assets/profile-not-found.svg"}
-              alt={data?.name || "User Avatar"}
+              src={data.user.image || "assets/profile-not-found.svg"}
+              alt={data.user.fullname || "User Avatar"}
             />
             <AvatarFallback className="bg-main-200 dark:bg-main-950">
               <Image
@@ -53,9 +72,11 @@ function UserAvatar({ data }: UserAvatarProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{data?.name}</p>
+            <p className="text-sm font-medium leading-none">
+              {data.user.fullname}
+            </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {data?.email}
+              {data.user.email}
             </p>
           </div>
         </DropdownMenuLabel>

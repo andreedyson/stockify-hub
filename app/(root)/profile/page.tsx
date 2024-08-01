@@ -14,12 +14,7 @@ async function ProfilePage() {
 
   return (
     <div>
-      <EditProfileForm
-        email={user.email as string}
-        fullname={user.name as string}
-        profile_photo={user.image as string}
-        createdAt={user.createdAt as Date}
-      />
+      <EditProfileForm id={user.id} />
     </div>
   );
 }

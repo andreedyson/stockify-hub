@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { EditProfileSchema } from "@/types/validations";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { BASE_URL } from "@/constants";
 import { useToast } from "../ui/use-toast";
 import Image from "next/image";
@@ -24,20 +24,14 @@ import { useRouter } from "next/navigation";
 import { formatDate, isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 import { Mail, UserRound } from "lucide-react";
+import Loader from "../ui/loader";
+import useSWR, { useSWRConfig } from "swr";
 
 type EditProfileProps = {
-  email: string;
-  fullname: string;
-  profile_photo: string;
-  createdAt: string | Date;
+  id: string;
 };
 
-function EditProfileForm({
-  email,
-  fullname,
-  profile_photo,
-  createdAt,
-}: EditProfileProps) {
+function EditProfileForm({ id }: EditProfileProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -48,11 +42,33 @@ function EditProfileForm({
   const form = useForm<z.infer<typeof EditProfileSchema>>({
     resolver: zodResolver(EditProfileSchema),
     defaultValues: {
-      fullname: fullname,
-      email: email,
-      profile_photo: profile_photo,
+      fullname: "",
+      email: "",
+      profile_photo: "",
     },
   });
+
+  const fetcher = () => fetch(`/api/user/${id}`).then((res) => res.json());
+  const { data, isLoading } = useSWR("/api/user/id", fetcher);
+  const { mutate } = useSWRConfig();
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        fullname: data.user.fullname,
+        email: data.user.email,
+        profile_photo: data.user.image,
+      });
+    }
+  }, [data, form]);
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
@@ -120,7 +136,8 @@ function EditProfileForm({
           description: data.message,
           variant: "success",
         });
-        router.refresh();
+        router.push("/dashboard");
+        mutate("/api/user/id");
       }
     } catch (error: any) {
       setSubmitting(false);
@@ -188,16 +205,16 @@ function EditProfileForm({
               <div className="flex w-full flex-col gap-4 md:text-base">
                 <div className="space-y-1 font-semibold md:space-y-2">
                   <h4 className="desc-2">Full Name</h4>
-                  <p className="text-sm md:text-base">{fullname}</p>
+                  <p className="text-sm md:text-base">{data.user.fullname}</p>
                 </div>
                 <div className="space-y-1 font-semibold md:space-y-2">
                   <h4 className="desc-2">Email</h4>
-                  <p className="text-sm md:text-base">{email}</p>
+                  <p className="text-sm md:text-base">{data.user.email}</p>
                 </div>
                 <div className="space-y-1 font-semibold md:space-y-2">
                   <h4 className="desc-2 line-clamp-1">Acccount Created</h4>
                   <p className="text-sm md:text-base">
-                    {formatDate(new Date(createdAt))}
+                    {formatDate(new Date(data.user.createdAt))}
                   </p>
                 </div>
               </div>
@@ -211,6 +228,7 @@ function EditProfileForm({
               <FormField
                 control={form.control}
                 name="fullname"
+                defaultValue={data.user.fullname}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>

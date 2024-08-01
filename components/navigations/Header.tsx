@@ -17,8 +17,9 @@ function Header() {
         <ThemeToggle />
         {session?.user && (
           <UserAvatar
-            data={
+            userData={
               session.user as {
+                id: string;
                 name: string;
                 email: string;
                 image: string | null;
