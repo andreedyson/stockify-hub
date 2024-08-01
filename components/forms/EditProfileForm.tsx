@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { EditProfileSchema, registerSchema } from "@/types/validations";
+import { EditProfileSchema } from "@/types/validations";
 import { ChangeEvent, useState } from "react";
 import { BASE_URL } from "@/constants";
 import { useToast } from "../ui/use-toast";
@@ -120,7 +120,7 @@ function EditProfileForm({
           description: data.message,
           variant: "success",
         });
-        router.replace("/");
+        router.refresh();
       }
     } catch (error: any) {
       setSubmitting(false);
@@ -243,7 +243,7 @@ function EditProfileForm({
                           placeholder="user@mail.com"
                           {...field}
                           autoComplete="off"
-                          className="rounded-l-none read-only:brightness-50"
+                          className="rounded-l-none read-only:brightness-75"
                         />
                       </FormControl>
                     </div>
