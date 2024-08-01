@@ -20,10 +20,12 @@ export async function POST(req: Request) {
       );
     }
 
-    const validate = registerSchema.safeParse({ fullname, email, password });
+    const response = registerSchema.safeParse({ fullname, email, password });
 
-    if (!validate.success) {
-      return NextResponse.json(validate.error.format(), { status: 400 });
+    if (!response.success) {
+      const { errors } = response.error;
+
+      return NextResponse.json({ message: errors[0].message }, { status: 400 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);

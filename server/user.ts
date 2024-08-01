@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
-import { UserType } from "@/types";
+import { User } from "@prisma/client";
 
-type CurrentUserPromise = Omit<UserType, "id">;
+type CurrentUserPromise = Omit<User, "id" | "password">;
 
 export async function getCurrentUser(
   userId: string,
@@ -15,7 +15,9 @@ export async function getCurrentUser(
         fullname: true,
         image: true,
         email: true,
+        role: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
 

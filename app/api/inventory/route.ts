@@ -1,10 +1,19 @@
 import prisma from "@/lib/db";
+import { inventorySchema } from "@/types/validations";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { userId, name } = await req.json();
+  const { userId, name, color } = await req.json();
 
   try {
+    const response = inventorySchema.safeParse({ name, color });
+
+    if (!response.success) {
+      const { errors } = response.error;
+
+      return NextResponse.json({ message: errors[0].message }, { status: 400 });
+    }
+
     const userExists = await prisma.user.findFirst({
       where: {
         id: userId,
@@ -21,6 +30,7 @@ export async function POST(req: Request) {
     await prisma.inventory.create({
       data: {
         name: name,
+        color: color,
         users: {
           connect: {
             id: userId,
@@ -30,7 +40,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Inventory successfully Created" },
+      { message: "Inventory successfully created" },
       { status: 200 },
     );
   } catch (error) {
