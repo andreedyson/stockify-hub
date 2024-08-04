@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 
 function Sidebar() {
   const pathname = usePathname();
+  const pagename = "/" + pathname.split("/")[1];
 
   return (
     <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-white shadow-md shadow-accent dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
@@ -27,7 +28,7 @@ function Sidebar() {
               href={link.path}
               className={cn(
                 "flex items-center gap-4 rounded-md p-4 text-sm",
-                pathname === link.path &&
+                pagename === link.path &&
                   "bg-main-200 font-semibold text-main-800 dark:bg-main-950 dark:text-main-300",
               )}
             >

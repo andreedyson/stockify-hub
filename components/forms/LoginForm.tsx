@@ -59,7 +59,7 @@ function LoginForm() {
       if (!res?.ok) {
         setSubmitting(false);
         toast({
-          title: "Invalid credentials provided",
+          description: "Invalid credentials provided",
           variant: "destructive",
         });
         setSubmitting(false);

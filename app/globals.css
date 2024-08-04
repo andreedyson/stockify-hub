@@ -89,8 +89,8 @@
     @apply text-sm text-zinc-500 dark:text-desc md:text-base;
   }
 
-  .bg-gradient-dark {
-    @apply bg-background shadow-md dark:bg-gradient-to-tl dark:from-zinc-800 dark:to-zinc-900;
+  .bg-main-card {
+    @apply bg-white shadow-sm dark:bg-accent;
   }
 }
 .account-form_image-input {

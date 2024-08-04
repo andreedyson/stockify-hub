@@ -90,10 +90,7 @@ function AddInventoryForm({ userId }: { userId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 border-card-foreground"
-        >
+        <Button className="flex items-center gap-2 bg-main-600 text-white duration-200 hover:bg-main-400">
           <PackageOpen size={16} />
           Add Inventory
         </Button>

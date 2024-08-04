@@ -39,7 +39,6 @@ export const authOptions: NextAuthOptions = {
             name: user.fullname,
             email: user.email,
             image: user.image,
-            role: user.role,
           };
         } else {
           return null;
@@ -91,7 +90,6 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.role = token.role;
         session.user.image = token.image;
         session.user.createdAt = token.createdAt;
       }
@@ -114,7 +112,6 @@ export const authOptions: NextAuthOptions = {
         ...token,
         id: dbUser.id,
         name: dbUser.fullname,
-        role: dbUser.role,
         email: dbUser.email,
         image: dbUser.image,
         createdAt: dbUser.createdAt,

@@ -32,3 +32,50 @@ export async function getUserInventories(
     throw new Error("There was a problem getting user inventory data");
   }
 }
+
+export async function getInventoryById(
+  userId: string,
+  inventoryId: string,
+): Promise<UserInventoriesPromise> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        fullname: true,
+        email: true,
+        image: true,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
+      },
+      include: {
+        users: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    if (!inventory) {
+      throw new Error("Inventory not found");
+    }
+
+    return {
+      ...inventory,
+      memberCount: inventory.users.length,
+    };
+  } catch (error) {
+    throw new Error("There was a problem getting user inventory data");
+  }
+}

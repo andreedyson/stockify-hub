@@ -16,7 +16,7 @@ function InventoryCard({ userData }: InventoryCardProps) {
   return (
     <Link href={`/inventory/${userData.id}`}>
       <article
-        className="border-lpx-2 rounded-md bg-accent py-4 sm:px-4 sm:py-6"
+        className="bg-main-card rounded-md px-2 py-4 sm:px-4 sm:py-6"
         style={{ borderRight: `4px solid ${userData.color}` }}
       >
         <div className="flex flex-col gap-5">
