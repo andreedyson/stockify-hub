@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 function Header() {
   const { data: session } = useSession();
   const pathname = usePathname();
-  const pageName = pathname.split("/").join(" ");
+  const pageName = pathname.split("/")[1];
 
   return (
     <div className="sticky top-6 z-50 hidden w-full items-center justify-between rounded-md border-2 bg-background p-3 shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:flex">

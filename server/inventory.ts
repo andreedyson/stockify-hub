@@ -1,23 +1,33 @@
 import prisma from "@/lib/db";
 import { Inventory } from "@prisma/client";
 
-export async function getUserInventories(userId: string): Promise<Inventory[]> {
-  // TODO: Add Member count for each Inventories
+type UserInventoriesPromise = Inventory & {
+  memberCount?: number;
+};
+
+export async function getUserInventories(
+  userId: string,
+): Promise<UserInventoriesPromise[]> {
   try {
-    const user = await prisma.user.findUnique({
+    const invWithMembers = await prisma.inventory.findMany({
       where: {
-        id: userId,
+        users: { some: { userId } },
       },
       include: {
-        inventories: true,
+        users: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
-    if (!user) {
-      throw new Error("User not found");
-    }
+    const result = invWithMembers.map((inventory) => ({
+      ...inventory,
+      memberCount: inventory.users.length,
+    }));
 
-    return user.inventories;
+    return result;
   } catch (error) {
     throw new Error("There was a problem getting user inventory data");
   }

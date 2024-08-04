@@ -40,19 +40,6 @@ async function DashboardPage() {
   const session = await getServerSession(authOptions);
   const userId = session?.user.id;
 
-  const inv = await prisma.user.findFirst({
-    where: {
-      id: userId,
-    },
-    include: {
-      inventories: {
-        include: {
-          products: true,
-        },
-      },
-    },
-  });
-
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">

@@ -32,8 +32,9 @@ export async function POST(req: Request) {
         name: name,
         color: color,
         users: {
-          connect: {
-            id: userId,
+          create: {
+            userId,
+            role: "OWNER",
           },
         },
       },

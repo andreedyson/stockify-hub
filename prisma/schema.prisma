@@ -14,17 +14,21 @@ model User {
   email     String   @unique
   password  String?
   image     String?
-  role      userRole @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  inventories   Inventory[]     @relation("UserInventories")
-  UserInventory UserInventory[]
+  inventories InventoryMember[]
 }
 
-enum userRole {
-  ADMIN
-  USER
+model Inventory {
+  id        String   @id @default(uuid())
+  name      String
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    InventoryMember[]
+  products Product[]
 }
 
 model Product {
@@ -38,18 +42,6 @@ model Product {
   updatedAt   DateTime      @updatedAt
   Inventory   Inventory     @relation(fields: [inventoryId], references: [id])
   Transaction Transaction[]
-}
-
-model Inventory {
-  id        String   @id @default(uuid())
-  name      String
-  color     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  users         User[]          @relation("UserInventories")
-  products      Product[]
-  UserInventory UserInventory[]
 }
 
 model Transaction {
@@ -71,13 +63,20 @@ enum Status {
   CANCELLED
 }
 
-model UserInventory {
+model InventoryMember {
+  id          String   @id @default(cuid())
   userId      String
   inventoryId String
-  assignedAt  DateTime @default(now())
+  role        userRole @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   user      User      @relation(fields: [userId], references: [id])
   inventory Inventory @relation(fields: [inventoryId], references: [id])
+}
 
-  @@id([userId, inventoryId])
+enum userRole {
+  OWNER
+  ADMIN
+  USER
 }

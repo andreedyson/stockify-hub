@@ -53,8 +53,8 @@ function UserAvatar({ userData }: UserAvatarProps) {
         >
           <Avatar className="size-8 md:size-10">
             <AvatarImage
-              src={data.user.image || "assets/profile-not-found.svg"}
-              alt={data.user.fullname || "User Avatar"}
+              src={data?.user?.image || "assets/profile-not-found.svg"}
+              alt={data?.user?.fullname || "User Avatar"}
             />
             <AvatarFallback className="bg-main-200 dark:bg-main-950">
               <Image
@@ -73,10 +73,10 @@ function UserAvatar({ userData }: UserAvatarProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {data.user.fullname}
+              {data?.user?.fullname}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {data.user.email}
+              {data?.user?.email}
             </p>
           </div>
         </DropdownMenuLabel>
