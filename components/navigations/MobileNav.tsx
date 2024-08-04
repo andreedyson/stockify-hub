@@ -32,7 +32,7 @@ function MobileNav() {
 
   return (
     <div className="sticky top-0 z-20 md:mt-6">
-      <nav className="relative flex w-full items-center justify-between rounded-md border bg-accent p-4 shadow-md shadow-accent/60 dark:shadow-white/5 lg:hidden">
+      <nav className="relative flex w-full items-center justify-between rounded-md border bg-white p-4 shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:hidden">
         <div
           onClick={() => setOpenNav((prev) => !prev)}
           className="cursor-pointer"
@@ -65,17 +65,7 @@ function MobileNav() {
           </Link>
         </div>
         <div className="flex items-center">
-          {session?.user && (
-            <UserAvatar
-              data={
-                session.user as {
-                  name: string;
-                  email: string;
-                  image: string | null;
-                }
-              }
-            />
-          )}
+          {session?.user && <UserAvatar userId={session.user.id} />}
         </div>
       </nav>
     </div>

@@ -7,7 +7,7 @@ type StatsCardProps = {
 
 function StatsCard({ title, amount, color, icon }: StatsCardProps) {
   return (
-    <article className="rounded-md bg-accent/80 px-4 py-6 md:px-6 md:py-8">
+    <article className="rounded-md bg-white px-4 py-6 shadow-md dark:bg-accent md:px-6 md:py-8">
       <div className="flex items-center justify-between">
         <div className="space-y-3">
           <span className="text-xs font-medium uppercase text-desc">

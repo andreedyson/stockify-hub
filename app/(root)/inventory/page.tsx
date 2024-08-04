@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import InventoryCard from "@/components/cards/InventoryCard";
 import AddInventoryForm from "@/components/forms/AddInventoryForm";
 import { Input } from "@/components/ui/input";
+import prisma from "@/lib/db";
 import { getUserInventories } from "@/server/inventory";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";

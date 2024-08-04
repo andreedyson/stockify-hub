@@ -11,7 +11,7 @@ function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-background shadow-md shadow-accent dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
+    <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-white shadow-md shadow-accent dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
       <div className="mx-2 flex h-full flex-col gap-6 xl:mx-4">
         {/* Sidebar Header */}
         <div className="mt-10 px-4">

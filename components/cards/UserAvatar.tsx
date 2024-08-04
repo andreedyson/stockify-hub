@@ -19,17 +19,11 @@ import Image from "next/image";
 import Loader from "../ui/loader";
 
 type UserAvatarProps = {
-  userData: {
-    id: string;
-    name: string;
-    email: string;
-    image: string | null;
-  };
+  userId: string;
 };
 
-function UserAvatar({ userData }: UserAvatarProps) {
-  const fetcher = () =>
-    fetch(`/api/user/${userData.id}`).then((res) => res.json());
+function UserAvatar({ userId }: UserAvatarProps) {
+  const fetcher = () => fetch(`/api/user/${userId}`).then((res) => res.json());
 
   const { data, isLoading } = useSWR("/api/user/id", fetcher);
   const { mutate } = useSWRConfig();
