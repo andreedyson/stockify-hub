@@ -24,7 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DataTableViewOptions } from "../tables/DataTableViewOptions";
 
 interface DataTableProps<TData, TValue> {
@@ -72,11 +72,9 @@ export function DataTable<TData, TValue>({
         <div className="flex flex-col justify-end gap-2 py-2 md:flex-row md:items-center">
           <Input
             placeholder="Filter member..."
-            value={
-              (table.getColumn("fullname")?.getFilterValue() as string) ?? ""
-            }
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("fullname")?.setFilterValue(event.target.value)
+              table.getColumn("name")?.setFilterValue(event.target.value)
             }
             className="w-[250px] pl-4"
           />

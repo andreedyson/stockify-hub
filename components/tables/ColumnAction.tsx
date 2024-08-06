@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import EditMemberDialog from "../forms/EditMemberDialog";
-import { Member } from "@/app/members/inventory-members-columns";
 import DeleteMemberDialog from "../forms/DeleteMemberDialog";
 import { CurrentInventoryMembers } from "@/server/inventory";
 
