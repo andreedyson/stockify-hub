@@ -16,19 +16,27 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { registerSchema } from "@/types/validations";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BASE_URL } from "@/constants";
 import { useToast } from "../ui/use-toast";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, UserRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 function RegisterForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const router = useRouter();
+  const session = useSession();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.replace("/");
+    }
+  }, [session, router]);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
