@@ -8,6 +8,7 @@ import Image from "next/image";
 import { cn, formatDate } from "@/lib/utils";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 import ColumnAction from "@/components/tables/ColumnAction";
+import { CurrentInventoryMembers } from "@/server/inventory";
 
 export type Member = {
   id: string;
@@ -20,7 +21,7 @@ export type Member = {
   inventoryId?: string;
 };
 
-export const InventoryMemberColumns: ColumnDef<Member>[] = [
+export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
   {
     accessorKey: "photo",
     header: "Photo",
@@ -79,7 +80,11 @@ export const InventoryMemberColumns: ColumnDef<Member>[] = [
       const data = row.original;
 
       return (
-        <>{data.role === "OWNER" ? null : <ColumnAction columnData={data} />}</>
+        <>
+          {data.role === "OWNER" || data.currentUserRole === "USER" ? null : (
+            <ColumnAction columnData={data} />
+          )}
+        </>
       );
     },
   },

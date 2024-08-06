@@ -6,6 +6,10 @@ type UserInventoriesPromise = Inventory & {
   memberCount?: number;
 };
 
+export type CurrentInventoryMembers = Member & {
+  currentUserRole: "USER" | "ADMIN" | "OWNER";
+};
+
 export async function getUserInventories(
   userId: string,
 ): Promise<UserInventoriesPromise[]> {
@@ -82,9 +86,21 @@ export async function getInventoryById(
 }
 
 export async function getCurrentInventoryMember(
+  userId: string,
   inventoryId: string,
-): Promise<Member[]> {
+): Promise<CurrentInventoryMembers[]> {
   try {
+    const user = await prisma.inventoryMember.findFirst({
+      where: {
+        userId: userId,
+        inventoryId: inventoryId,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
     const inventoryMembers = await prisma.inventoryMember.findMany({
       where: {
         inventoryId: inventoryId,
@@ -100,6 +116,7 @@ export async function getCurrentInventoryMember(
       },
     });
 
+    // TODO: Add current logged in user role to check
     const result = inventoryMembers.map((member) => {
       return {
         id: member.id,
@@ -110,6 +127,7 @@ export async function getCurrentInventoryMember(
         joined: member.createdAt,
         userId: member.userId,
         inventoryId: member.inventoryId,
+        currentUserRole: user.role,
       };
     });
 

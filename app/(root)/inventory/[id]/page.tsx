@@ -1,8 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import {
-  Member,
-  InventoryMemberColumns as columns,
-} from "@/app/members/inventory-members-columns";
+import { InventoryMemberColumns as columns } from "@/app/members/inventory-members-columns";
 import AddMemberDialog from "@/components/forms/AddMemberDialog";
 import EditInventoryForm from "@/components/forms/EditInventoryForm";
 import { DataTable } from "@/components/ui/data-table";
@@ -28,7 +25,9 @@ async function InventoryDetailsPage({
   }
 
   const inventory = await getInventoryById(session.user.id, id);
-  const data = await getCurrentInventoryMember(id);
+  const data = await getCurrentInventoryMember(session.user.id, id);
+
+  console.log(data);
 
   return (
     <section>
