@@ -63,6 +63,9 @@
   * {
     @apply border-border;
   }
+  * {
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
   body {
     @apply bg-background text-foreground;
   }
@@ -83,6 +86,10 @@
 
   .header-3 {
     @apply text-xl font-bold md:text-2xl lg:text-3xl;
+  }
+
+  .section-header {
+    @apply border-b-2 pb-2 text-base font-semibold md:text-lg;
   }
 
   .desc-2 {

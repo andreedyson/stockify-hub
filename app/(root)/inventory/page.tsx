@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import InventoryCard from "@/components/cards/InventoryCard";
-import AddInventoryForm from "@/components/forms/AddInventoryForm";
+import AddInventoryDialog from "@/components/forms/AddInventoryDialog";
 import { Input } from "@/components/ui/input";
 import prisma from "@/lib/db";
 import { getUserInventories } from "@/server/inventory";
@@ -19,7 +19,7 @@ async function InventoryPage() {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <Input placeholder="Search inventory..." />
-        <AddInventoryForm userId={session?.user.id as string} />
+        <AddInventoryDialog userId={session?.user.id as string} />
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {userInventories.map((inv) => (

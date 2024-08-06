@@ -23,29 +23,41 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
-import { inventorySchema } from "@/types/validations";
+import { addMemberSchema } from "@/types/validations";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import { BASE_URL } from "@/constants";
-import { PackageOpen } from "lucide-react";
+import { BASE_URL, userRole } from "@/constants";
+import { UserCheck } from "lucide-react";
 
-function AddInventoryForm({ userId }: { userId: string }) {
+type AddMemberProps = {
+  inventoryId: string;
+};
+
+function AddMemberDialog({ inventoryId }: AddMemberProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof inventorySchema>>({
-    resolver: zodResolver(inventorySchema),
+  const form = useForm<z.infer<typeof addMemberSchema>>({
+    resolver: zodResolver(addMemberSchema),
     defaultValues: {
-      name: "",
-      color: "#000000",
+      email: "",
+      role: "USER",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof inventorySchema>) {
+  async function onSubmit(values: z.infer<typeof addMemberSchema>) {
     setSubmitting(true);
 
     try {
@@ -55,9 +67,9 @@ function AddInventoryForm({ userId }: { userId: string }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
-          name: values.name,
-          color: values.color,
+          email: values.email,
+          role: values.email,
+          inventoryId: inventoryId,
         }),
       });
 
@@ -90,29 +102,32 @@ function AddInventoryForm({ userId }: { userId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2 bg-main-600 text-white duration-200 hover:bg-main-400">
-          <PackageOpen size={16} />
-          Add Inventory
+        <Button
+          size={"sm"}
+          className="flex items-center gap-2 bg-zinc-600 text-white duration-200 hover:bg-zinc-400"
+        >
+          <UserCheck size={16} />
+          Add Member
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new Inventory</DialogTitle>
+          <DialogTitle>Add a new Member</DialogTitle>
           <DialogDescription>
-            Create a new inventory for you to track all your products.
+            Grant access for a new member to this current inventory.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="name"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="ex: Warehouse"
+                      placeholder="user@mail.com"
                       autoComplete="off"
                       {...field}
                     />
@@ -123,12 +138,32 @@ function AddInventoryForm({ userId }: { userId: string }) {
             />
             <FormField
               control={form.control}
-              name="color"
+              name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Color</FormLabel>
+                  <FormLabel>Role</FormLabel>
                   <FormControl>
-                    <Input type="color" {...field} />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a verified email to display" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {userRole.map((role, i) => (
+                          <SelectItem
+                            key={i}
+                            value={role.name}
+                            className="font-semibold"
+                          >
+                            {role.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                 </FormItem>
               )}
@@ -149,7 +184,7 @@ function AddInventoryForm({ userId }: { userId: string }) {
                 disabled={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add"}
+                {submitting ? "Adding..." : "Add Member"}
               </Button>
             </DialogFooter>
           </form>
@@ -159,4 +194,4 @@ function AddInventoryForm({ userId }: { userId: string }) {
   );
 }
 
-export default AddInventoryForm;
+export default AddMemberDialog;

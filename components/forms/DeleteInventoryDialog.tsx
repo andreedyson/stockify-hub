@@ -67,7 +67,7 @@ function DeleteInventoryDialog({ userId, inventoryId }: DeleteInventoryProps) {
       <AlertDialogTrigger asChild>
         <Button
           variant="outline"
-          className="w-[100px] border-red-500 text-red-500 duration-200 hover:bg-red-500 md:w-[120px]"
+          className="w-[100px] border-red-500 text-red-500 duration-200 hover:bg-red-500 hover:text-white md:w-[120px]"
         >
           Delete
         </Button>
@@ -81,7 +81,11 @@ function DeleteInventoryDialog({ userId, inventoryId }: DeleteInventoryProps) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button variant={"outline"} className="w-[100px] rounded-sm">
+          <Button
+            variant={"outline"}
+            className="w-[100px] rounded-sm"
+            onClick={() => setOpenDialog(false)}
+          >
             Cancel
           </Button>
           <Button

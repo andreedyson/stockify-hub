@@ -4,6 +4,32 @@ import { formatDate } from "@/lib/utils";
 import { getInventoryById } from "@/server/inventory";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import {
+  Member,
+  InventoryMemberColumns as columns,
+} from "@/app/members/inventory-members-columns";
+import { DataTable } from "@/components/ui/data-table";
+import AddMemberDialog from "@/components/forms/AddMemberDialog";
+
+async function getData(): Promise<Member[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      name: "Andre Edyson",
+      email: "m@example.com",
+      role: "OWNER",
+      photo: "test",
+    },
+    {
+      id: "728ed52f",
+      name: "Dinan",
+      email: "m2@example.com",
+      role: "USER",
+      photo: "test",
+    },
+  ];
+}
 
 async function InventoryDetailsPage({
   params: { id },
@@ -19,20 +45,18 @@ async function InventoryDetailsPage({
   }
 
   const inventory = await getInventoryById(session.user.id, id);
+  const data = await getData();
 
   return (
     <section>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12">
         {/* Inventory Details Card */}
-        <div className="bg-main-card col-span-full rounded-md p-6 md:col-span-2">
+        <div className="bg-main-card col-span-full rounded-md p-6 md:col-span-4">
           <div>
-            <h3 className="border-b-2 pb-2 text-base font-semibold md:text-lg">
-              Inventory Details
-            </h3>
+            <h3 className="section-header">Inventory Details</h3>
           </div>
-
           <div className="space-y-2">
-            <div className="space-y-2 border-b-2 py-4">
+            <div className="space-y-3 border-b-2 py-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs md:text-sm">Inventory Name</p>
                 <h4 className="text-sm font-semibold md:text-base">
@@ -52,12 +76,6 @@ async function InventoryDetailsPage({
                   {formatDate(inventory.createdAt)}
                 </p>
               </div>
-              <div className="flex items-center justify-between">
-                <p className="text-xs md:text-sm">Last Updated</p>
-                <p className="text-sm font-semibold md:text-base">
-                  {formatDate(inventory.updatedAt)}
-                </p>
-              </div>
             </div>
             <EditInventoryForm
               userId={session.user.id}
@@ -65,14 +83,28 @@ async function InventoryDetailsPage({
                 id: inventory.id,
                 name: inventory.name,
                 color: inventory.color as string,
-                createdAt: inventory.createdAt,
-                updatedAt: inventory.updatedAt,
               }}
             />
           </div>
         </div>
-        <div className="bg-main-card rounded-md p-6 md:col-span-2 lg:col-span-3"></div>
-        <div className="bg-main-card rounded-md px-4 py-6 md:col-span-full md:px-6 md:py-8"></div>
+
+        {/* Member Details Card */}
+        <div className="bg-main-card h-full rounded-md p-6 md:col-span-4 lg:col-span-8">
+          <div className="section-header flex items-center justify-between">
+            <h3>Members</h3>
+            <AddMemberDialog inventoryId={inventory.id} />
+          </div>
+          <div className="mt-4">
+            <DataTable columns={columns} data={data} className="border-none" />
+          </div>
+        </div>
+
+        {/* Product List */}
+        <div className="bg-main-card rounded-md px-4 py-6 md:col-span-full md:px-6 md:py-8">
+          <div>
+            <h3 className="section-header">Products</h3>
+          </div>
+        </div>
       </div>
     </section>
   );

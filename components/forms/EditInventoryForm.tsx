@@ -26,8 +26,6 @@ type EditInventoryProps = {
     id: string;
     name: string;
     color: string | undefined;
-    createdAt: Date;
-    updatedAt: Date;
   };
 };
 
@@ -88,7 +86,10 @@ function EditInventoryForm({ userId, inventoryData }: EditInventoryProps) {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormField
           control={form.control}
           name="name"
@@ -119,7 +120,7 @@ function EditInventoryForm({ userId, inventoryData }: EditInventoryProps) {
           )}
         />
 
-        <div className="flex w-full justify-end gap-2">
+        <div className="mt-4 flex w-full justify-end gap-2">
           <DeleteInventoryDialog
             userId={userId}
             inventoryId={inventoryData.id}

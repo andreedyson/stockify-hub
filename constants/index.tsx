@@ -35,3 +35,5 @@ export const sidebarLinks = [
     icon: <ChartColumnIncreasing size={20} />,
   },
 ];
+
+export const userRole = [{ name: "USER" }, { name: "ADMIN" }];

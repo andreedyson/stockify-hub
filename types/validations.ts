@@ -37,3 +37,8 @@ export const inventorySchema = z.object({
     .max(50, { message: "Inventory name should be less than 50 characters." }),
   color: z.string().nonempty(),
 });
+
+export const addMemberSchema = z.object({
+  email: z.string().email({ message: "Email is invalid" }),
+  role: z.enum(["USER", "ADMIN", "OWNER"]),
+});
