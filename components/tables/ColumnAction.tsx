@@ -43,20 +43,21 @@ function ColumnAction({ columnData }: MemberColumnProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DialogTrigger asChild>
-            <DropdownMenuItem
-              onClick={() => setAction("edit")}
-              className="flex items-center gap-2"
-            >
-              <Pencil className="h-4 w-4" /> Edit Member
-            </DropdownMenuItem>
-          </DialogTrigger>
-          <DialogTrigger asChild onClick={() => setAction("delete")}>
-            <DropdownMenuItem className="flex items-center gap-2">
-              <Trash2 className="h-4 w-4" color="red" />
-              Delete Member
-            </DropdownMenuItem>
-          </DialogTrigger>
+          {columnData.currentUserRole === "OWNER" && (
+            <DialogTrigger asChild onClick={() => setAction("edit")}>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <Pencil className="h-4 w-4" /> Edit Member
+              </DropdownMenuItem>
+            </DialogTrigger>
+          )}
+          {columnData.currentUserRole !== "USER" && (
+            <DialogTrigger asChild onClick={() => setAction("delete")}>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <Trash2 className="h-4 w-4" color="red" />
+                Delete Member
+              </DropdownMenuItem>
+            </DialogTrigger>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
