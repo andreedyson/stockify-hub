@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import { DataTableViewOptions } from "../tables/data-table-view-options";
+import { DataTableViewOptions } from "../tables/DataTableViewOptions";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn("fullname")?.setFilterValue(event.target.value)
             }
-            className="max-w-[200px] pl-4"
+            className="w-[250px] pl-4"
           />
         </div>
       </div>
@@ -108,6 +108,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="text-xs md:text-sm"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

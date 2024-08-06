@@ -61,14 +61,14 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`${BASE_URL}/api/inventory`, {
+      const res = await fetch(`${BASE_URL}/api/member`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: values.email,
-          role: values.email,
+          role: values.role,
           inventoryId: inventoryId,
         }),
       });
@@ -77,9 +77,8 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
 
       if (!res.ok) {
         setSubmitting(false);
-
         toast({
-          title: "Uh oh! Something went wrong",
+          title: "😵 Uh oh! Something went wrong",
           description: data.message,
           variant: "destructive",
         });
@@ -149,7 +148,7 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Select a role for this user" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -169,7 +168,7 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
               )}
             />
 
-            <DialogFooter className="flex">
+            <DialogFooter className="flex gap-2">
               <DialogClose className="w-full">
                 <Button
                   variant={"outline"}

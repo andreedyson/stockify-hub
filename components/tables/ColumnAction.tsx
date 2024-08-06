@@ -1,0 +1,78 @@
+"use client";
+
+import { useState } from "react";
+
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import EditMemberDialog from "../forms/EditMemberDialog";
+import { Member } from "@/app/members/inventory-members-columns";
+import DeleteMemberDialog from "../forms/DeleteMemberDialog";
+
+type MemberColumnProps = {
+  columnData: Member;
+};
+
+function ColumnAction({ columnData }: MemberColumnProps) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [action, setAction] = useState("");
+
+  const handleSubmitSuccess = () => {
+    setOpenDialog(false);
+  };
+
+  return (
+    <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DialogTrigger asChild>
+            <DropdownMenuItem
+              onClick={() => setAction("edit")}
+              className="flex items-center gap-2"
+            >
+              <Pencil className="h-4 w-4" /> Edit Member
+            </DropdownMenuItem>
+          </DialogTrigger>
+          <DialogTrigger asChild onClick={() => setAction("delete")}>
+            <DropdownMenuItem className="flex items-center gap-2">
+              <Trash2 className="h-4 w-4" color="red" />
+              Delete Member
+            </DropdownMenuItem>
+          </DialogTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
+        {action === "delete" ? (
+          <DeleteMemberDialog
+            userData={columnData}
+            onSubmitSuccess={handleSubmitSuccess}
+          />
+        ) : (
+          <EditMemberDialog
+            userData={columnData}
+            onSubmitSuccess={handleSubmitSuccess}
+          />
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export default ColumnAction;

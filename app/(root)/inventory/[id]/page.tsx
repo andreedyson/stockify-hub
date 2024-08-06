@@ -1,35 +1,18 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import EditInventoryForm from "@/components/forms/EditInventoryForm";
-import { formatDate } from "@/lib/utils";
-import { getInventoryById } from "@/server/inventory";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import {
   Member,
   InventoryMemberColumns as columns,
 } from "@/app/members/inventory-members-columns";
-import { DataTable } from "@/components/ui/data-table";
 import AddMemberDialog from "@/components/forms/AddMemberDialog";
-
-async function getData(): Promise<Member[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      name: "Andre Edyson",
-      email: "m@example.com",
-      role: "OWNER",
-      photo: "test",
-    },
-    {
-      id: "728ed52f",
-      name: "Dinan",
-      email: "m2@example.com",
-      role: "USER",
-      photo: "test",
-    },
-  ];
-}
+import EditInventoryForm from "@/components/forms/EditInventoryForm";
+import { DataTable } from "@/components/ui/data-table";
+import { formatDate } from "@/lib/utils";
+import {
+  getCurrentInventoryMember,
+  getInventoryById,
+} from "@/server/inventory";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 async function InventoryDetailsPage({
   params: { id },
@@ -45,7 +28,7 @@ async function InventoryDetailsPage({
   }
 
   const inventory = await getInventoryById(session.user.id, id);
-  const data = await getData();
+  const data = await getCurrentInventoryMember(id);
 
   return (
     <section>

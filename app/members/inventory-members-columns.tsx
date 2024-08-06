@@ -1,28 +1,23 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Crown, MoreHorizontal } from "lucide-react";
+import { Crown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { DataTableColumnHeader } from "@/components/tables/data-table-colum-header";
+import { cn, formatDate } from "@/lib/utils";
+import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
+import ColumnAction from "@/components/tables/ColumnAction";
 
 export type Member = {
   id: string;
   photo: string;
   name: string;
   email: string;
-  role: "USER" | "OWNER";
-  joined?: Date;
+  role: "USER" | "ADMIN" | "OWNER";
+  joined: Date;
+  userId?: string;
+  inventoryId?: string;
 };
 
 export const InventoryMemberColumns: ColumnDef<Member>[] = [
@@ -31,12 +26,15 @@ export const InventoryMemberColumns: ColumnDef<Member>[] = [
     header: "Photo",
     cell: ({ row }) => {
       return (
-        <Image
-          src={"/assets/profile-not-found.svg"}
-          width={36}
-          height={36}
-          alt="Profile"
-        />
+        <div className="size-12">
+          <Image
+            src={row.original.photo}
+            width={36}
+            height={36}
+            alt="Profile"
+            className="size-10 rounded-full object-cover md:size-12"
+          />
+        </div>
       );
     },
   },
@@ -56,6 +54,7 @@ export const InventoryMemberColumns: ColumnDef<Member>[] = [
     header: ({ column }) => {
       return <DataTableColumnHeader column={column} title="Joined" />;
     },
+    cell: ({ row }) => <div>{formatDate(row.original.joined)}</div>,
   },
   {
     accessorKey: "role",
@@ -77,28 +76,10 @@ export const InventoryMemberColumns: ColumnDef<Member>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      const data = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>{data.role === "OWNER" ? null : <ColumnAction columnData={data} />}</>
       );
     },
   },
