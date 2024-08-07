@@ -14,7 +14,7 @@ async function ProfilePage() {
 
   return (
     <div>
-      <EditProfileForm id={user.id} />
+      <EditProfileForm userId={user.id} />
     </div>
   );
 }

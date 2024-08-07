@@ -34,8 +34,8 @@ export async function getUserInventories(
     }));
 
     return result;
-  } catch (error) {
-    throw new Error("There was a problem getting user inventory data");
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
   }
 }
 
@@ -81,8 +81,8 @@ export async function getInventoryById(
       ...inventory,
       memberCount: inventory.users.length,
     };
-  } catch (error) {
-    throw new Error("There was a problem getting user inventory data");
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
   }
 }
 
@@ -143,34 +143,5 @@ export async function getCurrentInventoryMember(
     return result;
   } catch (error: any) {
     throw new Error(`${error.message}`);
-  }
-}
-
-export async function getCurentInventoryOwner(
-  userId: string,
-  inventoryId: string,
-) {
-  try {
-    const user = await prisma.inventoryMember.findFirst({
-      where: {
-        userId: userId,
-        inventoryId: inventoryId,
-      },
-      include: {
-        user: {
-          select: {
-            email: true,
-          },
-        },
-      },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    console.log(user);
-  } catch (error) {
-    throw new Error("There was a problem getting inventory owner data");
   }
 }

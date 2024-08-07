@@ -26,12 +26,13 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { Mail, UserRound } from "lucide-react";
 import Loader from "../ui/loader";
 import useSWR, { useSWRConfig } from "swr";
+import { useUser } from "@/hooks/useUserData";
 
 type EditProfileProps = {
-  id: string;
+  userId: string;
 };
 
-function EditProfileForm({ id }: EditProfileProps) {
+function EditProfileForm({ userId }: EditProfileProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -48,8 +49,7 @@ function EditProfileForm({ id }: EditProfileProps) {
     },
   });
 
-  const fetcher = () => fetch(`/api/user/${id}`).then((res) => res.json());
-  const { data, isLoading } = useSWR("/api/user/id", fetcher);
+  const { data, isLoading } = useUser(userId);
   const { mutate } = useSWRConfig();
 
   useEffect(() => {
@@ -137,7 +137,8 @@ function EditProfileForm({ id }: EditProfileProps) {
           variant: "success",
         });
         router.push("/dashboard");
-        mutate("/api/user/id");
+        router.refresh();
+        mutate(`/api/user/${userId}`);
       }
     } catch (error: any) {
       setSubmitting(false);

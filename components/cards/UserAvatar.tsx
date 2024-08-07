@@ -1,4 +1,4 @@
-import useSWR, { useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,18 +17,17 @@ import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
 import Image from "next/image";
 import Loader from "../ui/loader";
+import { useUser } from "@/hooks/useUserData";
 
 type UserAvatarProps = {
   userId: string;
 };
 
 function UserAvatar({ userId }: UserAvatarProps) {
-  const fetcher = () => fetch(`/api/user/${userId}`).then((res) => res.json());
-
-  const { data, isLoading } = useSWR("/api/user/id", fetcher);
+  const { data, isLoading } = useUser(userId);
   const { mutate } = useSWRConfig();
 
-  mutate("api/user/id");
+  mutate(`/api/user/${userId}`);
 
   if (isLoading) {
     return (
