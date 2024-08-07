@@ -29,7 +29,7 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
       return (
         <div className="size-12">
           <Image
-            src={row.original.photo}
+            src={row.original.photo || "/assets/profile-not-found.svg"}
             width={36}
             height={36}
             alt="Profile"

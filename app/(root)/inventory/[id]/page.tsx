@@ -27,8 +27,6 @@ async function InventoryDetailsPage({
   const inventory = await getInventoryById(session.user.id, id);
   const data = await getCurrentInventoryMember(session.user.id, id);
 
-  console.log(data);
-
   return (
     <section>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12">

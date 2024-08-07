@@ -62,6 +62,7 @@ export async function POST(req: Request) {
       data: {
         userId: userExist.id,
         inventoryId: inventoryId,
+        role: role,
       },
     });
 
