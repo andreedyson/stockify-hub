@@ -91,6 +91,66 @@ export async function getCurrentInventoryMember(
   inventoryId: string,
 ): Promise<CurrentInventoryMembers[]> {
   try {
+    //* Check if the requesting user has access to said inventory
+    const userHasAccess = await prisma.inventoryMember.findFirst({
+      where: {
+        userId: userId,
+        inventoryId: inventoryId,
+      },
+      include: {
+        user: {
+          select: {
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!userHasAccess) {
+      throw new Error("User not found in that inventory");
+    }
+
+    const inventoryMembers = await prisma.inventoryMember.findMany({
+      where: {
+        inventoryId: inventoryId,
+      },
+      include: {
+        user: {
+          select: {
+            fullname: true,
+            email: true,
+            image: true,
+          },
+        },
+      },
+    });
+
+    const result = inventoryMembers.map((member) => {
+      return {
+        id: member.id,
+        name: member.user.fullname,
+        email: member.user.email,
+        photo: member.user.image as string,
+        role: member.role,
+        joined: member.createdAt,
+        userId: member.userId,
+        inventoryId: member.inventoryId,
+        currentUserRole: userHasAccess.role, //* The current user session role on this inventory
+        currentUserEmail: userHasAccess.user.email, //* The current user session email on this inventory
+      };
+    });
+
+    return result;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function getCurentInventoryOwner(
+  userId: string,
+  inventoryId: string,
+) {
+  try {
     const user = await prisma.inventoryMember.findFirst({
       where: {
         userId: userId,
@@ -109,39 +169,8 @@ export async function getCurrentInventoryMember(
       throw new Error("User not found");
     }
 
-    const inventoryMembers = await prisma.inventoryMember.findMany({
-      where: {
-        inventoryId: inventoryId,
-      },
-      include: {
-        user: {
-          select: {
-            fullname: true,
-            email: true,
-            image: true,
-          },
-        },
-      },
-    });
-
-    // TODO: Add current logged in user role to check
-    const result = inventoryMembers.map((member) => {
-      return {
-        id: member.id,
-        name: member.user.fullname,
-        email: member.user.email,
-        photo: member.user.image as string,
-        role: member.role,
-        joined: member.createdAt,
-        userId: member.userId,
-        inventoryId: member.inventoryId,
-        currentUserRole: user.role,
-        currentUserEmail: user.user.email,
-      };
-    });
-
-    return result;
+    console.log(user);
   } catch (error) {
-    throw new Error("There was a problem getting inventory member data");
+    throw new Error("There was a problem getting inventory owner data");
   }
 }

@@ -26,9 +26,9 @@ async function InventoryDetailsPage({
   }
 
   const inventory = await getInventoryById(session.user.id, id);
-  const data = await getCurrentInventoryMember(session.user.id, id);
-
-  const inventoryOwner = data.find((user) => user.role === "OWNER")?.name;
+  const tableData = await getCurrentInventoryMember(session.user.id, id);
+  const inventoryOwner = tableData.find((user) => user.role === "OWNER");
+  const currentUserRole = tableData.find((user) => user)?.currentUserRole;
 
   return (
     <section>
@@ -40,14 +40,14 @@ async function InventoryDetailsPage({
               <h3 className="section-header">Inventory Details</h3>
             </div>
             <div className="space-y-2">
-              <div className="content-center border-b-2 py-4 max-lg:space-y-3.5 lg:max-xl:grid lg:max-xl:grid-cols-4 xl:space-y-4">
+              <div className="border-b-2 py-4 max-lg:space-y-3.5 lg:max-xl:grid lg:max-xl:grid-cols-4 lg:max-xl:content-center xl:space-y-4">
                 <div className="space-y-1 lg:space-y-2">
                   <p className="text-xs text-desc md:text-sm">
                     Inventory Owner
                   </p>
                   <h4 className="flex items-center gap-2 text-sm font-semibold text-orange-500 dark:text-yellow-500 md:text-base">
                     <Crown size={16} />
-                    {inventoryOwner}
+                    {inventoryOwner?.name}
                   </h4>
                 </div>
                 <div className="space-y-1 lg:space-y-2">
@@ -71,15 +71,38 @@ async function InventoryDetailsPage({
                     {formatDate(inventory.createdAt)}
                   </p>
                 </div>
+                {currentUserRole === "USER" && (
+                  <>
+                    <div className="space-y-1 lg:space-y-2">
+                      <p className="text-xs text-desc md:text-sm">
+                        Last Updated
+                      </p>
+                      <p className="text-sm font-semibold md:text-base">
+                        {formatDate(inventory.updatedAt)}
+                      </p>
+                    </div>
+                    <div className="space-y-1 lg:space-y-2">
+                      <p className="text-xs text-desc md:text-sm">
+                        Your Current Role
+                      </p>
+                      <h4 className="line-clamp-1 text-sm font-semibold md:text-base">
+                        USER
+                      </h4>
+                    </div>
+                  </>
+                )}
               </div>
-              <EditInventoryForm
-                userId={session.user.id}
-                inventoryData={{
-                  id: inventory.id,
-                  name: inventory.name,
-                  color: inventory.color as string,
-                }}
-              />
+              {currentUserRole !== "USER" && (
+                <EditInventoryForm
+                  userId={session.user.id}
+                  inventoryData={{
+                    id: inventory.id,
+                    name: inventory.name,
+                    color: inventory.color as string,
+                    ownerId: inventoryOwner?.userId as string,
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -88,10 +111,16 @@ async function InventoryDetailsPage({
         <div className="bg-main-card h-full rounded-md p-6 md:col-span-4 xl:col-span-8">
           <div className="section-header flex items-center justify-between">
             <h3>Members</h3>
-            <AddMemberDialog inventoryId={inventory.id} />
+            {currentUserRole !== "USER" && (
+              <AddMemberDialog inventoryId={inventory.id} />
+            )}
           </div>
           <div className="mt-4">
-            <DataTable columns={columns} data={data} className="border-none" />
+            <DataTable
+              columns={columns}
+              data={tableData}
+              className="border-none"
+            />
           </div>
         </div>
 

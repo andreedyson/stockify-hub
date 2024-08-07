@@ -26,6 +26,7 @@ type EditInventoryProps = {
     id: string;
     name: string;
     color: string | undefined;
+    ownerId: string;
   };
 };
 
@@ -121,10 +122,12 @@ function EditInventoryForm({ userId, inventoryData }: EditInventoryProps) {
         />
 
         <div className="mt-4 flex w-full justify-end gap-2">
-          <DeleteInventoryDialog
-            userId={userId}
-            inventoryId={inventoryData.id}
-          />
+          {userId === inventoryData.ownerId && (
+            <DeleteInventoryDialog
+              userId={userId}
+              inventoryId={inventoryData.id}
+            />
+          )}
           <Button
             type="submit"
             disabled={submitting}

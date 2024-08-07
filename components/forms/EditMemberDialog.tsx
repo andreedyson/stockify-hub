@@ -44,7 +44,6 @@ type AddMemberProps = {
 
 function EditMemberDialog({ userData, onSubmitSuccess }: AddMemberProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
-
   const router = useRouter();
   const { toast } = useToast();
 
