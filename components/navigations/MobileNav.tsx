@@ -11,8 +11,9 @@ import { useSession } from "next-auth/react";
 
 function MobileNav() {
   const [openNav, setOpenNav] = useState<boolean>(false);
-  const pathname = usePathname();
   const { data: session } = useSession();
+  const pathname = usePathname();
+  const pagename = "/" + pathname.split("/")[1];
 
   useEffect(() => {
     function handleResize() {
@@ -49,7 +50,7 @@ function MobileNav() {
                 href={link.path}
                 className={cn(
                   "flex items-center gap-2 rounded-md p-4 text-xs font-semibold",
-                  pathname === link.path &&
+                  pagename === link.path &&
                     "bg-main-200 font-semibold text-main-800 shadow-[0px_0px_10px_2px_#00000024] transition-all duration-300 ease-in-out dark:bg-main-950 dark:text-main-300",
                 )}
                 onClick={() => setOpenNav(false)}

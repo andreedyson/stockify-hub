@@ -103,13 +103,13 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
       <DialogTrigger asChild>
         <Button
           size={"sm"}
-          className="flex items-center gap-2 bg-zinc-600 text-white duration-200 hover:bg-zinc-400"
+          className="flex items-center gap-2 bg-zinc-600 text-xs text-white duration-200 hover:bg-zinc-400 lg:text-sm"
         >
-          <UserCheck size={16} />
+          <UserCheck className="text-sm lg:text-sm" />
           Add Member
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[350px] sm:max-w-[425px]">
+      <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Add a new Member</DialogTitle>
           <DialogDescription>

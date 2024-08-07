@@ -61,7 +61,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply box-border border-border;
   }
   * {
     font-family: "Plus Jakarta Sans", sans-serif;
