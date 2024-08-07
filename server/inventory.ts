@@ -1,4 +1,4 @@
-import { Member } from "@/app/members/inventory-members-columns";
+import { Member } from "@/components/tables/members/inventory-members-columns";
 import prisma from "@/lib/db";
 import { Inventory } from "@prisma/client";
 

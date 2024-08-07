@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
-import { Member } from "@/app/members/inventory-members-columns";
+import { Member } from "@/components/tables/members/inventory-members-columns";
 
 type DeleteInventoryProps = {
   userData: Member;

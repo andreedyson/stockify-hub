@@ -72,6 +72,7 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
         {row.original.role}{" "}
       </div>
     ),
+    enableHiding: false,
   },
 
   {
@@ -79,13 +80,15 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
     cell: ({ row }) => {
       const data = row.original;
 
+      const shouldShowColumnAction =
+        data.role === "OWNER" ||
+        data.currentUserRole === "USER" ||
+        data.currentUserEmail === data.email ||
+        data.role === data.currentUserRole;
+
       return (
         <>
-          {data.role === "OWNER" ||
-          data.currentUserRole === "USER" ||
-          data.currentUserEmail === data.email ? null : (
-            <ColumnAction columnData={data} />
-          )}
+          {shouldShowColumnAction ? null : <ColumnAction columnData={data} />}
         </>
       );
     },

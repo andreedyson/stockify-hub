@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { InventoryMemberColumns as columns } from "@/app/members/inventory-members-columns";
+import { InventoryMemberColumns as columns } from "@/components//tables/members/inventory-members-columns";
 import AddMemberDialog from "@/components/forms/AddMemberDialog";
 import EditInventoryForm from "@/components/forms/EditInventoryForm";
 import { DataTable } from "@/components/ui/data-table";

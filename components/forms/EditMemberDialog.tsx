@@ -35,7 +35,7 @@ import { addMemberSchema } from "@/types/validations";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL, userRole } from "@/constants";
-import { Member } from "@/app/members/inventory-members-columns";
+import { Member } from "@/components//tables/members/inventory-members-columns";
 
 type AddMemberProps = {
   userData: Member;
@@ -117,7 +117,7 @@ function EditMemberDialog({ userData, onSubmitSuccess }: AddMemberProps) {
                     placeholder="user@mail.com"
                     autoComplete="off"
                     readOnly
-                    className="read-only:bg-card/70"
+                    className="read-only:bg-zinc-300 dark:read-only:bg-card/70"
                     {...field}
                   />
                 </FormControl>
