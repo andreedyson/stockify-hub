@@ -81,7 +81,9 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
 
       return (
         <>
-          {data.role === "OWNER" || data.currentUserRole === "USER" ? null : (
+          {data.role === "OWNER" ||
+          data.currentUserRole === "USER" ||
+          data.currentUserEmail === data.email ? null : (
             <ColumnAction columnData={data} />
           )}
         </>

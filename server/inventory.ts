@@ -8,6 +8,7 @@ type UserInventoriesPromise = Inventory & {
 
 export type CurrentInventoryMembers = Member & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
+  currentUserEmail: string;
 };
 
 export async function getUserInventories(
@@ -95,6 +96,13 @@ export async function getCurrentInventoryMember(
         userId: userId,
         inventoryId: inventoryId,
       },
+      include: {
+        user: {
+          select: {
+            email: true,
+          },
+        },
+      },
     });
 
     if (!user) {
@@ -128,6 +136,7 @@ export async function getCurrentInventoryMember(
         userId: member.userId,
         inventoryId: member.inventoryId,
         currentUserRole: user.role,
+        currentUserEmail: user.user.email,
       };
     });
 
