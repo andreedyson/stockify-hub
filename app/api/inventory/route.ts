@@ -139,7 +139,6 @@ export async function DELETE(req: NextResponse) {
     await prisma.inventoryMember.deleteMany({
       where: {
         inventoryId: inventoryId,
-        userId: userId,
       },
     });
 

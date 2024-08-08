@@ -74,8 +74,8 @@ function DeleteInventoryDialog({ userId, inventoryId }: DeleteInventoryProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            Deleting this inventory will permanently remove it from your records
-            and our servers.
+            Deleting this inventory will permanently remove it from your
+            records, member records, and our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
