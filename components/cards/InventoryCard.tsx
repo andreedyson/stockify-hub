@@ -1,4 +1,5 @@
 import { formatDate } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 type InventoryCardProps = {
@@ -16,9 +17,17 @@ function InventoryCard({ userData }: InventoryCardProps) {
   return (
     <Link href={`/inventory/${userData.id}`}>
       <article
-        className="bg-main-card rounded-md px-2 py-4 sm:px-4 sm:py-6"
+        className="bg-main-card relative overflow-hidden rounded-md px-2 py-4 sm:px-4 sm:py-6"
         style={{ borderRight: `4px solid ${userData.color}` }}
       >
+        <div className="absolute -right-4 -top-4">
+          <Image
+            src={"/assets/inv-card-decor.svg"}
+            height={100}
+            width={150}
+            alt="Card Decor"
+          />
+        </div>
         <div className="flex flex-col gap-5">
           <div>
             <span className="text-xs font-semibold text-desc">Name</span>

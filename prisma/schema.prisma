@@ -32,15 +32,18 @@ model Inventory {
 }
 
 model Product {
-  id          String        @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String?
   price       Float
   stock       Int
   inventoryId String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  categoryId  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   Inventory   Inventory     @relation(fields: [inventoryId], references: [id])
+  Category    Category?     @relation(fields: [categoryId], references: [id])
   Transaction Transaction[]
 }
 
@@ -54,6 +57,15 @@ model Transaction {
   updatedAt  DateTime @updatedAt
 
   product Product @relation(fields: [productId], references: [id])
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
 }
 
 enum Status {

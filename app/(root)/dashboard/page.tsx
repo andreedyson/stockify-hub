@@ -42,7 +42,7 @@ async function DashboardPage() {
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
         {DUMMY_DATA.map((card) => (
           <div key={card.title}>
             <StatsCard

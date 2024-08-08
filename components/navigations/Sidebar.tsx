@@ -12,7 +12,7 @@ function Sidebar() {
   const pagename = "/" + pathname.split("/")[1];
 
   return (
-    <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-white shadow-md shadow-accent dark:bg-accent/60 dark:shadow-white/10 lg:block xl:w-[250px]">
+    <nav className="fixed hidden h-full min-h-screen w-[200px] border bg-white shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:block xl:w-[250px]">
       <div className="mx-2 flex h-full flex-col gap-6 xl:mx-4">
         {/* Sidebar Header */}
         <div className="mt-10 px-4">
@@ -37,7 +37,7 @@ function Sidebar() {
             </Link>
           ))}
         </div>
-        <div className="mt-auto px-6 py-4">
+        <div className="mt-auto px-4 py-6">
           <div
             onClick={() => signOut({ redirect: true })}
             className="flex cursor-pointer items-center gap-2 font-semibold text-red-500"
