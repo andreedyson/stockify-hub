@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body className={`${sans.className} mx-auto max-w-[1920px]`}>
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="dark">

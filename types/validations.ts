@@ -27,7 +27,7 @@ export const EditProfileSchema = z.object({
     .string()
     .min(1, { message: "Username should be atleast 1 character" })
     .max(50, { message: "Username should be less than 50 characters" }),
-  profile_photo: z.string().url().nonempty(),
+  profile_photo: z.string().url().optional(),
 });
 
 export const inventorySchema = z.object({
@@ -41,4 +41,15 @@ export const inventorySchema = z.object({
 export const addMemberSchema = z.object({
   email: z.string().email({ message: "Email is invalid" }),
   role: z.enum(["USER", "ADMIN", "OWNER"]),
+});
+
+export const productSchema = z.object({
+  name: z
+    .string()
+    .min(3, { message: "Product name should be atleast 3 characters." })
+    .max(50, { message: "Product name should be less than 50 characters." }),
+  description: z.string().optional(),
+  price: z.number().min(1, { message: "Price should be more than 0" }),
+  stock: z.number().min(1, { message: "Stock should be more than 0" }),
+  image: z.string().url(),
 });

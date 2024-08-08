@@ -14,7 +14,8 @@ function StatsCard({ title, amount, color, icon }: StatsCardProps) {
             {title}
           </span>
           <p className="text-lg font-semibold tracking-wide lg:text-xl">
-            {amount} {title.split(" ")[1]}
+            {amount}{" "}
+            <span className="text-base font-light">{title.split(" ")[1]}</span>
           </p>
         </div>
         <div

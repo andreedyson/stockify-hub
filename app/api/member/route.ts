@@ -36,14 +36,14 @@ export async function POST(req: Request) {
       );
     }
 
-    const member = await prisma.inventoryMember.findFirst({
+    const isUserAlreadyAMember = await prisma.inventoryMember.findFirst({
       where: {
         userId: userExist.id,
         inventoryId: inventoryId,
       },
     });
 
-    if (member) {
+    if (isUserAlreadyAMember) {
       return NextResponse.json(
         { message: `That user is already part of this inventory` },
         { status: 409 },
