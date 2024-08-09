@@ -113,6 +113,7 @@ function AddInventoryDialog({ userId }: { userId: string }) {
                     <Input
                       placeholder="ex: Warehouse"
                       autoComplete="off"
+                      className="bg-input"
                       {...field}
                     />
                   </FormControl>
@@ -127,7 +128,7 @@ function AddInventoryDialog({ userId }: { userId: string }) {
                 <FormItem>
                   <FormLabel>Color</FormLabel>
                   <FormControl>
-                    <Input type="color" {...field} />
+                    <Input type="color" {...field} className="bg-input" />
                   </FormControl>
                 </FormItem>
               )}

@@ -137,7 +137,7 @@ async function InventoryDetailsPage({
           </div>
         </div>
         {/* Category List */}
-        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-4">
+        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 lg:col-span-4">
           <div className="section-header flex items-center justify-between">
             <h3>Categories</h3>
             {currentUserRole !== "USER" && (

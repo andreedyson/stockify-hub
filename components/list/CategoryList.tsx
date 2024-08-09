@@ -12,12 +12,18 @@ async function CategoryList({ data, userRole }: CategoryListProps) {
 
   return (
     <article>
-      <div className="flex items-center justify-between py-2">
+      <div className="flex items-center justify-between border-b-2 py-3">
         <p className="font-semibold">
-          {data.name} (
-          <span className="text-sm font-light">{total} Products</span>)
+          {data.name}{" "}
+          {userRole !== "USER" && (
+            <span className="text-sm font-light">({total} Products)</span>
+          )}
         </p>
-        {userRole !== "USER" && <CategoryAction category={data} />}
+        {userRole !== "USER" ? (
+          <CategoryAction category={data} />
+        ) : (
+          <span className="text-sm font-light">{total} Products</span>
+        )}
       </div>
     </article>
   );

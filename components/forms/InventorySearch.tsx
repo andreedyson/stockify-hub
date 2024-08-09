@@ -28,7 +28,7 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
             placeholder="Search inventory..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12"
+            className="bg-input pl-12"
           />
         </div>
         <AddInventoryDialog userId={userId} />

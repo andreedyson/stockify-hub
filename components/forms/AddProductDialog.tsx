@@ -110,7 +110,7 @@ function AddProductDialog({ userId }: { userId: string }) {
         setSubmitting(false);
 
         toast({
-          title: "Uh oh! Something went wrong",
+          title: "Uh oh! Something went wrong 😵",
           description: data.message,
           variant: "destructive",
         });
