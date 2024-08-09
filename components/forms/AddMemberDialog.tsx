@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -169,15 +168,14 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
             />
 
             <DialogFooter className="flex gap-2">
-              <DialogClose className="w-full">
-                <Button
-                  variant={"outline"}
-                  type="button"
-                  className="w-full border-card-foreground"
-                >
-                  Close
-                </Button>
-              </DialogClose>
+              <Button
+                variant={"outline"}
+                type="button"
+                className="w-full border-card-foreground"
+                onClick={() => setOpen(false)}
+              >
+                Close
+              </Button>
               <Button
                 type="submit"
                 disabled={submitting}

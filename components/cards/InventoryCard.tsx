@@ -14,12 +14,14 @@ function InventoryCard({ inventoryData }: InventoryCardProps) {
         className="bg-main-card relative overflow-hidden rounded-md px-2 py-4 sm:px-4 sm:py-6"
         style={{ borderRight: `4px solid ${inventoryData.color}` }}
       >
-        <div className="absolute -right-4 -top-4">
+        <div className="absolute -right-4 top-0">
           <Image
             src={"/assets/inv-card-decor.svg"}
-            height={100}
-            width={150}
+            height={0}
+            width={0}
             alt="Card Decor"
+            priority
+            className="h-[90px] w-[150px]"
           />
         </div>
         <div className="flex flex-col gap-5">

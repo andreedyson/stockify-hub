@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -23,31 +23,71 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { inventorySchema } from "@/types/validations";
+import { productSchema } from "@/types/validations";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import { PackageOpen } from "lucide-react";
+import { useUploadThing } from "@/lib/uploadthing";
+import { isBase64Image } from "@/lib/utils";
 
-function AddInventoryDialog({ userId }: { userId: string }) {
+function AddProductDialog({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [files, setFiles] = useState<File[]>([]);
 
   const router = useRouter();
   const { toast } = useToast();
+  const { startUpload } = useUploadThing("productImage");
 
-  const form = useForm<z.infer<typeof inventorySchema>>({
-    resolver: zodResolver(inventorySchema),
+  const form = useForm<z.infer<typeof productSchema>>({
+    resolver: zodResolver(productSchema),
     defaultValues: {
       name: "",
-      color: "#000000",
+      description: "",
+      price: 0,
+      stock: 0,
+      image: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof inventorySchema>) {
+  const handleImage = (
+    e: ChangeEvent<HTMLInputElement>,
+    fieldChange: (value: string) => void,
+  ) => {
+    e.preventDefault();
+
+    const fileReader = new FileReader();
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      setFiles(Array.from(e.target.files));
+
+      if (!file.type.includes("image")) return; // Return if there is no image
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || "";
+        fieldChange(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof productSchema>) {
     setSubmitting(true);
 
     try {
+      const blob = values.image;
+      const hasImageChanged = isBase64Image(blob);
+      if (hasImageChanged) {
+        const imgRes = await startUpload(files);
+
+        if (imgRes && imgRes[0].url) {
+          values.image = imgRes[0].url;
+        }
+      }
+
       const res = await fetch(`${BASE_URL}/api/inventory`, {
         method: "POST",
         headers: {
@@ -56,7 +96,11 @@ function AddInventoryDialog({ userId }: { userId: string }) {
         body: JSON.stringify({
           userId: userId,
           name: values.name,
-          color: values.color,
+          price: values.price,
+          stock: values.stock,
+          description: values.description,
+          image: values.image,
+          //TODO: Add categoryId and inventoryId
         }),
       });
 
@@ -122,12 +166,12 @@ function AddInventoryDialog({ userId }: { userId: string }) {
             />
             <FormField
               control={form.control}
-              name="color"
+              name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Color</FormLabel>
+                  <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input type="color" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -157,4 +201,4 @@ function AddInventoryDialog({ userId }: { userId: string }) {
   );
 }
 
-export default AddInventoryDialog;
+export default AddProductDialog;

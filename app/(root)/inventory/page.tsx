@@ -17,23 +17,11 @@ async function InventoryPage() {
 
   return (
     <div className="space-y-6">
-      {/* <div className="flex items-center gap-6">
-        <Input placeholder="Search inventory..." />
-        <AddInventoryDialog userId={session?.user.id as string} />
-      </div> */}
+      {/* Inventory Card, Search, Add Inventory */}
       <InventorySearch
         userId={session?.user.id as string}
         inventoryData={userInventories}
       />
-
-      {/* Inventory Card */}
-      {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {userInventories.map((inv) => (
-          <div key={inv.id}>
-            <InventoryCard inventoryData={inv} />
-          </div>
-        ))}
-      </div> */}
 
       {/* Inventory Activity & User Role Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">

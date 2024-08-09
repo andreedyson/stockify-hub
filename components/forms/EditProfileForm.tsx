@@ -98,7 +98,7 @@ function EditProfileForm({ userId }: EditProfileProps) {
 
     try {
       const blob = values.profile_photo;
-      const hasImageChanged = isBase64Image(blob);
+      const hasImageChanged = isBase64Image(blob as string);
       if (hasImageChanged) {
         const imgRes = await startUpload(files);
 

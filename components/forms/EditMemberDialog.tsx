@@ -6,9 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -158,15 +155,14 @@ function EditMemberDialog({ userData, onSubmitSuccess }: AddMemberProps) {
           />
 
           <DialogFooter className="flex gap-2">
-            <DialogClose className="w-full">
-              <Button
-                variant={"outline"}
-                type="button"
-                className="w-full border-card-foreground"
-              >
-                Close
-              </Button>
-            </DialogClose>
+            <Button
+              variant={"outline"}
+              type="button"
+              className="w-full border-card-foreground"
+              onClick={() => onSubmitSuccess()} // Handler to set the open sate to false
+            >
+              Close
+            </Button>
             <Button
               type="submit"
               disabled={submitting}
