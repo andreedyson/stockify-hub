@@ -107,7 +107,7 @@ export async function getCurrentInventoryMember(
     });
 
     if (!userHasAccess) {
-      throw new Error("User not found in that inventory");
+      throw new Error("User are not part of that inventory");
     }
 
     const inventoryMembers = await prisma.inventoryMember.findMany({

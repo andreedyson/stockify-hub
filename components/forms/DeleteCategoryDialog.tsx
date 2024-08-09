@@ -10,17 +10,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
-import { Member } from "@/components/tables/members/inventory-members-columns";
+import { Category } from "@prisma/client";
 
-type DeleteInventoryProps = {
-  userData: Member;
+type DeleteCategoryProps = {
+  categoryData: Category;
   onSubmitSuccess: () => void;
 };
 
-function DeleteMemberDialog({
-  userData,
+function DeleteCategoryDialog({
+  categoryData,
   onSubmitSuccess,
-}: DeleteInventoryProps) {
+}: DeleteCategoryProps) {
   const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
@@ -29,14 +29,14 @@ function DeleteMemberDialog({
   const handleDelete = async () => {
     setSubmitting(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/member`, {
+      const res = await fetch(`${BASE_URL}/api/category`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userData.userId,
-          inventoryId: userData.inventoryId,
+          categoryId: categoryData.id,
+          inventoryId: categoryData.inventoryId,
         }),
       });
 
@@ -66,9 +66,9 @@ function DeleteMemberDialog({
   return (
     <div className="flex flex-col gap-4">
       <DialogHeader>
-        <DialogTitle>Are you absolutely sure?</DialogTitle>
+        <DialogTitle>Are you sure?</DialogTitle>
         <DialogDescription>
-          Deleting this user will remove their access from this inventory.
+          Deleting this category will remove it&apos;s data from this inventory.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="justify-end">
@@ -85,4 +85,4 @@ function DeleteMemberDialog({
   );
 }
 
-export default DeleteMemberDialog;
+export default DeleteCategoryDialog;

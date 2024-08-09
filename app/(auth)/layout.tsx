@@ -15,13 +15,13 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <main lang="en" className="dark">
       <AuthProvider>
-        <body>
+        <div>
           {children}
           <Toaster />
-        </body>
+        </div>
       </AuthProvider>
-    </html>
+    </main>
   );
 }

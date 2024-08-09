@@ -19,7 +19,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="dark:bg-background">
       <div className="mx-auto max-w-[1920px]">
         <AuthProvider>
           <Sidebar />

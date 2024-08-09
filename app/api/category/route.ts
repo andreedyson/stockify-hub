@@ -1,14 +1,29 @@
 import prisma from "@/lib/db";
+import { categorySchema } from "@/types/validations";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { name, inventoryId } = await req.json();
 
   try {
+    const response = categorySchema.safeParse({ name });
+
+    if (!response.success) {
+      const { errors } = response.error;
+
+      return NextResponse.json({ message: errors[0].message }, { status: 400 });
+    }
+
     const nameExist = await prisma.category.findFirst({
       where: {
         name: name,
         inventoryId: inventoryId,
+      },
+    });
+
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
       },
     });
 
@@ -20,12 +35,6 @@ export async function POST(req: Request) {
         { status: 409 },
       );
     }
-
-    const inventory = await prisma.inventory.findUnique({
-      where: {
-        id: inventoryId,
-      },
-    });
 
     if (!inventory) {
       return NextResponse.json(
@@ -54,10 +63,25 @@ export async function PUT(req: Request) {
   const { categoryId, name, inventoryId } = await req.json();
 
   try {
+    const response = categorySchema.safeParse({ name });
+
+    if (!response.success) {
+      const { errors } = response.error;
+
+      return NextResponse.json({ message: errors[0].message }, { status: 400 });
+    }
+
     const nameExist = await prisma.category.findFirst({
       where: {
         name: name,
         inventoryId: inventoryId,
+        id: { not: categoryId },
+      },
+    });
+
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
       },
     });
 
@@ -69,12 +93,6 @@ export async function PUT(req: Request) {
         { status: 409 },
       );
     }
-
-    const inventory = await prisma.inventory.findUnique({
-      where: {
-        id: inventoryId,
-      },
-    });
 
     if (!inventory) {
       return NextResponse.json(
@@ -102,7 +120,7 @@ export async function PUT(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  const { categoryId } = await req.json();
+  const { categoryId, inventoryId } = await req.json();
 
   try {
     const category = await prisma.category.findUnique({
@@ -111,9 +129,22 @@ export async function DELETE(req: Request) {
       },
     });
 
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
+      },
+    });
+
     if (!category) {
       return NextResponse.json(
         { message: "Category does not exist" },
+        { status: 404 },
+      );
+    }
+
+    if (!inventory) {
+      return NextResponse.json(
+        { message: "Inventory does not exist" },
         { status: 404 },
       );
     }

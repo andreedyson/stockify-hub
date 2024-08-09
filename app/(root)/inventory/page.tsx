@@ -1,8 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import InventoryCard from "@/components/cards/InventoryCard";
-import AddInventoryDialog from "@/components/forms/AddInventoryDialog";
 import InventorySearch from "@/components/forms/InventorySearch";
-import { Input } from "@/components/ui/input";
 import { getUserInventories } from "@/server/inventory";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -42,7 +39,7 @@ async function InventoryPage() {
         <div className="bg-main-card rounded-md p-6">
           {" "}
           <div>
-            <h4 className="section-header">Total Members</h4>
+            <h4 className="section-header">Inventory Categories</h4>
           </div>
         </div>
         <div className="bg-main-card rounded-md p-6">

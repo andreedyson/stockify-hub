@@ -116,6 +116,12 @@ export async function DELETE(req: NextResponse) {
       },
     });
 
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
+      },
+    });
+
     if (!user) {
       return NextResponse.json(
         { message: "You need to be authenticated to delete this inventory" },
@@ -123,18 +129,18 @@ export async function DELETE(req: NextResponse) {
       );
     }
 
-    const inventory = await prisma.inventory.findUnique({
-      where: {
-        id: inventoryId,
-      },
-    });
-
     if (!inventory) {
       return NextResponse.json(
         { message: "Inventory does not exist" },
         { status: 404 },
       );
     }
+
+    await prisma.category.deleteMany({
+      where: {
+        inventoryId: inventoryId,
+      },
+    });
 
     await prisma.inventoryMember.deleteMany({
       where: {

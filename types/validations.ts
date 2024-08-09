@@ -46,10 +46,17 @@ export const addMemberSchema = z.object({
 export const productSchema = z.object({
   name: z
     .string()
-    .min(3, { message: "Product name should be atleast 3 characters." })
+    .min(2, { message: "Product name should be atleast 2 characters." })
     .max(50, { message: "Product name should be less than 50 characters." }),
   description: z.string().optional(),
   price: z.number().min(1, { message: "Price should be more than 0" }),
   stock: z.number().min(1, { message: "Stock should be more than 0" }),
   image: z.string().url(),
+});
+
+export const categorySchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Category name should be atleast 2 characters." })
+    .max(50, { message: "Category name should be less than 50 characters." }),
 });

@@ -22,52 +22,43 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
-import { addMemberSchema } from "@/types/validations";
+import { categorySchema } from "@/types/validations";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import { BASE_URL, userRole } from "@/constants";
-import { UserCheck } from "lucide-react";
+import { BASE_URL } from "@/constants";
+import { Layers3 } from "lucide-react";
 
-type AddMemberProps = {
+type CategoryProps = {
   inventoryId: string;
 };
 
-function AddMemberDialog({ inventoryId }: AddMemberProps) {
+function AddCategoryDialog({ inventoryId }: CategoryProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof addMemberSchema>>({
-    resolver: zodResolver(addMemberSchema),
+  const form = useForm<z.infer<typeof categorySchema>>({
+    resolver: zodResolver(categorySchema),
     defaultValues: {
-      email: "",
-      role: "USER",
+      name: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof addMemberSchema>) {
+  async function onSubmit(values: z.infer<typeof categorySchema>) {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`${BASE_URL}/api/member`, {
+      const res = await fetch(`${BASE_URL}/api/category`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: values.email,
-          role: values.role,
+          name: values.name,
           inventoryId: inventoryId,
         }),
       });
@@ -104,65 +95,33 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
           size={"sm"}
           className="flex items-center gap-2 bg-main-700 text-xs text-white duration-200 hover:bg-main-500 lg:text-sm"
         >
-          <UserCheck size={16} />
-          Add Member
+          <Layers3 size={16} />
+          Add Category
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new Member</DialogTitle>
+          <DialogTitle>Add a new Category</DialogTitle>
           <DialogDescription>
-            Grant access for a new member to this current inventory.
+            Add a new category to this current inventory.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="email"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="user@mail.com"
+                      placeholder="ex: Computer"
                       autoComplete="off"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a role for this user" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {userRole.map((role, i) => (
-                          <SelectItem
-                            key={i}
-                            value={role.name}
-                            className="font-semibold"
-                          >
-                            {role.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
                 </FormItem>
               )}
             />
@@ -181,7 +140,7 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
                 disabled={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add Member"}
+                {submitting ? "Adding..." : "Add Category"}
               </Button>
             </DialogFooter>
           </form>
@@ -191,4 +150,4 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
   );
 }
 
-export default AddMemberDialog;
+export default AddCategoryDialog;

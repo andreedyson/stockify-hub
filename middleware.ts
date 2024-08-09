@@ -8,5 +8,6 @@ export const config = {
     "/products",
     "/transactions",
     "/reports",
+    "/api/:path*",
   ],
 };

@@ -52,7 +52,7 @@ function DeleteInventoryDialog({ userId, inventoryId }: DeleteInventoryProps) {
           description: data.message,
           variant: "success",
         });
-        router.replace("/inventory");
+        router.push("/inventory");
         router.refresh();
       }
     } catch (error: any) {

@@ -1,9 +1,12 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { InventoryMemberColumns as columns } from "@/components//tables/members/inventory-members-columns";
+import AddCategoryDialog from "@/components/forms/AddCategoryDialog";
 import AddMemberDialog from "@/components/forms/AddMemberDialog";
 import EditInventoryForm from "@/components/forms/EditInventoryForm";
+import CategoryList from "@/components/list/CategoryList";
 import { DataTable } from "@/components/ui/data-table";
 import { formatDate } from "@/lib/utils";
+import { getInventoryCategories } from "@/server/category";
 import {
   getCurrentInventoryMember,
   getInventoryById,
@@ -29,10 +32,11 @@ async function InventoryDetailsPage({
   const tableData = await getCurrentInventoryMember(session.user.id, id);
   const inventoryOwner = tableData.find((user) => user.role === "OWNER");
   const currentUserRole = tableData.find((user) => user)?.currentUserRole;
+  const currentInventoryCategory = await getInventoryCategories(inventory.id);
 
   return (
-    <section>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">
+    <section className="space-y-6">
+      <div className="grid grid-cols-1 gap-4 max-md:gap-y-6 md:grid-cols-4 xl:grid-cols-12">
         {/* Inventory Details Card */}
         <div className="bg-main-card col-span-full grid-rows-1 rounded-md p-6 md:col-span-4">
           <div className="h-full">
@@ -123,11 +127,31 @@ async function InventoryDetailsPage({
             />
           </div>
         </div>
+      </div>
 
+      <div className="grid gap-4 max-md:gap-y-6 lg:grid-cols-12">
         {/* Product List */}
-        <div className="bg-main-card rounded-md px-4 py-6 md:col-span-full md:px-6 md:py-8">
+        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
           <div>
             <h3 className="section-header">Products</h3>
+          </div>
+        </div>
+        {/* Category List */}
+        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-4">
+          <div className="section-header flex items-center justify-between">
+            <h3>Categories</h3>
+            {currentUserRole !== "USER" && (
+              <AddCategoryDialog inventoryId={inventory.id} />
+            )}
+          </div>
+          <div>
+            {currentInventoryCategory.map((category) => (
+              <CategoryList
+                key={category.id}
+                data={category}
+                userRole={currentUserRole as string}
+              />
+            ))}
           </div>
         </div>
       </div>

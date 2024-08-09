@@ -20,3 +20,20 @@ export async function getInventoryCategories(
     throw new Error(`${error.message}`);
   }
 }
+
+export async function getTotalCategoryProducts(categoryId: string) {
+  try {
+    const product = await prisma.product.findMany({
+      where: {
+        categoryId: categoryId,
+      },
+      include: {
+        Category: true,
+      },
+    });
+
+    return product.length;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
