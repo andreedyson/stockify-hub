@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import AddInventoryDialog from "./AddInventoryDialog";
 import InventoryCard from "../cards/InventoryCard";
 import { SearchIcon } from "lucide-react";
+import Image from "next/image";
 
 type InventorySearchProps = {
   userId: string;
@@ -43,7 +44,13 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
             </div>
           ))
         ) : (
-          <div className="col-span-full text-center font-light">
+          <div className="col-span-full flex h-[350px] flex-col items-center justify-center gap-5 text-center font-light">
+            <Image
+              src={"/assets/data-not-found.svg"}
+              width={400}
+              height={500}
+              alt="Data Not Found"
+            />
             No inventory found.
           </div>
         )}

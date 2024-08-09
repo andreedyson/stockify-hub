@@ -89,7 +89,7 @@ function AddInventoryDialog({ userId }: { userId: string }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2 bg-main-600 text-sm text-white duration-200 hover:bg-main-400 md:text-base">
+        <Button className="flex items-center gap-2 bg-main-600 text-sm text-white duration-200 hover:bg-main-400">
           <PackageOpen size={16} />
           Add Inventory
         </Button>
