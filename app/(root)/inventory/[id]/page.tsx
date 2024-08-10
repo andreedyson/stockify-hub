@@ -28,8 +28,9 @@ async function InventoryDetailsPage({
     redirect("/signin");
   }
 
-  const inventory = await getInventoryById(session.user.id, id);
-  const tableData = await getCurrentInventoryMember(session.user.id, id);
+  const userId = session.user.id;
+  const inventory = await getInventoryById(userId, id);
+  const tableData = await getCurrentInventoryMember(userId, id);
   const inventoryOwner = tableData.find((user) => user.role === "OWNER");
   const currentUserRole = tableData.find((user) => user)?.currentUserRole;
   const currentInventoryCategory = await getInventoryCategories(inventory.id);
@@ -98,7 +99,7 @@ async function InventoryDetailsPage({
               </div>
               {currentUserRole !== "USER" && (
                 <EditInventoryForm
-                  userId={session.user.id}
+                  userId={userId}
                   inventoryData={{
                     id: inventory.id,
                     name: inventory.name,

@@ -13,7 +13,7 @@ async function InventoryPage() {
   const userInventories = await getUserInventories(session?.user.id as string);
 
   return (
-    <div className="space-y-6">
+    <section className="space-y-6">
       {/* Inventory Card, Search, Add Inventory */}
       <InventorySearch
         userId={session?.user.id as string}
@@ -48,7 +48,7 @@ async function InventoryPage() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

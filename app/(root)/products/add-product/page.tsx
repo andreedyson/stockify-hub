@@ -1,22 +1,23 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import AddProductForm from "@/components/forms/AddProductForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import EditProfileForm from "@/components/forms/EditProfileForm";
 
-async function ProfilePage() {
+async function AddProductPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return redirect("/signin"); // Redirect to login page
+    redirect("/signin");
   }
 
   const userId = session.user.id;
-
   return (
-    <div>
-      <EditProfileForm userId={userId} />
-    </div>
+    <section>
+      <div>
+        <AddProductForm userId={userId} />
+      </div>
+    </section>
   );
 }
 
-export default ProfilePage;
+export default AddProductPage;

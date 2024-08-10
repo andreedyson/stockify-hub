@@ -20,14 +20,13 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: Validate categoryId
-
     const response = productSchema.safeParse({
       name,
       description,
       price,
       stock,
       image,
+      categoryId,
     });
 
     if (!response.success) {
@@ -53,6 +52,7 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ message: `${error}` }, { status: 500 });
   }
 }
@@ -96,14 +96,13 @@ export async function PUT(req: Request) {
       );
     }
 
-    // TODO: Validate categoryId
-
     const response = productSchema.safeParse({
       name,
       description,
       price,
       stock,
       image,
+      categoryId,
     });
 
     if (!response.success) {

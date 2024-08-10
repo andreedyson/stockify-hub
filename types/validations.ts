@@ -49,9 +49,10 @@ export const productSchema = z.object({
     .min(2, { message: "Product name should be atleast 2 characters." })
     .max(50, { message: "Product name should be less than 50 characters." }),
   description: z.string().optional(),
-  price: z.number().min(1, { message: "Price should be more than 0" }),
-  stock: z.number().min(1, { message: "Stock should be more than 0" }),
+  price: z.coerce.number().min(1, { message: "Price should be more than 0" }),
+  stock: z.coerce.number().min(1, { message: "Stock should be more than 0" }),
   image: z.string().url(),
+  categoryId: z.string(),
 });
 
 export const categorySchema = z.object({

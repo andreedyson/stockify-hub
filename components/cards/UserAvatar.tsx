@@ -25,9 +25,6 @@ type UserAvatarProps = {
 
 function UserAvatar({ userId }: UserAvatarProps) {
   const { data, isLoading } = useUser(userId);
-  const { mutate } = useSWRConfig();
-
-  mutate(`/api/user/${userId}`);
 
   if (isLoading) {
     return (
