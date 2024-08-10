@@ -19,3 +19,12 @@ export function formatDate(date: Date) {
 
   return formattedDate;
 }
+
+export const currencyFormatterIDR = (amount: number) => {
+  const formatter = Intl.NumberFormat("id-ID", {
+    currency: "IDR",
+    style: "currency",
+  }).format(amount);
+
+  return formatter;
+};

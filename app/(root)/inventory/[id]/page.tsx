@@ -125,6 +125,7 @@ async function InventoryDetailsPage({
               columns={columns}
               data={tableData}
               className="border-none"
+              dataPerPage={4}
             />
           </div>
         </div>

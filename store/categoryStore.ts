@@ -22,7 +22,6 @@ export const useCategoryStore = create<InventoryCategoryStore>((set) => ({
       `${BASE_URL}/api/inventory/category/${userId}`,
     );
     const data = await response.json();
-    console.log(data);
     set({ data: data, isLoading: false });
     try {
     } catch (error) {

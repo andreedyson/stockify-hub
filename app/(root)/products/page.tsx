@@ -1,5 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import ProductsList from "@/components/list/ProductsList";
 import { Button } from "@/components/ui/button";
+import { getProductsForUser } from "@/server/product";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -18,15 +20,25 @@ async function ProductsPage() {
 
   const userId = session.user.id;
 
+  const products = await getProductsForUser(userId);
+
+  console.log(products);
+
   return (
     <section className="space-y-6">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 lg:grid-cols-12 lg:grid-rows-6">
         <div className="bg-main-card rounded-md p-6 md:col-span-4 lg:col-span-9 lg:row-span-full">
           <div className="section-header flex items-center justify-between">
             <h4>Products List</h4>
-            <Button variant={"link"} asChild>
-              <Link href={"/products/add-product"}>Add Product</Link>
-            </Button>
+            <Link
+              href={"/products/add-product"}
+              className="text-sm duration-200 hover:underline"
+            >
+              Add Product
+            </Link>
+          </div>
+          <div className="mt-2">
+            <ProductsList products={products} />
           </div>
         </div>
         <div className="bg-main-card rounded-md p-6 md:col-span-4 lg:col-span-3 lg:row-span-3">
