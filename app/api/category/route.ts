@@ -159,7 +159,13 @@ export async function DELETE(req: Request) {
       { message: "Category deleted successfully" },
       { status: 200 },
     );
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === "P2003") {
+      return NextResponse.json(
+        { message: "Can't delete category,  it is referenced in other table" },
+        { status: 400 },
+      );
+    }
     return NextResponse.json({ message: `${error}` }, { status: 500 });
   }
 }

@@ -47,22 +47,19 @@ function ProductsList({ products }: ProductListProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [action, setAction] = useState("");
 
-  const handleSubmitSuccess = () => {
-    setOpenDialog(false);
-  };
-
   return (
     <div className="flex w-full flex-col gap-4">
       {products.length > 0 ? (
         <>
-          <div className="flex w-full flex-col gap-3 max-md:overflow-x-scroll">
+          <div className="flex flex-col gap-3 overflow-x-auto">
             {products.slice(startIndex, endIndex).map((product) => (
               <article
                 key={product.id}
-                className="rounded-md bg-muted p-4 max-sm:w-max"
+                className="flex max-w-full items-center rounded-md bg-muted p-4"
               >
-                <div className="flex w-full items-center justify-between max-md:gap-6">
-                  <div className="flex items-center gap-4">
+                {/* Product Image & Name */}
+                <div className="flex w-[350px] max-md:gap-6 md:w-[400px]">
+                  <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center">
                     <div className="size-16 rounded-md bg-zinc-200 dark:bg-zinc-500 md:size-20">
                       <Image
                         src={product.image}
@@ -72,33 +69,41 @@ function ProductsList({ products }: ProductListProps) {
                         className="h-full w-full rounded-md object-cover"
                       />
                     </div>
-                    <div className="max-w-96">
+                    <div className="max-w-80">
                       <h4 className="line-clamp-1 text-base font-bold md:text-lg">
                         {product.name}
                       </h4>
-                      <p className="text-xs md:text-sm">
-                        <span>{product.Category?.name}</span> {" • "}{" "}
-                        <span>{product.stock} Item</span>
+                      <p className="line-clamp-1 text-xs text-desc md:text-sm">
+                        <span>{product.Category?.name}</span>
+                        {" | "}
+                        <span>{product.stock} Items</span>
                       </p>
                     </div>
                   </div>
-                  <div className="space-y-1 border-l-2 border-input py-1.5 pl-3.5">
+                </div>
+
+                {/* Product Details */}
+                <div className="flex w-80 flex-col justify-between md:flex-row md:items-center">
+                  <div className="w-[150px] space-y-1 border-l-2 border-input py-1.5 pl-3.5 max-md:py-3">
                     <p className="text-[10px] font-medium uppercase text-desc md:text-xs">
                       Price
                     </p>
-                    <p className="text-xs font-semibold md:text-sm">
+                    <p className="line-clamp-1 text-xs font-semibold md:text-sm">
                       {currencyFormatterIDR(product.price)}
                     </p>
                   </div>
-                  <div className="space-y-1 border-l-2 border-input py-1.5 pl-3.5">
+                  <div className="w-[150px] space-y-1 border-l-2 border-input py-1.5 pl-3.5 max-md:py-3">
                     <p className="text-[10px] font-medium uppercase text-desc md:text-xs">
                       Inventory
                     </p>
-                    <p className="text-xs font-semibold md:text-sm">
+                    <p className="line-clamp-1 text-xs font-semibold md:text-sm">
                       {product.Inventory?.name}
                     </p>
                   </div>
+                </div>
 
+                {/* Product Actions */}
+                <div className="ml-auto max-md:pl-3.5">
                   {product.currentUserRole !== "USER" && (
                     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
                       <DropdownMenu>

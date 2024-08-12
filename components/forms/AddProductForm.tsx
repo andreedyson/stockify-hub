@@ -142,6 +142,7 @@ function AddProductForm({ userId }: { userId: string }) {
         });
         form.reset();
         router.push("/products");
+        router.refresh();
       }
     } catch (error: any) {
       setSubmitting(false);
@@ -194,6 +195,7 @@ function AddProductForm({ userId }: { userId: string }) {
                     placeholder="Upload a photo"
                     className="account-form_image-input"
                     onChange={(e) => handleImage(e, field.onChange)}
+                    required
                   />
                 </FormControl>
               </FormItem>
@@ -291,13 +293,11 @@ function AddProductForm({ userId }: { userId: string }) {
             )}
           />
           <div className="flex gap-2">
-            <Button
-              variant={"outline"}
-              type="button"
-              className="w-full border-card-foreground"
-            >
-              <Link href={"/products"}>Cancel</Link>
-            </Button>
+            <Link href={"/products"} className="w-full border-card-foreground">
+              <Button variant={"outline"} type="button" className="w-full">
+                Cancel
+              </Button>
+            </Link>
             <Button
               type="submit"
               disabled={submitting}

@@ -11,8 +11,9 @@ import {
   getCurrentInventoryMember,
   getInventoryById,
 } from "@/server/inventory";
-import { Crown } from "lucide-react";
+import { ArrowLeft, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function InventoryDetailsPage({
@@ -41,8 +42,11 @@ async function InventoryDetailsPage({
         {/* Inventory Details Card */}
         <div className="bg-main-card col-span-full grid-rows-1 rounded-md p-6 md:col-span-4">
           <div className="h-full">
-            <div>
-              <h3 className="section-header">Inventory Details</h3>
+            <div className="section-header flex items-center gap-2">
+              <Link href={"/products"}>
+                <ArrowLeft size={20} className="cursor-pointer lg:hidden" />
+              </Link>
+              <h3>Inventory Details</h3>
             </div>
             <div className="space-y-2">
               <div className="border-b-2 py-4 max-lg:space-y-3.5 lg:max-xl:grid lg:max-xl:grid-cols-4 lg:max-xl:content-center xl:space-y-4">

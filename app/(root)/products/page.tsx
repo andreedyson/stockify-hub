@@ -1,6 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import ProductsList from "@/components/list/ProductsList";
 import { getProductsForUser } from "@/server/product";
+import { ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -29,12 +30,13 @@ async function ProductsPage() {
             <h4>Products List</h4>
             <Link
               href={"/products/add-product"}
-              className="text-sm duration-200 hover:underline"
+              className="flex items-center text-sm text-main-500 duration-200 hover:text-main-300 hover:underline"
             >
               Add Product
+              <ChevronRight size={16} />
             </Link>
           </div>
-          <div className="mt-2">
+          <div className="mt-2 w-full overflow-hidden">
             <ProductsList products={products} />
           </div>
         </div>

@@ -296,13 +296,14 @@ function EditProductForm({ userId, product }: EditProductProps) {
               )}
             />
             <div className="flex gap-2">
-              <Button
-                variant={"outline"}
-                type="button"
+              <Link
+                href={"/products"}
                 className="w-full border-card-foreground"
               >
-                <Link href={"/products"}>Cancel</Link>
-              </Button>
+                <Button variant={"outline"} type="button" className="w-full">
+                  Cancel
+                </Button>
+              </Link>
               <Button
                 type="submit"
                 disabled={submitting}
