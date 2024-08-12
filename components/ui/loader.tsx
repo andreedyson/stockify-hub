@@ -1,14 +1,14 @@
 "use client";
-import { dotSpinner } from "ldrs";
 
-dotSpinner.register();
+import { useEffect } from "react";
 
-function Loader() {
-  return (
-    <div>
-      <l-dot-spinner size="40" speed="1.3" color="#519ee6"></l-dot-spinner>
-    </div>
-  );
+export default function Loader() {
+  useEffect(() => {
+    async function getLoader() {
+      const { dotSpinner } = await import("ldrs");
+      dotSpinner.register();
+    }
+    getLoader();
+  }, []);
+  return <l-dot-spinner size="40" speed="1.3" color="#519ee6"></l-dot-spinner>;
 }
-
-export default Loader;

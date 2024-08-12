@@ -201,6 +201,7 @@ function ProductsList({ products }: ProductListProps) {
             height={400}
             alt="Product Not Found"
             className="h-1/2 w-1/2"
+            priority
           />
           No products found
         </div>
