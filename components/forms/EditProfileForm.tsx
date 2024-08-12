@@ -152,12 +152,12 @@ function EditProfileForm({ userId }: EditProfileProps) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col justify-start gap-4"
       >
-        <div>
-          <h2 className="header-3 font-semibold text-slate-700 dark:text-slate-300">
-            Edit Profile
-          </h2>
-        </div>
         <div className="flex flex-col gap-4 rounded-lg bg-accent px-8 py-10">
+          <div>
+            <h2 className="header-3 mb-3 font-semibold text-slate-700 dark:text-slate-300">
+              Edit Your Personal Profile
+            </h2>
+          </div>
           {/* Edit Profile Photo */}
           <FormField
             control={form.control}

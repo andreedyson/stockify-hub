@@ -32,6 +32,7 @@ import { Textarea } from "../ui/textarea";
 import Image from "next/image";
 import Link from "next/link";
 import { Product } from "@prisma/client";
+import BackButton from "../navigations/BackButton";
 
 type EditProductProps = {
   userId: string;
@@ -162,6 +163,11 @@ function EditProductForm({ userId, product }: EditProductProps) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6 bg-accent p-6"
         >
+          <div className="section-header">
+            <BackButton className="flex items-center gap-2">
+              <h4>Edit a Product</h4>
+            </BackButton>
+          </div>
           <div className="max-w-[650px] space-y-4">
             <FormField
               control={form.control}

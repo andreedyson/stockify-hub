@@ -31,6 +31,7 @@ import { useCategoryStore } from "@/store/categoryStore";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
 import Link from "next/link";
+import BackButton from "../navigations/BackButton";
 
 function AddProductForm({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -155,8 +156,10 @@ function AddProductForm({ userId }: { userId: string }) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-6 bg-accent p-6"
       >
-        <div>
-          <h4 className="section-header">Add a Product</h4>
+        <div className="section-header">
+          <BackButton className="flex items-center gap-2">
+            <h4>Add a Product</h4>
+          </BackButton>
         </div>
         <div className="max-w-[650px] space-y-4">
           <FormField
