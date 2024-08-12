@@ -53,6 +53,9 @@ export async function getcategoriesByUser(
           users: {
             some: {
               userId: userId,
+              NOT: {
+                role: "USER",
+              },
             },
           },
         },
@@ -70,6 +73,8 @@ export async function getcategoriesByUser(
         inventoryName: cat.Inventory.name,
       };
     });
+
+    console.log(result);
 
     return result;
   } catch (error: any) {

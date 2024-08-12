@@ -1,6 +1,7 @@
 import { Member } from "@/components/tables/members/inventory-members-columns";
 import prisma from "@/lib/db";
 import { Inventory } from "@prisma/client";
+import { date } from "zod";
 
 type UserInventoriesPromise = Inventory & {
   memberCount?: number;
@@ -25,6 +26,9 @@ export async function getUserInventories(
             id: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "asc",
       },
     });
 
