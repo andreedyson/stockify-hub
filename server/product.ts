@@ -101,3 +101,59 @@ export async function getProductById(
     throw new Error(`${error.message}`);
   }
 }
+
+export async function getProductsByInventory(
+  userId: string,
+  inventoryId: string,
+): Promise<ProductsForUserType[]> {
+  try {
+    const inventory = await prisma.inventory.findUnique({
+      where: {
+        id: inventoryId,
+      },
+    });
+
+    if (!inventory) {
+      throw new Error("Inventory not found");
+    }
+
+    const products = await prisma.product.findMany({
+      where: {
+        inventoryId: inventoryId,
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+        Inventory: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    const results = await Promise.all(
+      products.map(async (product) => {
+        const user = await prisma.inventoryMember.findFirst({
+          where: {
+            userId: userId,
+            inventoryId: product.inventoryId,
+          },
+        });
+
+        return {
+          ...product,
+          userId: user?.id as string,
+          currentUserRole: user?.role ?? "USER",
+        };
+      }),
+    );
+
+    return results;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}

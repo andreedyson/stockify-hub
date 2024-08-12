@@ -119,12 +119,12 @@ function ProductsList({ products }: ProductListProps) {
                               asChild
                               onClick={() => setAction("edit")}
                             >
-                              <DropdownMenuItem className="flex items-center gap-2">
-                                <Pencil className="h-4 w-4" />{" "}
+                              <DropdownMenuItem>
                                 <Link
                                   href={`/products/edit-product/${product.id}`}
+                                  className="flex items-center gap-2"
                                 >
-                                  Edit Product
+                                  <Pencil className="h-4 w-4" /> Edit Product
                                 </Link>
                               </DropdownMenuItem>
                             </DialogTrigger>
@@ -143,15 +143,11 @@ function ProductsList({ products }: ProductListProps) {
                             ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
-                        {action === "delete" ? (
-                          <>
-                            <DeleteProductDialog productId={product.id} />
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </DialogContent>
+                      {action === "delete" && (
+                        <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
+                          <DeleteProductDialog productId={product.id} />
+                        </DialogContent>
+                      )}
                     </Dialog>
                   )}
                 </div>

@@ -19,7 +19,6 @@ async function InventoryPage() {
   }
 
   const userId = session.user.id;
-
   const userInventories = await getUserInventories(userId);
 
   return (

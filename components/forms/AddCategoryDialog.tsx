@@ -93,7 +93,7 @@ function AddCategoryDialog({ inventoryId }: CategoryProps) {
       <DialogTrigger asChild>
         <Button
           size={"sm"}
-          className="flex items-center gap-2 bg-main-700 text-xs text-white duration-200 hover:bg-main-500 lg:text-sm"
+          className="flex items-center gap-2 bg-main-700 text-xs text-white duration-200 hover:bg-main-500 xl:text-sm"
         >
           <Layers3 size={16} />
           Add Category

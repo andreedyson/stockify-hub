@@ -4,6 +4,7 @@ import AddCategoryDialog from "@/components/forms/AddCategoryDialog";
 import AddMemberDialog from "@/components/forms/AddMemberDialog";
 import EditInventoryForm from "@/components/forms/EditInventoryForm";
 import CategoryList from "@/components/list/CategoryList";
+import ProductsList from "@/components/list/ProductsList";
 import { DataTable } from "@/components/ui/data-table";
 import { formatDate } from "@/lib/utils";
 import { getInventoryCategories } from "@/server/category";
@@ -11,6 +12,7 @@ import {
   getCurrentInventoryMember,
   getInventoryById,
 } from "@/server/inventory";
+import { getProductsByInventory } from "@/server/product";
 import { ArrowLeft, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -35,6 +37,7 @@ async function InventoryDetailsPage({
   const inventoryOwner = tableData.find((user) => user.role === "OWNER");
   const currentUserRole = tableData.find((user) => user)?.currentUserRole;
   const currentInventoryCategory = await getInventoryCategories(inventory.id);
+  const inventoryProducts = await getProductsByInventory(userId, id);
 
   return (
     <section className="space-y-6">
@@ -135,11 +138,14 @@ async function InventoryDetailsPage({
         </div>
       </div>
 
-      <div className="grid gap-4 max-md:gap-y-6 lg:grid-cols-12">
+      <div className="grid grid-cols-1 gap-4 max-md:gap-y-6 lg:grid-cols-12">
         {/* Product List */}
-        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
+        <div className="bg-main-card col-span-1 w-full rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
           <div>
             <h3 className="section-header">Products</h3>
+          </div>
+          <div className="mt-2 w-full">
+            <ProductsList products={inventoryProducts} />
           </div>
         </div>
         {/* Category List */}
