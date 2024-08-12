@@ -1,8 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import InventorySearch from "@/components/forms/InventorySearch";
+import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
 import { getUserInventories } from "@/server/inventory";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Inventory",
@@ -10,15 +13,24 @@ export const metadata: Metadata = {
 
 async function InventoryPage() {
   const session = await getServerSession(authOptions);
-  const userInventories = await getUserInventories(session?.user.id as string);
+
+  if (!session) {
+    redirect("/signin");
+  }
+
+  const userId = session.user.id;
+
+  const userInventories = await getUserInventories(userId);
 
   return (
     <section className="space-y-6">
       {/* Inventory Card, Search, Add Inventory */}
-      <InventorySearch
-        userId={session?.user.id as string}
-        inventoryData={userInventories}
-      />
+      <Suspense fallback={<InventorySearchSkeletons />}>
+        <InventorySearch
+          userId={session?.user.id as string}
+          inventoryData={userInventories}
+        />
+      </Suspense>
 
       {/* Inventory Activity & User Role Cards */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">

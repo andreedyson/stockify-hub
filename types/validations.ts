@@ -52,7 +52,7 @@ export const productSchema = z.object({
   price: z.coerce.number().min(1, { message: "Price should be more than 0" }),
   stock: z.coerce.number().min(1, { message: "Stock should be more than 0" }),
   image: z.string().url(),
-  categoryId: z.string(),
+  categoryId: z.string().min(1, { message: "You must select a category" }),
 });
 
 export const categorySchema = z.object({

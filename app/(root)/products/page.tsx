@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import ProductsList from "@/components/list/ProductsList";
-import { Button } from "@/components/ui/button";
 import { getProductsForUser } from "@/server/product";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -21,8 +20,6 @@ async function ProductsPage() {
   const userId = session.user.id;
 
   const products = await getProductsForUser(userId);
-
-  console.log(products);
 
   return (
     <section className="space-y-6">

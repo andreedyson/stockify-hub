@@ -30,6 +30,7 @@ import { isBase64Image } from "@/lib/utils";
 import { useCategoryStore } from "@/store/categoryStore";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
+import Link from "next/link";
 
 function AddProductForm({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -206,7 +207,7 @@ function AddProductForm({ userId }: { userId: string }) {
                 <FormLabel>Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="ex: Warehouse"
+                    placeholder="ex: Stuff 1"
                     autoComplete="off"
                     {...field}
                   />
@@ -239,6 +240,9 @@ function AddProductForm({ userId }: { userId: string }) {
                           className="font-semibold"
                         >
                           {category.name}
+                          <span className="font-light">
+                            {` (${category.inventoryName}) `}
+                          </span>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -292,7 +296,7 @@ function AddProductForm({ userId }: { userId: string }) {
               type="button"
               className="w-full border-card-foreground"
             >
-              Cancel
+              <Link href={"/products"}>Cancel</Link>
             </Button>
             <Button
               type="submit"
