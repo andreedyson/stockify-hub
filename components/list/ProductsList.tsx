@@ -194,7 +194,16 @@ function ProductsList({ products }: ProductListProps) {
           </Pagination>
         </>
       ) : (
-        <div>No products found.</div>
+        <div className="flex w-full flex-col items-center gap-4 py-4">
+          <Image
+            src={"/assets/product-not-found.svg"}
+            width={200}
+            height={400}
+            alt="Product Not Found"
+            className="h-1/2 w-1/2"
+          />
+          No products found
+        </div>
       )}
     </div>
   );

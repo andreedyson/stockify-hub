@@ -119,7 +119,7 @@ export async function getProductsByInventory(
 
     const products = await prisma.product.findMany({
       where: {
-        inventoryId: inventoryId,
+        inventoryId: inventoryId, // Get by inventoryId
       },
       include: {
         Category: {
