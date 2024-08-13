@@ -10,7 +10,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { formatDate } from "@/lib/utils";
 import { getInventoryCategories } from "@/server/category";
 import {
-  getCurrentInventoryMember,
+  getCurrentInventoryMembers,
   getInventoryById,
 } from "@/server/inventory";
 import { getProductsByInventory } from "@/server/product";
@@ -33,7 +33,7 @@ async function InventoryDetailsPage({
 
   const userId = session.user.id;
   const inventory = await getInventoryById(userId, id);
-  const tableData = await getCurrentInventoryMember(userId, id);
+  const tableData = await getCurrentInventoryMembers(userId, id);
   const inventoryOwner = tableData.find((user) => user.role === "OWNER");
   const currentUserRole = tableData.find((user) => user)?.currentUserRole;
   const currentInventoryCategory = await getInventoryCategories(inventory.id);

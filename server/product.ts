@@ -6,6 +6,47 @@ type ProductsForUserType = Product & {
   userId: string;
 };
 
+export type InventoriesProductCountType = {
+  Inventory: string;
+  Products: number;
+};
+
+export async function getProductById(
+  userId: string,
+  productId: string,
+): Promise<Product> {
+  try {
+    const product = await prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+
+    if (!product) {
+      throw new Error("Product not found");
+    }
+
+    const userIsPartOfTheInventory = await prisma.inventoryMember.findFirst({
+      where: {
+        userId: userId,
+        inventoryId: product.inventoryId,
+      },
+    });
+
+    if (!userIsPartOfTheInventory) {
+      throw new Error("You are not part of that inventory");
+    }
+
+    if (userIsPartOfTheInventory.role === "USER") {
+      throw new Error("You are not allowed to edit this product data");
+    }
+
+    return product;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
 export async function getProductsForUser(
   userId: string,
 ): Promise<ProductsForUserType[]> {
@@ -66,42 +107,6 @@ export async function getProductsForUser(
   }
 }
 
-export async function getProductById(
-  userId: string,
-  productId: string,
-): Promise<Product> {
-  try {
-    const product = await prisma.product.findUnique({
-      where: {
-        id: productId,
-      },
-    });
-
-    if (!product) {
-      throw new Error("Product not found");
-    }
-
-    const userIsPartOfTheInventory = await prisma.inventoryMember.findFirst({
-      where: {
-        userId: userId,
-        inventoryId: product.inventoryId,
-      },
-    });
-
-    if (!userIsPartOfTheInventory) {
-      throw new Error("You are not part of that inventory");
-    }
-
-    if (userIsPartOfTheInventory.role === "USER") {
-      throw new Error("You are not allowed to edit this product data");
-    }
-
-    return product;
-  } catch (error: any) {
-    throw new Error(`${error.message}`);
-  }
-}
-
 export async function getProductsByInventory(
   userId: string,
   inventoryId: string,
@@ -151,6 +156,44 @@ export async function getProductsByInventory(
         };
       }),
     );
+
+    return results;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function getInventoriesProductCount(
+  userId: string,
+): Promise<InventoriesProductCountType[]> {
+  try {
+    const userInventories = await prisma.inventoryMember.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    // Extract all of the inventory IDs
+    const inventoryIds = userInventories.map((user) => user.inventoryId);
+
+    const inventoryData = await prisma.inventory.findMany({
+      where: {
+        id: {
+          in: inventoryIds,
+        },
+      },
+      include: {
+        products: true,
+      },
+    });
+
+    const results = inventoryData.map((inventory) => {
+      return {
+        Inventory: inventory.name,
+        Products: inventory.products.length,
+        fill: `var(--color-${inventory.name.slice(0, 3)})`,
+      };
+    });
 
     return results;
   } catch (error: any) {

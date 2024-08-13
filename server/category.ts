@@ -74,8 +74,6 @@ export async function getcategoriesByUser(
       };
     });
 
-    console.log(result);
-
     return result;
   } catch (error: any) {
     throw new Error(`${error.message}`);

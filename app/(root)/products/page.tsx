@@ -1,6 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import TotalProductsCharts from "@/components/charts/TotalProductsCharts";
 import ProductsList from "@/components/list/ProductsList";
-import { getProductsForUser } from "@/server/product";
+import { getUserInventories } from "@/server/inventory";
+import {
+  getInventoriesProductCount,
+  getProductsForUser,
+} from "@/server/product";
 import { ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -21,6 +26,8 @@ async function ProductsPage() {
   const userId = session.user.id;
 
   const products = await getProductsForUser(userId);
+  const userInventories = await getUserInventories(userId);
+  const totalProductsChartData = await getInventoriesProductCount(userId);
 
   return (
     <section className="space-y-6">
@@ -54,9 +61,15 @@ async function ProductsPage() {
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="bg-main-card rounded-md p-6">
+          {/* Charts */}
           <div>
-            {/* Charts */}
             <h4 className="section-header">Total Products</h4>
+          </div>
+          <div className="mt-4">
+            <TotalProductsCharts
+              productsData={totalProductsChartData}
+              inventoriesData={userInventories}
+            />
           </div>
         </div>
         <div className="bg-main-card rounded-md p-6">

@@ -1,7 +1,13 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import TotalProductsCharts from "@/components/charts/TotalProductsCharts";
 import InventorySearch from "@/components/forms/InventorySearch";
+import UserRoles from "@/components/list/UserRoles";
 import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
-import { getUserInventories } from "@/server/inventory";
+import {
+  currentUserInventoriesRoles,
+  getUserInventories,
+} from "@/server/inventory";
+import { getInventoriesProductCount } from "@/server/product";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -20,6 +26,9 @@ async function InventoryPage() {
 
   const userId = session.user.id;
   const userInventories = await getUserInventories(userId);
+  const totalProductsChartData = await getInventoriesProductCount(userId);
+
+  const userRoles = await currentUserInventoriesRoles(userId);
 
   return (
     <section className="space-y-6">
@@ -38,9 +47,14 @@ async function InventoryPage() {
             <h4 className="section-header">Activity</h4>
           </div>
         </div>
-        <div className="bg-main-card rounded-md p-6 md:col-span-2 xl:col-span-3">
+        <div className="bg-main-card space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-3">
           <div>
             <h4 className="section-header">Your Role</h4>
+          </div>
+          <div className="grid grid-cols-1 gap-3 max-md:grid-cols-2">
+            {userRoles.map((user) => (
+              <UserRoles key={user.userId} data={user} />
+            ))}
           </div>
         </div>
       </div>
@@ -56,6 +70,12 @@ async function InventoryPage() {
         <div className="bg-main-card rounded-md p-6">
           <div>
             <h4 className="section-header">Total Products</h4>
+          </div>
+          <div className="mt-4">
+            <TotalProductsCharts
+              productsData={totalProductsChartData}
+              inventoriesData={userInventories}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import { Member } from "@/components/tables/members/inventory-members-columns";
 import prisma from "@/lib/db";
 import { Inventory } from "@prisma/client";
-import { date } from "zod";
 
 type UserInventoriesPromise = Inventory & {
   memberCount?: number;
@@ -12,36 +11,13 @@ export type CurrentInventoryMembers = Member & {
   currentUserEmail: string;
 };
 
-export async function getUserInventories(
-  userId: string,
-): Promise<UserInventoriesPromise[]> {
-  try {
-    const invWithMembers = await prisma.inventory.findMany({
-      where: {
-        users: { some: { userId } },
-      },
-      include: {
-        users: {
-          select: {
-            id: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-    });
-
-    const result = invWithMembers.map((inventory) => ({
-      ...inventory,
-      memberCount: inventory.users.length,
-    }));
-
-    return result;
-  } catch (error: any) {
-    throw new Error(`${error.message}`);
-  }
-}
+export type currentUserInventoriesRolesType = {
+  userId: string;
+  role: string;
+  inventoryId: string;
+  inventoryName: string;
+  inventoryColor: string;
+};
 
 export async function getInventoryById(
   userId: string,
@@ -90,7 +66,39 @@ export async function getInventoryById(
   }
 }
 
-export async function getCurrentInventoryMember(
+export async function getUserInventories(
+  userId: string,
+): Promise<UserInventoriesPromise[]> {
+  try {
+    const invWithMembers = await prisma.inventory.findMany({
+      where: {
+        users: { some: { userId } },
+      },
+      include: {
+        users: {
+          select: {
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const result = invWithMembers.map((inventory) => ({
+      ...inventory,
+      memberCount: inventory.users.length,
+    }));
+
+    return result;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+// Table Data for Inventory Details
+export async function getCurrentInventoryMembers(
   userId: string,
   inventoryId: string,
 ): Promise<CurrentInventoryMembers[]> {
@@ -145,6 +153,35 @@ export async function getCurrentInventoryMember(
     });
 
     return result;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function currentUserInventoriesRoles(
+  userId: string,
+): Promise<currentUserInventoriesRolesType[]> {
+  try {
+    const userInventories = await prisma.inventoryMember.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        inventory: true,
+      },
+    });
+
+    const results = userInventories.map((user) => {
+      return {
+        userId: user.userId,
+        role: user.role,
+        inventoryId: user.inventory.id,
+        inventoryName: user.inventory.name,
+        inventoryColor: user.inventory.color as string,
+      };
+    });
+
+    return results;
   } catch (error: any) {
     throw new Error(`${error.message}`);
   }
