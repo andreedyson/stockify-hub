@@ -22,8 +22,7 @@ function UserRoles({ data }: UserRolesListType) {
             <p
               className={cn(
                 "text-xs md:text-sm",
-                data.role === "OWNER",
-                "font-semibold text-yellow-500",
+                data.role === "OWNER" && "font-semibold text-yellow-500",
               )}
             >
               {data.role}

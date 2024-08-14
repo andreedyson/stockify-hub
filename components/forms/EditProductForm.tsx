@@ -148,7 +148,7 @@ function EditProductForm({ userId, product }: EditProductProps) {
           description: data.message,
           variant: "success",
         });
-        router.push("/products");
+        router.back();
         router.refresh();
       }
     } catch (error: any) {
