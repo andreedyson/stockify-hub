@@ -1,7 +1,6 @@
-import { create } from "zustand";
-import { Category } from "@prisma/client";
 import { BASE_URL } from "@/constants";
 import { CategoriesByUserType } from "@/server/category";
+import { create } from "zustand";
 
 type InventoryCategoryStore = {
   data: {

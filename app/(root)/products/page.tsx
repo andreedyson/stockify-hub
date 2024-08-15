@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import TotalProductsCharts from "@/components/charts/TotalProductsCharts";
+import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import ProductsList from "@/components/list/ProductsList";
 import { getUserInventories } from "@/server/inventory";
 import {

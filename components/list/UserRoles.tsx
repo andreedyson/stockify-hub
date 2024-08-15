@@ -16,7 +16,7 @@ function UserRoles({ data }: UserRolesListType) {
       >
         <div className="flex items-center justify-between">
           <div className="space-y-1.5">
-            <h4 className="line-clamp-1 text-base font-semibold md:text-lg">
+            <h4 className="line-clamp-1 text-sm font-bold md:text-base">
               {data.inventoryName}
             </h4>
             <p

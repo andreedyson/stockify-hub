@@ -1,12 +1,12 @@
 "use client";
 
 import { InventoryCardType } from "@/types";
-import { useState } from "react";
-import { Input } from "../ui/input";
-import AddInventoryDialog from "./AddInventoryDialog";
-import InventoryCard from "../cards/InventoryCard";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
+import { useState, useMemo } from "react";
+import InventoryCard from "../cards/InventoryCard";
+import { Input } from "../ui/input";
+import AddInventoryDialog from "./AddInventoryDialog";
 
 type InventorySearchProps = {
   userId: string;
@@ -16,9 +16,11 @@ type InventorySearchProps = {
 function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  const filteredInventories = inventoryData.filter((inventory) =>
-    inventory.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredInventories = useMemo(() => {
+    return inventoryData.filter((inventory) =>
+      inventory.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [searchTerm, inventoryData]);
 
   return (
     <div className="space-y-6">

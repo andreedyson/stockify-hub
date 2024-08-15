@@ -12,7 +12,7 @@ type TotalProductChartsProps = {
   inventoriesData: InventoryCardType[];
 };
 
-export default function TotalproductsCharts({
+export function TotalProductsCharts({
   productsData,
   inventoriesData,
 }: TotalProductChartsProps) {
@@ -53,7 +53,6 @@ export default function TotalproductsCharts({
           ticks={ticks}
         />
         <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
-        {/* <ChartLegend content={<ChartLegendContent nameKey="War" />} /> */}
         <Bar dataKey="Products" radius={4} />
       </BarChart>
     </ChartContainer>

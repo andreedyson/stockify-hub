@@ -114,22 +114,19 @@ function ProductsList({ products }: ProductListProps) {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          {product.currentUserRole === "OWNER" ||
-                            ("ADMIN" && (
-                              <DialogTrigger
-                                asChild
-                                onClick={() => setAction("edit")}
+                          <DialogTrigger
+                            asChild
+                            onClick={() => setAction("edit")}
+                          >
+                            <DropdownMenuItem>
+                              <Link
+                                href={`/products/edit-product/${product.id}`}
+                                className="flex items-center gap-2"
                               >
-                                <DropdownMenuItem>
-                                  <Link
-                                    href={`/products/edit-product/${product.id}`}
-                                    className="flex items-center gap-2"
-                                  >
-                                    <Pencil className="h-4 w-4" /> Edit Product
-                                  </Link>
-                                </DropdownMenuItem>
-                              </DialogTrigger>
-                            ))}
+                                <Pencil className="h-4 w-4" /> Edit Product
+                              </Link>
+                            </DropdownMenuItem>
+                          </DialogTrigger>
                           {product.currentUserRole === "OWNER" && (
                             <DialogTrigger
                               asChild

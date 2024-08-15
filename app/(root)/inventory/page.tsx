@@ -1,8 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import TotalProductsCharts from "@/components/charts/TotalProductsCharts";
+import { InventoryCategoryCharts } from "@/components/charts/InventoryCategoryCharts";
+import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import InventorySearch from "@/components/forms/InventorySearch";
+import InventoryCategoryList from "@/components/list/InventoryCategoryList";
 import UserRoles from "@/components/list/UserRoles";
 import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
+import { getInventoriesCategoriesChartData } from "@/server/category";
 import {
   currentUserInventoriesRoles,
   getUserInventories,
@@ -27,8 +30,9 @@ async function InventoryPage() {
   const userId = session.user.id;
   const userInventories = await getUserInventories(userId);
   const totalProductsChartData = await getInventoriesProductCount(userId);
-
   const userRoles = await currentUserInventoriesRoles(userId);
+  const inventoriesCategoriesData =
+    await getInventoriesCategoriesChartData(userId);
 
   return (
     <section className="space-y-6">
@@ -51,7 +55,7 @@ async function InventoryPage() {
           <div>
             <h4 className="section-header">Your Role</h4>
           </div>
-          <div className="grid grid-cols-1 gap-3 max-md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:max-md:grid-cols-2">
             {userRoles.map((user) => (
               <UserRoles key={user.userId} data={user} />
             ))}
@@ -61,13 +65,15 @@ async function InventoryPage() {
 
       {/*  */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="bg-main-card rounded-md p-6">
-          {" "}
+        <div className="bg-main-card space-y-4 rounded-md p-6">
           <div>
             <h4 className="section-header">Inventory Categories</h4>
           </div>
+          <div>
+            <InventoryCategoryList categoryData={inventoriesCategoriesData} />
+          </div>
         </div>
-        <div className="bg-main-card rounded-md p-6">
+        <div className="bg-main-card h-full rounded-md p-6">
           <div>
             <h4 className="section-header">Total Products</h4>
           </div>
