@@ -36,7 +36,6 @@ export function InventoryCategoryCharts({
     Products: {
       label: "Products",
     },
-    // Optionally, you can dynamically generate labels and colors based on categoryData
     ...categoryData.reduce((acc, category, index) => {
       acc[category.Category] = {
         label: category.Category,
@@ -51,7 +50,7 @@ export function InventoryCategoryCharts({
   }, [chartData]);
 
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px]">
+    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <PieChart>
         <ChartTooltip
           cursor={false}
