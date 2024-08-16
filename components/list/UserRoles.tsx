@@ -12,7 +12,7 @@ function UserRoles({ data }: UserRolesListType) {
     <Link href={`/inventory/${data.inventoryId}`}>
       <article
         style={{ borderLeft: `3px solid ${data.inventoryColor}` }}
-        className="rounded-md bg-zinc-200 px-3 py-2 dark:bg-zinc-800"
+        className="bg-card-light rounded-md px-3 py-2"
       >
         <div className="flex items-center justify-between">
           <div className="space-y-1.5">

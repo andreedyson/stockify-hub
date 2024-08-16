@@ -12,12 +12,12 @@ function InventoryCategoryList({ categoryData }: InventoryCategoryListProps) {
       <div className="w-full">
         {categoryData.length > 0 && (
           <Tabs defaultValue={categoryData[0].inventoryId} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5">
+            <TabsList className="grid w-full grid-cols-2 place-items-center gap-3 md:grid-cols-3 lg:grid-cols-5">
               {categoryData.map((tab) => (
                 <TabsTrigger
                   key={tab.inventoryId}
                   value={tab.inventoryId}
-                  className="line-clamp-1 max-w-[200px]"
+                  className="line-clamp-1 w-full md:max-w-[200px]"
                 >
                   {tab.inventoryName}
                 </TabsTrigger>

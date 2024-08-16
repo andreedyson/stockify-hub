@@ -55,7 +55,7 @@ function ProductsList({ products }: ProductListProps) {
             {products.slice(startIndex, endIndex).map((product) => (
               <article
                 key={product.id}
-                className="flex max-w-full items-center rounded-md bg-muted p-4"
+                className="bg-card-light flex max-w-full items-center rounded-md p-4"
               >
                 {/* Product Image & Name */}
                 <div className="flex w-[350px] max-md:gap-6 md:w-[400px]">

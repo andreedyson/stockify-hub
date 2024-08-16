@@ -50,7 +50,10 @@ export function InventoryCategoryCharts({
   }, [chartData]);
 
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+    <ChartContainer
+      config={chartConfig}
+      className="h-[280px] min-h-[280px] w-full"
+    >
       <PieChart>
         <ChartTooltip
           cursor={false}

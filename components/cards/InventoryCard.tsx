@@ -27,7 +27,9 @@ function InventoryCard({ inventoryData }: InventoryCardProps) {
         <div className="flex flex-col gap-5">
           <div>
             <span className="text-xs font-semibold text-desc">Name</span>
-            <p className="text-lg font-bold">{inventoryData.name}</p>
+            <p className="line-clamp-1 text-lg font-bold">
+              {inventoryData.name}
+            </p>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex flex-col font-semibold">

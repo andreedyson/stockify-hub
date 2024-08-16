@@ -32,7 +32,7 @@
   }
 
   .dark {
-    --background: 230 8% 13%;
+    --background: 249 10% 13%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -44,7 +44,7 @@
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 220 6% 10%;
+    --accent: 252 11% 9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
@@ -99,7 +99,12 @@
   .bg-main-card {
     @apply bg-white shadow-sm dark:bg-accent;
   }
-}
-.account-form_image-input {
-  @apply cursor-pointer border-none bg-transparent outline-none file:text-main-500 !important;
+
+  .bg-card-light {
+    @apply bg-zinc-200 dark:bg-zinc-800;
+  }
+
+  .account-form_image-input {
+    @apply cursor-pointer border-none bg-transparent outline-none file:text-main-500 !important;
+  }
 }
