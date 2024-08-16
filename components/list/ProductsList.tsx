@@ -40,7 +40,7 @@ type ProductListProps = {
 };
 
 function ProductsList({ products }: ProductListProps) {
-  const dataPerPage = 5;
+  const dataPerPage = 8;
   const [startIndex, setStartIndex] = useState<number>(0);
   const [endIndex, setEndIndex] = useState<number>(dataPerPage);
 
