@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { Product } from "@prisma/client";
+import { Category, Product } from "@prisma/client";
 
 type ProductsForUserType = Product & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
@@ -10,6 +10,8 @@ export type InventoriesProductCountType = {
   Inventory: string;
   Products: number;
 };
+
+export type LowStockProductsType = Pick<Product, "name" | "stock">;
 
 export async function getProductById(
   userId: string,
@@ -52,7 +54,7 @@ export async function getProductsForUser(
 ): Promise<ProductsForUserType[]> {
   try {
     // Search inventories the user is a part of
-    const inventoryMembers = await prisma.inventoryMember.findMany({
+    const userInventories = await prisma.inventoryMember.findMany({
       where: {
         userId: userId,
       },
@@ -62,7 +64,7 @@ export async function getProductsForUser(
     });
 
     // Extract all of the inventory IDs
-    const inventoryIds = inventoryMembers.map((member) => member.inventoryId);
+    const inventoryIds = userInventories.map((member) => member.inventoryId);
 
     const products = await prisma.product.findMany({
       where: {
@@ -167,6 +169,7 @@ export async function getInventoriesProductCount(
   userId: string,
 ): Promise<InventoriesProductCountType[]> {
   try {
+    // Search inventories the user is a part of
     const userInventories = await prisma.inventoryMember.findMany({
       where: {
         userId: userId,
@@ -196,6 +199,55 @@ export async function getInventoriesProductCount(
     });
 
     return results;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function getLowStocksProducts(
+  userId: string,
+): Promise<LowStockProductsType[]> {
+  try {
+    // Search inventories the user is a part of
+    const userInventories = await prisma.inventoryMember.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        inventoryId: true,
+      },
+    });
+
+    // Extract all of the inventory IDs
+    const inventoryIds = userInventories.map((member) => member.inventoryId);
+
+    const products = await prisma.product.findMany({
+      where: {
+        inventoryId: {
+          in: inventoryIds,
+        },
+        stock: {
+          lt: 5,
+        },
+      },
+      include: {
+        Category: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      take: 5,
+    });
+
+    const result = products.map((product) => {
+      return {
+        name: product.name,
+        stock: product.stock,
+      };
+    });
+
+    return result;
   } catch (error: any) {
     throw new Error(`${error.message}`);
   }

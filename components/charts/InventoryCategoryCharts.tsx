@@ -5,6 +5,8 @@ import { Label, Pie, PieChart } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -58,6 +60,9 @@ export function InventoryCategoryCharts({
         <ChartTooltip
           cursor={false}
           content={<ChartTooltipContent hideLabel />}
+        />
+        <ChartLegend
+          content={<ChartLegendContent className="flex flex-wrap" />}
         />
         <Pie
           data={chartData}
