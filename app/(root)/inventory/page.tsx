@@ -3,7 +3,7 @@ import { InventoryCategoryCharts } from "@/components/charts/InventoryCategoryCh
 import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import InventorySearch from "@/components/forms/InventorySearch";
 import InventoryCategoryList from "@/components/list/InventoryCategoryList";
-import UserRoles from "@/components/list/UserRoles";
+import UserRolesList from "@/components/list/UserRolesList";
 import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
 import { getInventoriesCategoriesChartData } from "@/server/category";
 import {
@@ -57,7 +57,7 @@ async function InventoryPage() {
           </div>
           <div className="grid grid-cols-1 gap-3 sm:max-md:grid-cols-2">
             {userRoles.map((user) => (
-              <UserRoles key={user.userId} data={user} />
+              <UserRolesList key={user.userId} data={user} />
             ))}
           </div>
         </div>

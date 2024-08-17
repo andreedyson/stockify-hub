@@ -7,7 +7,7 @@ type UserRolesListType = {
   data: currentUserInventoriesRolesType;
 };
 
-function UserRoles({ data }: UserRolesListType) {
+function UserRolesList({ data }: UserRolesListType) {
   return (
     <Link href={`/inventory/${data.inventoryId}`}>
       <article
@@ -37,4 +37,4 @@ function UserRoles({ data }: UserRolesListType) {
   );
 }
 
-export default UserRoles;
+export default UserRolesList;

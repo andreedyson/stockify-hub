@@ -13,6 +13,15 @@ export type InventoriesProductCountType = {
 
 export type LowStockProductsType = Pick<Product, "name" | "stock">;
 
+export type HighestSellingProductsType = {
+  id: string;
+  name: string;
+  stock: number;
+  price: number;
+  inventoryColor: string;
+  transactionCount: number;
+};
+
 export async function getProductById(
   userId: string,
   productId: string,
@@ -248,6 +257,67 @@ export async function getLowStocksProducts(
     });
 
     return result;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function getHighestSellingProducts(
+  userId: string,
+): Promise<HighestSellingProductsType[]> {
+  try {
+    // Search inventories the user is a part of
+    const userInventories = await prisma.inventoryMember.findMany({
+      where: {
+        userId: userId,
+      },
+      select: {
+        inventoryId: true,
+      },
+    });
+
+    // Extract all of the inventory IDs
+    const inventoryIds = userInventories.map((member) => member.inventoryId);
+
+    const products = await prisma.product.findMany({
+      where: {
+        inventoryId: {
+          in: inventoryIds,
+        },
+      },
+      include: {
+        Inventory: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
+        _count: {
+          select: {
+            Transaction: true,
+          },
+        },
+      },
+      take: 5,
+    });
+
+    // Filter product that has transaction count that's greater or equal to 5
+    const filter = products.filter((product) => {
+      return product._count.Transaction >= 5;
+    });
+
+    const results = filter.map((product) => {
+      return {
+        id: product.id,
+        name: product.name,
+        stock: product.stock,
+        price: product.price,
+        inventoryColor: product.Inventory.color as string,
+        transactionCount: product._count.Transaction,
+      };
+    });
+
+    return results;
   } catch (error: any) {
     throw new Error(`${error.message}`);
   }

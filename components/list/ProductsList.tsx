@@ -37,12 +37,13 @@ export type ProductWithCategory = Product & {
 
 type ProductListProps = {
   products: ProductWithCategory[];
+  size?: number;
 };
 
-function ProductsList({ products }: ProductListProps) {
-  const dataPerPage = 8;
+function ProductsList({ products, size }: ProductListProps) {
+  const dataPerPage = 5;
   const [startIndex, setStartIndex] = useState<number>(0);
-  const [endIndex, setEndIndex] = useState<number>(dataPerPage);
+  const [endIndex, setEndIndex] = useState<number>(size || dataPerPage);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [action, setAction] = useState("");
@@ -162,8 +163,8 @@ function ProductsList({ products }: ProductListProps) {
                     startIndex === 0 ? "pointer-events-none opacity-50" : ""
                   }
                   onClick={() => {
-                    setStartIndex(startIndex - dataPerPage);
-                    setEndIndex(endIndex - dataPerPage);
+                    setStartIndex(startIndex - (size || dataPerPage));
+                    setEndIndex(endIndex - (size || dataPerPage));
                   }}
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -180,8 +181,8 @@ function ProductsList({ products }: ProductListProps) {
                       : ""
                   }
                   onClick={() => {
-                    setStartIndex(startIndex + dataPerPage);
-                    setEndIndex(endIndex + dataPerPage);
+                    setStartIndex(startIndex + (size || dataPerPage));
+                    setEndIndex(endIndex + (size || dataPerPage));
                   }}
                 >
                   <ChevronRight className="h-4 w-4" />
