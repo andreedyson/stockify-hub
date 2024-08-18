@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   DropdownMenu,
@@ -11,12 +12,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 
+import { CurrentInventoryMembers } from "@/types/server/inventory";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import EditMemberDialog from "../forms/EditMemberDialog";
 import DeleteMemberDialog from "../forms/DeleteMemberDialog";
-import { CurrentInventoryMembers } from "@/server/inventory";
+import EditMemberDialog from "../forms/EditMemberDialog";
 
 type MemberColumnProps = {
   columnData: CurrentInventoryMembers;

@@ -1,31 +1,29 @@
 import prisma from "@/lib/db";
-import { Category, Product } from "@prisma/client";
+import {
+  HighestSellingProductsType,
+  InventoriesProductCountType,
+  LowStockProductsType,
+  ProductsInUserInventoriesType,
+  ProductsValueType,
+} from "@/types/server/product";
+import { Product } from "@prisma/client";
 
-type ProductsForUserType = Product & {
-  currentUserRole: "USER" | "ADMIN" | "OWNER";
-  userId: string;
-};
+async function getUserInventoryIds(userId: string): Promise<string[]> {
+  // Search inventories the user is a part of
+  const userInventories = await prisma.inventoryMember.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      inventoryId: true,
+    },
+  });
 
-export type InventoriesProductCountType = {
-  Inventory: string;
-  Products: number;
-};
+  // Extract all of the inventory IDs
+  const inventoryIds = userInventories.map((member) => member.inventoryId);
 
-export type LowStockProductsType = Pick<Product, "name" | "stock">;
-
-export type HighestSellingProductsType = {
-  id: string;
-  name: string;
-  stock: number;
-  price: number;
-  inventoryColor: string;
-  transactionCount: number;
-};
-
-export type ProductsValueType = {
-  inventory: string;
-  value: number;
-};
+  return inventoryIds;
+}
 
 export async function getProductById(
   userId: string,
@@ -63,22 +61,11 @@ export async function getProductById(
   }
 }
 
-export async function getProductsForUser(
+export async function getProductsInUserInventories(
   userId: string,
-): Promise<ProductsForUserType[]> {
+): Promise<ProductsInUserInventoriesType[]> {
   try {
-    // Search inventories the user is a part of
-    const userInventories = await prisma.inventoryMember.findMany({
-      where: {
-        userId: userId,
-      },
-      select: {
-        inventoryId: true,
-      },
-    });
-
-    // Extract all of the inventory IDs
-    const inventoryIds = userInventories.map((member) => member.inventoryId);
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const products = await prisma.product.findMany({
       where: {
@@ -126,7 +113,7 @@ export async function getProductsForUser(
 export async function getProductsByInventory(
   userId: string,
   inventoryId: string,
-): Promise<ProductsForUserType[]> {
+): Promise<ProductsInUserInventoriesType[]> {
   try {
     const inventory = await prisma.inventory.findUnique({
       where: {
@@ -183,15 +170,7 @@ export async function getInventoriesProductCount(
   userId: string,
 ): Promise<InventoriesProductCountType[]> {
   try {
-    // Search inventories the user is a part of
-    const userInventories = await prisma.inventoryMember.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-
-    // Extract all of the inventory IDs
-    const inventoryIds = userInventories.map((user) => user.inventoryId);
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const inventoryData = await prisma.inventory.findMany({
       where: {
@@ -206,8 +185,8 @@ export async function getInventoriesProductCount(
 
     const results = inventoryData.map((inventory) => {
       return {
-        Inventory: inventory.name,
-        Products: inventory.products.length,
+        inventory: inventory.name,
+        products: inventory.products.length,
         fill: `var(--color-${inventory.name.slice(0, 3)})`,
       };
     });
@@ -222,18 +201,7 @@ export async function getLowStocksProducts(
   userId: string,
 ): Promise<LowStockProductsType[]> {
   try {
-    // Search inventories the user is a part of
-    const userInventories = await prisma.inventoryMember.findMany({
-      where: {
-        userId: userId,
-      },
-      select: {
-        inventoryId: true,
-      },
-    });
-
-    // Extract all of the inventory IDs
-    const inventoryIds = userInventories.map((member) => member.inventoryId);
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const products = await prisma.product.findMany({
       where: {
@@ -271,18 +239,7 @@ export async function getHighestSellingProducts(
   userId: string,
 ): Promise<HighestSellingProductsType[]> {
   try {
-    // Search inventories the user is a part of
-    const userInventories = await prisma.inventoryMember.findMany({
-      where: {
-        userId: userId,
-      },
-      select: {
-        inventoryId: true,
-      },
-    });
-
-    // Extract all of the inventory IDs
-    const inventoryIds = userInventories.map((member) => member.inventoryId);
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const products = await prisma.product.findMany({
       where: {
@@ -332,15 +289,7 @@ export async function getInventoriesProductsValue(
   userId: string,
 ): Promise<ProductsValueType[]> {
   try {
-    // Search inventories the user is a part of
-    const userInventories = await prisma.inventoryMember.findMany({
-      where: {
-        userId: userId,
-      },
-    });
-
-    // Extract all of the inventory IDs
-    const inventoryIds = userInventories.map((user) => user.inventoryId);
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const inventoryData = await prisma.inventory.findMany({
       where: {

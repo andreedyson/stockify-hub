@@ -10,9 +10,9 @@ import {
   getInventoriesProductCount,
   getInventoriesProductsValue,
   getLowStocksProducts,
-  getProductsForUser,
+  getProductsInUserInventories,
 } from "@/server/product";
-import { ChartColumnDecreasing, ChevronRight, TrendingUp } from "lucide-react";
+import { ChartColumnDecreasing, ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -31,7 +31,7 @@ async function ProductsPage() {
 
   const userId = session.user.id;
 
-  const products = await getProductsForUser(userId);
+  const products = await getProductsInUserInventories(userId);
   const userInventories = await getUserInventories(userId);
   const totalProductsChartData = await getInventoriesProductCount(userId);
   const lowStocksProducts = await getLowStocksProducts(userId);

@@ -1,4 +1,4 @@
-import { getcategoriesByUser } from "@/server/category";
+import { getCategoriesByUser } from "@/server/category";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { userId: string } },
 ) {
   try {
-    const categories = await getcategoriesByUser(params.userId);
+    const categories = await getCategoriesByUser(params.userId);
 
     return NextResponse.json({ results: categories }, { status: 200 });
   } catch (error) {

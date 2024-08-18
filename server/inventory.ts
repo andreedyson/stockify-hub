@@ -1,23 +1,9 @@
-import { Member } from "@/components/tables/members/inventory-members-columns";
 import prisma from "@/lib/db";
-import { Inventory } from "@prisma/client";
-
-type UserInventoriesPromise = Inventory & {
-  memberCount?: number;
-};
-
-export type CurrentInventoryMembers = Member & {
-  currentUserRole: "USER" | "ADMIN" | "OWNER";
-  currentUserEmail: string;
-};
-
-export type currentUserInventoriesRolesType = {
-  userId: string;
-  role: string;
-  inventoryId: string;
-  inventoryName: string;
-  inventoryColor: string;
-};
+import {
+  CurrentInventoryMembers,
+  currentUserInventoriesRolesType,
+  UserInventoriesPromise,
+} from "@/types/server/inventory";
 
 export async function getInventoryById(
   userId: string,
@@ -97,7 +83,7 @@ export async function getUserInventories(
   }
 }
 
-// Table Data for Inventory Details
+// For Table Data Inventory Details
 export async function getCurrentInventoryMembers(
   userId: string,
   inventoryId: string,
@@ -158,6 +144,7 @@ export async function getCurrentInventoryMembers(
   }
 }
 
+// For User Roles List
 export async function currentUserInventoriesRoles(
   userId: string,
 ): Promise<currentUserInventoriesRolesType[]> {

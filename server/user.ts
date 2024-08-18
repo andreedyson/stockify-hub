@@ -1,7 +1,5 @@
 import prisma from "@/lib/db";
-import { User } from "@prisma/client";
-
-type CurrentUserPromise = Omit<User, "id" | "password">;
+import { CurrentUserPromise } from "@/types/server/user";
 
 export async function getCurrentUser(
   userId: string,

@@ -1,22 +1,9 @@
 import prisma from "@/lib/db";
+import {
+  CategoriesByUserType,
+  InventoriesCategoriesChartDataType,
+} from "@/types/server/category";
 import { Category } from "@prisma/client";
-
-export type CategoriesByUserType = Omit<Category, "createdAt" | "updatedAt"> & {
-  inventoryName: string;
-};
-
-export type InventoryCategoriesChartData = {
-  Category: string;
-  Products: number;
-  fill: string;
-};
-
-export type InventoriesCategoriesChartDataType = {
-  inventoryId: string;
-  inventoryName: string;
-  totalCategories: number;
-  chartData: InventoryCategoriesChartData[];
-};
 
 export async function getInventoryCategories(
   inventoryId: string,
@@ -38,7 +25,9 @@ export async function getInventoryCategories(
   }
 }
 
-export async function getTotalCategoryProducts(categoryId: string) {
+export async function getTotalCategoryProducts(
+  categoryId: string,
+): Promise<number> {
   try {
     const product = await prisma.product.findMany({
       where: {
@@ -55,7 +44,7 @@ export async function getTotalCategoryProducts(categoryId: string) {
   }
 }
 
-export async function getcategoriesByUser(
+export async function getCategoriesByUser(
   userId: string,
 ): Promise<CategoriesByUserType[]> {
   try {

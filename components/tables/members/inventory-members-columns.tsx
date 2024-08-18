@@ -3,12 +3,11 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Crown } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { cn, formatDate } from "@/lib/utils";
-import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 import ColumnAction from "@/components/tables/ColumnAction";
-import { CurrentInventoryMembers } from "@/server/inventory";
+import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
+import { cn, formatDate } from "@/lib/utils";
+import { CurrentInventoryMembers } from "@/types/server/inventory";
+import Image from "next/image";
 
 export type Member = {
   id: string;
