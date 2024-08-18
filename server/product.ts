@@ -22,6 +22,11 @@ export type HighestSellingProductsType = {
   transactionCount: number;
 };
 
+export type ProductsValueType = {
+  inventory: string;
+  value: number;
+};
+
 export async function getProductById(
   userId: string,
   productId: string,
@@ -314,6 +319,53 @@ export async function getHighestSellingProducts(
         price: product.price,
         inventoryColor: product.Inventory.color as string,
         transactionCount: product._count.Transaction,
+      };
+    });
+
+    return results;
+  } catch (error: any) {
+    throw new Error(`${error.message}`);
+  }
+}
+
+export async function getInventoriesProductsValue(
+  userId: string,
+): Promise<ProductsValueType[]> {
+  try {
+    // Search inventories the user is a part of
+    const userInventories = await prisma.inventoryMember.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    // Extract all of the inventory IDs
+    const inventoryIds = userInventories.map((user) => user.inventoryId);
+
+    const inventoryData = await prisma.inventory.findMany({
+      where: {
+        id: {
+          in: inventoryIds,
+        },
+      },
+      include: {
+        products: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
+
+    const results = inventoryData.map((inventory) => {
+      const productsPrice = inventory.products.map((product) => product.price);
+      const productsValue = productsPrice.reduce((acc, curr) => {
+        return acc + curr;
+      }, 0);
+
+      return {
+        inventory: inventory.name,
+        value: productsValue,
       };
     });
 

@@ -22,6 +22,7 @@ export function TotalProductsCharts({
     (acc, item) => ({
       ...acc,
       [item.name.slice(0, 3)]: { label: item.name, color: item.color },
+      //TODO: Change return value to lowercase and capitalize here
     }),
     {},
   );

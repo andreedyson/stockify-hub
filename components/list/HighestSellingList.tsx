@@ -7,7 +7,6 @@ type HighestSellingListType = {
 };
 
 function HighestSellingList({ productData }: HighestSellingListType) {
-  // TODO: Add empty state
   return (
     <article
       className="px-4 py-2"

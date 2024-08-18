@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { LowStocksProductsCharts } from "@/components/charts/LowStockProductsCharts";
+import { ProductsValueCharts } from "@/components/charts/ProductsValueCharts";
 import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import HighestSellingList from "@/components/list/HighestSellingList";
 import ProductsList from "@/components/list/ProductsList";
@@ -7,6 +8,7 @@ import { getUserInventories } from "@/server/inventory";
 import {
   getHighestSellingProducts,
   getInventoriesProductCount,
+  getInventoriesProductsValue,
   getLowStocksProducts,
   getProductsForUser,
 } from "@/server/product";
@@ -34,6 +36,7 @@ async function ProductsPage() {
   const totalProductsChartData = await getInventoriesProductCount(userId);
   const lowStocksProducts = await getLowStocksProducts(userId);
   const highestSellingProducts = await getHighestSellingProducts(userId);
+  const productsValue = await getInventoriesProductsValue(userId);
 
   return (
     <section className="space-y-6">
@@ -80,6 +83,7 @@ async function ProductsPage() {
             <h4 className="section-header">Highest Selling</h4>
           </div>
           <div className="space-y-4">
+            {/* TODO: Add empty state */}
             {highestSellingProducts.map((product) => (
               <HighestSellingList key={product.id} productData={product} />
             ))}
@@ -100,9 +104,12 @@ async function ProductsPage() {
             />
           </div>
         </div>
-        <div className="bg-main-card rounded-md p-6">
+        <div className="bg-main-card space-y-4 rounded-md p-6">
           <div>
-            <h4 className="section-header">Product by Category</h4>
+            <h4 className="section-header">Products Value</h4>
+          </div>
+          <div>
+            <ProductsValueCharts productsData={productsValue} />
           </div>
         </div>
       </div>
