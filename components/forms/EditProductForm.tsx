@@ -163,171 +163,166 @@ function EditProductForm({ userId, product }: EditProductProps) {
     }
   }
   return (
-    <div className="flex flex-col gap-4">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 bg-accent p-6"
-        >
-          <div className="section-header">
-            <BackButton className="flex items-center gap-2">
-              <h4>Edit a Product</h4>
-            </BackButton>
-          </div>
-          <div className="max-w-[650px] space-y-4">
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
-                  <FormLabel className="rounded-md">
-                    <div className="space-y-3">
-                      <p>Product Image</p>
-                      {field.value ? (
-                        <Image
-                          src={field.value}
-                          alt="Product Image"
-                          width={150}
-                          height={150}
-                          priority
-                          className="size-32 object-cover"
-                        />
-                      ) : (
-                        <Image
-                          src={"/assets/placeholder-image.svg"}
-                          alt="Product Image"
-                          width={150}
-                          height={150}
-                          priority
-                          className="h-24 w-32 object-cover"
-                        />
-                      )}
-                    </div>
-                  </FormLabel>
-                  <FormControl className="text-base-semibold flex-1 text-gray-700 dark:text-gray-200">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      placeholder="Upload a photo"
-                      className="account-form_image-input"
-                      onChange={(e) => handleImage(e, field.onChange)}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="ex: Stuff 1"
-                      autoComplete="off"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="categoryId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a category for this product" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {categories.results.map((category) => (
-                          <SelectItem
-                            key={category.id}
-                            value={category.id}
-                            className="font-semibold"
-                          >
-                            {category.name}
-                            <span className="font-light">
-                              {` (${category.inventoryName}) `}
-                            </span>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock</FormLabel>
-                  <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea rows={4} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex gap-2">
-              <Link
-                href={"/products"}
-                className="w-full border-card-foreground"
-              >
-                <Button variant={"outline"} type="button" className="w-full">
-                  Cancel
-                </Button>
-              </Link>
-              <Button
-                type="submit"
-                disabled={submitting}
-                className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
-              >
-                {submitting ? "Editing..." : "Edit"}
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6 rounded-md bg-accent p-6"
+      >
+        <div className="section-header">
+          <BackButton className="flex items-center gap-2">
+            <h4>Edit a Product</h4>
+          </BackButton>
+        </div>
+        <div className="max-w-[500px] space-y-4">
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-4">
+                <FormLabel className="rounded-md">
+                  <div className="space-y-3">
+                    <p>Product Image</p>
+                    {field.value ? (
+                      <Image
+                        src={field.value}
+                        alt="Product Image"
+                        width={150}
+                        height={150}
+                        priority
+                        className="size-32 object-cover"
+                      />
+                    ) : (
+                      <Image
+                        src={"/assets/placeholder-image.svg"}
+                        alt="Product Image"
+                        width={150}
+                        height={150}
+                        priority
+                        className="h-24 w-32 object-cover"
+                      />
+                    )}
+                  </div>
+                </FormLabel>
+                <FormControl className="text-base-semibold flex-1 text-gray-700 dark:text-gray-200">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    placeholder="Upload a photo"
+                    className="account-form_image-input"
+                    onChange={(e) => handleImage(e, field.onChange)}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="ex: Stuff 1"
+                    autoComplete="off"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category for this product" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.results.map((category) => (
+                        <SelectItem
+                          key={category.id}
+                          value={category.id}
+                          className="font-semibold"
+                        >
+                          {category.name}
+                          <span className="font-light">
+                            {` (${category.inventoryName}) `}
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Price</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="stock"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Stock</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea rows={4} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex gap-2">
+            <Link href={"/products"} className="w-full border-card-foreground">
+              <Button variant={"outline"} type="button" className="w-full">
+                Cancel
               </Button>
-            </div>
+            </Link>
+            <Button
+              type="submit"
+              disabled={submitting}
+              className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
+            >
+              {submitting ? "Editing..." : "Edit"}
+            </Button>
           </div>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 }
 

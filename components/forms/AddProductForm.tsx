@@ -160,7 +160,7 @@ function AddProductForm({ userId }: { userId: string }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 bg-accent p-6"
+        className="space-y-6 rounded-md bg-accent p-6"
       >
         <div className="section-header">
           <BackButton className="flex items-center gap-2">

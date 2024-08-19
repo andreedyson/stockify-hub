@@ -51,7 +51,7 @@ model Product {
 }
 
 model Transaction {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(uuid())
   productId  String
   quantity   Int
   totalPrice Float

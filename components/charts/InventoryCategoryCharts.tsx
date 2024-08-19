@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { InventoryCategoriesChartData } from "@/server/category";
+import { InventoryCategoriesChartData } from "@/types/server/category";
 import React from "react";
 
 type InventoryCategoryChartsType = {

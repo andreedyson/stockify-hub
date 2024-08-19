@@ -15,18 +15,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { EditProfileSchema } from "@/types/validations";
-import { ChangeEvent, useEffect, useState } from "react";
 import { BASE_URL } from "@/constants";
-import { useToast } from "../ui/use-toast";
+import { useUser } from "@/hooks/useUserData";
+import { useUploadThing } from "@/lib/uploadthing";
+import { formatDate, isBase64Image } from "@/lib/utils";
+import { EditProfileSchema } from "@/types/validations";
+import { Mail, UserRound } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { formatDate, isBase64Image } from "@/lib/utils";
-import { useUploadThing } from "@/lib/uploadthing";
-import { Mail, UserRound } from "lucide-react";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useSWRConfig } from "swr";
 import Loader from "../ui/loader";
-import useSWR, { useSWRConfig } from "swr";
-import { useUser } from "@/hooks/useUserData";
+import { useToast } from "../ui/use-toast";
 
 type EditProfileProps = {
   userId: string;
@@ -163,7 +163,7 @@ function EditProfileForm({ userId }: EditProfileProps) {
             control={form.control}
             name="profile_photo"
             render={({ field }) => (
-              <FormItem className="flex items-center gap-4">
+              <FormItem className="flex max-w-[500px] items-center gap-4">
                 <FormLabel className="rounded-full border-2 border-input">
                   {field.value ? (
                     <Image
@@ -204,15 +204,15 @@ function EditProfileForm({ userId }: EditProfileProps) {
                 Personal Info
               </h3>
               <div className="flex w-full flex-col gap-4 md:text-base">
-                <div className="space-y-1 font-semibold md:space-y-2">
+                <div className="space-y-1 font-semibold">
                   <h4 className="desc-2">Full Name</h4>
                   <p className="text-sm md:text-base">{data.user.fullname}</p>
                 </div>
-                <div className="space-y-1 font-semibold md:space-y-2">
+                <div className="space-y-1 font-semibold">
                   <h4 className="desc-2">Email</h4>
                   <p className="text-sm md:text-base">{data.user.email}</p>
                 </div>
-                <div className="space-y-1 font-semibold md:space-y-2">
+                <div className="space-y-1 font-semibold">
                   <h4 className="desc-2 line-clamp-1">Acccount Created</h4>
                   <p className="text-sm md:text-base">
                     {formatDate(new Date(data.user.createdAt))}

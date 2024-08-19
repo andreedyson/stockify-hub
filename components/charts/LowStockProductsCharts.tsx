@@ -10,7 +10,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { LowStockProductsType } from "@/server/product";
+import { LowStockProductsType } from "@/types/server/product";
 
 type LowStockProductsChartsType = {
   productsData: LowStockProductsType[];

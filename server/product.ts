@@ -85,6 +85,9 @@ export async function getProductsInUserInventories(
           },
         },
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
 
     const results = await Promise.all(

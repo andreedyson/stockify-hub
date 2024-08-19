@@ -2,7 +2,7 @@ import { Skeleton } from "../ui/skeleton";
 
 function ProductFormSkeletons() {
   return (
-    <div className="bg-accent p-6">
+    <div className="rounded-md bg-accent p-6">
       <div className="space-y-6">
         <div className="section-header">
           <Skeleton className="h-6 w-40" />
