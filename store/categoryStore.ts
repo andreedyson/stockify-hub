@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/constants";
-import { CategoriesByUserType } from "@/server/category";
+import { CategoriesByUserType } from "@/types/server/category";
 import { create } from "zustand";
 
 type InventoryCategoryStore = {

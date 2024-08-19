@@ -1,9 +1,5 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -20,19 +17,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { productSchema } from "@/types/validations";
-import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import { useCategoryStore } from "@/store/categoryStore";
-import { Textarea } from "../ui/textarea";
+import { productSchema } from "@/types/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import BackButton from "../navigations/BackButton";
+import ProductFormSkeletons from "../skeletons/ProductFormSkeletons";
+import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
 type EditProductProps = {
   userId: string;
@@ -70,7 +71,12 @@ function EditProductForm({ userId, product }: EditProductProps) {
     fetchCategories(userId);
   }, [fetchCategories, userId]);
 
-  if (isLoading) return <div></div>;
+  if (isLoading)
+    return (
+      <>
+        <ProductFormSkeletons />
+      </>
+    );
   if (error) return <div>{error}</div>;
 
   const handleImage = (
