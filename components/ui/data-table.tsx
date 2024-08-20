@@ -32,6 +32,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   className?: string;
   dataPerPage?: number;
+  showSearch?: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -39,6 +40,7 @@ export function DataTable<TData, TValue>({
   data,
   className,
   dataPerPage,
+  showSearch,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -60,31 +62,35 @@ export function DataTable<TData, TValue>({
     },
     initialState: {
       pagination: {
-        pageSize: dataPerPage,
+        pageSize: dataPerPage || 10,
       },
     },
   });
 
   return (
-    <div>
+    <div className="space-y-4">
       <div className="flex flex-col justify-between md:flex-row md:items-center">
         <div>
           <DataTableViewOptions table={table} />
         </div>
-        <div className="flex flex-col justify-end gap-2 py-2 md:flex-row md:items-center">
-          <Input
-            placeholder="Filter member..."
-            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("name")?.setFilterValue(event.target.value)
-            }
-            className="w-[250px] pl-4"
-          />
-        </div>
+        {showSearch && (
+          <div className="flex flex-col justify-end gap-2 py-2 md:flex-row md:items-center">
+            <Input
+              placeholder="Filter member..."
+              value={
+                (table.getColumn("name")?.getFilterValue() as string) ?? ""
+              }
+              onChange={(event) =>
+                table.getColumn("name")?.setFilterValue(event.target.value)
+              }
+              className="w-[250px] pl-4"
+            />
+          </div>
+        )}
       </div>
-      <div className={cn("rounded-md border", className)}>
-        <Table>
-          <TableHeader>
+      <div className={cn("overflow-hidden rounded-lg border", className)}>
+        <Table className="rounded-lg">
+          <TableHeader className="rounded-lg bg-muted">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -108,7 +114,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="text-xs md:text-sm"
+                  className="border-none text-xs md:text-sm"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

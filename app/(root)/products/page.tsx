@@ -108,9 +108,8 @@ async function ProductsPage() {
           <div>
             <h4 className="section-header">Products Value</h4>
           </div>
-          <div>
-            <ProductsValueCharts productsData={productsValue} />
-          </div>
+
+          <ProductsValueCharts productsData={productsValue} />
         </div>
       </div>
     </section>

@@ -1,12 +1,12 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { Crown } from "lucide-react";
-
 import ColumnAction from "@/components/tables/ColumnAction";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 import { cn, formatDate } from "@/lib/utils";
 import { CurrentInventoryMembers } from "@/types/server/inventory";
+import { userRole } from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import { Crown } from "lucide-react";
 import Image from "next/image";
 
 export type Member = {
@@ -14,7 +14,7 @@ export type Member = {
   photo: string;
   name: string;
   email: string;
-  role: "USER" | "ADMIN" | "OWNER";
+  role: userRole;
   joined: Date;
   userId?: string;
   inventoryId?: string;

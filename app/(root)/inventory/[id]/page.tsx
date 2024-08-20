@@ -132,6 +132,7 @@ async function InventoryDetailsPage({
               data={tableData}
               className="border-none"
               dataPerPage={4}
+              showSearch
             />
           </div>
         </div>

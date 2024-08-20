@@ -7,15 +7,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { Category } from "@prisma/client";
-import EditCategoryDialog from "../forms/EditCategoryDialog";
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import DeleteCategoryDialog from "../forms/DeleteCategoryDialog";
+import EditCategoryDialog from "../forms/EditCategoryDialog";
 
 type CategoryActionProps = {
   category: Category;
@@ -32,7 +30,7 @@ function CategoryAction({ category }: CategoryActionProps) {
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger asChild className="cursor-pointer">
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>

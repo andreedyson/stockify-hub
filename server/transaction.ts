@@ -1,5 +1,8 @@
 import prisma from "@/lib/db";
-import { TransactionsCount } from "@/types/server/transaction";
+import {
+  TransactionsCountType,
+  TransactionsTableType,
+} from "@/types/server/transaction";
 
 export async function getTotalTransactionsByStatus() {
   try {
@@ -10,10 +13,10 @@ export async function getTotalTransactionsByStatus() {
       },
     });
 
-    const result = totalTransactionByStatus.reduce<TransactionsCount>(
+    const result = totalTransactionByStatus.reduce<TransactionsCountType>(
       (acc, item) => {
         acc[
-          `total${item.status.charAt(0) + item.status.slice(1).toLowerCase()}` as keyof TransactionsCount
+          `total${item.status.charAt(0) + item.status.slice(1).toLowerCase()}` as keyof TransactionsCountType
         ] = item._count.id;
         return acc;
       },
@@ -21,6 +24,49 @@ export async function getTotalTransactionsByStatus() {
     );
 
     return result;
+  } catch (error: any) {
+    throw new Error(error.message || "An error occured");
+  }
+}
+
+export async function getTransactionTableData(
+  userId: string,
+): Promise<TransactionsTableType[]> {
+  try {
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId,
+              },
+            },
+          },
+        },
+      },
+      include: {
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    const results = transactions.map((transaction) => ({
+      date: transaction.createdAt,
+      status: transaction.status,
+      product: transaction.product.name,
+      quantity: transaction.quantity,
+      total: transaction.totalPrice,
+    }));
+
+    return results;
   } catch (error: any) {
     throw new Error(error.message || "An error occured");
   }
