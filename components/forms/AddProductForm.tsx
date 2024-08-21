@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BASE_URL } from "@/constants";
-import { getCategories } from "@/data/category";
+import { getCategories } from "@/data/category-data";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import { UserCategories } from "@/types/server/category";

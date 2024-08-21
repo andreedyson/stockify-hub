@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
     }
 
     const response = transactionSchema.safeParse({
+      productId,
       quantity,
       date,
       status,
@@ -28,9 +29,16 @@ export async function POST(req: NextRequest) {
     if (!response.success) {
       const { errors } = response.error;
 
-      console.log(errors);
-
       return NextResponse.json({ message: errors[0].message }, { status: 400 });
+    }
+
+    if (product.stock === 0) {
+      return NextResponse.json(
+        {
+          message: "Item is out of stock",
+        },
+        { status: 422 },
+      );
     }
 
     if (quantity > product.stock) {

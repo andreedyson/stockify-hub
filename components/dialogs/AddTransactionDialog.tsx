@@ -25,6 +25,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -33,20 +38,35 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { BASE_URL, transactionStatus } from "@/constants";
 import { transactionSchema } from "@/types/validations";
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight, CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/data/product-data";
+import { UserProducts } from "@/types/server/product";
+import { cn } from "@/lib/utils";
+import { Calendar } from "../ui/calendar";
+import { format } from "date-fns";
 
 type TransactionFormProps = {
-  inventoryId?: string;
+  userId: string;
 };
 
-function AddTransactionDialog({ inventoryId }: TransactionFormProps) {
+function AddTransactionDialog({ userId }: TransactionFormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
   const { toast } = useToast();
+
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery<UserProducts>({
+    queryFn: () => getProducts(userId),
+    queryKey: ["product"],
+  });
 
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
@@ -68,10 +88,10 @@ function AddTransactionDialog({ inventoryId }: TransactionFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          productId: values.productId,
           quantity: values.quantity,
           status: values.status,
           date: values.date,
-          // TODO: Add productId
         }),
       });
 
@@ -100,6 +120,7 @@ function AddTransactionDialog({ inventoryId }: TransactionFormProps) {
       throw new Error(error);
     }
   }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -120,6 +141,84 @@ function AddTransactionDialog({ inventoryId }: TransactionFormProps) {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="productId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Product</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a product for this transaction" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {products?.results.map((product) => (
+                          <SelectItem
+                            key={product.id}
+                            value={product.id}
+                            className="w-full font-semibold"
+                          >
+                            <div className="flex w-full items-center gap-2">
+                              <p>{product.name}</p>
+                              <p>({product.Inventory?.name})</p>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel className="w-fit">Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "bg-input text-left font-normal",
+                            !field.value && "text-muted-foreground",
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("2019-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="quantity"

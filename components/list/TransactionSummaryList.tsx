@@ -1,13 +1,13 @@
-import { TransactionsCount } from "@/types/server/transaction";
+import { TransactionsCountType } from "@/types/server/transaction";
 
 type TransactionSummaryListType = {
-  total: TransactionsCount;
+  total: TransactionsCountType;
 };
 
 function TransactionSummaryList({
   total: {
     totalPending = 0,
-    totalInProgress = 0,
+    totalIn_progress = 0,
     totalCompleted = 0,
     totalCancelled = 0,
   },
@@ -28,7 +28,7 @@ function TransactionSummaryList({
         </div>
         <div className="border-l-[3px] border-blue-500">
           <p className="pl-3 text-3xl font-bold leading-none">
-            {totalInProgress}
+            {totalIn_progress}
           </p>
         </div>
       </div>

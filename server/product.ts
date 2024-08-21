@@ -101,7 +101,6 @@ export async function getProductsInUserInventories(
 
         return {
           ...product,
-          userId: user?.id as string,
           currentUserRole: user?.role ?? "USER",
         };
       }),

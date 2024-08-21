@@ -31,7 +31,6 @@ import DeleteProductDialog from "../dialogs/DeleteProductDialog";
 export type ProductWithCategory = Product & {
   Category?: Category;
   Inventory?: Inventory;
-  userId: string;
   currentUserRole: "USER" | "ADMIN" | "OWNER";
 };
 

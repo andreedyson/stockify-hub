@@ -26,7 +26,7 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-4">
         <div className="relative flex flex-1 items-center">
-          <SearchIcon className="absolute left-3 z-50" />
+          <SearchIcon className="absolute left-3 z-30" />
           <Input
             placeholder="Search inventory..."
             value={searchTerm}

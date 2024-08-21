@@ -30,7 +30,7 @@ async function TransactionsPage() {
   return (
     <section className="space-y-6">
       <div>
-        <AddTransactionDialog />
+        <AddTransactionDialog userId={userId} />
       </div>
       <div className="grid grid-cols-1">
         <div className="bg-main-card space-y-4 rounded-md p-6 md:col-span-1 lg:col-span-9">

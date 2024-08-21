@@ -14,7 +14,7 @@ function Header() {
   const router = useRouter();
 
   return (
-    <div className="sticky top-6 z-[100] hidden w-full items-center justify-between rounded-md border-2 bg-white p-3 shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:flex">
+    <div className="sticky top-6 z-[50] hidden w-full items-center justify-between rounded-md border-2 bg-white p-3 shadow-md shadow-accent/60 dark:bg-accent dark:shadow-white/5 lg:flex">
       <div className="flex items-center gap-2">
         {pathname.split("/").length >= 3 && (
           <ArrowLeft

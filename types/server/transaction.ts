@@ -2,7 +2,7 @@ import { Status } from "@prisma/client";
 
 export type TransactionsCountType = {
   totalPending?: number;
-  totalInProgress?: number;
+  totalIn_progress?: number;
   totalCompleted?: number;
   totalCancelled?: number;
 };

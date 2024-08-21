@@ -40,7 +40,9 @@ function StatusBadge({ status }: { status: Status }) {
           <Ban size={20} />
         )}
       </div>
-      <p className="text-xs font-semibold">{status.split("_").join(" ")}</p>
+      <p className="line-clamp-1 text-[10px] font-semibold md:text-xs">
+        {status.split("_").join(" ")}
+      </p>
     </div>
   );
 }

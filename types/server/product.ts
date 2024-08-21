@@ -1,8 +1,8 @@
-import { Product } from "@prisma/client";
+import { Inventory, Product } from "@prisma/client";
 
 export type ProductsInUserInventoriesType = Product & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
-  userId: string;
+  Inventory?: Pick<Inventory, "name">;
 };
 
 export type InventoriesProductCountType = {
@@ -24,4 +24,8 @@ export type HighestSellingProductsType = {
 export type ProductsValueType = {
   inventory: string;
   value: number;
+};
+
+export type UserProducts = {
+  results: ProductsInUserInventoriesType[];
 };
