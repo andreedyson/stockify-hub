@@ -12,8 +12,8 @@ import {
 
 import { Category } from "@prisma/client";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import DeleteCategoryDialog from "../forms/DeleteCategoryDialog";
-import EditCategoryDialog from "../forms/EditCategoryDialog";
+import DeleteCategoryDialog from "../dialogs/DeleteCategoryDialog";
+import EditCategoryDialog from "../dialogs/EditCategoryDialog";
 
 type CategoryActionProps = {
   category: Category;

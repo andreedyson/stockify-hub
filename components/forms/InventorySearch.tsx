@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState, useMemo } from "react";
 import InventoryCard from "../cards/InventoryCard";
 import { Input } from "../ui/input";
-import AddInventoryDialog from "./AddInventoryDialog";
+import AddInventoryDialog from "../dialogs/AddInventoryDialog";
 
 type InventorySearchProps = {
   userId: string;

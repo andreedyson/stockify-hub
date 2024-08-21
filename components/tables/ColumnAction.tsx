@@ -15,8 +15,8 @@ import {
 
 import { CurrentInventoryMembers } from "@/types/server/inventory";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import DeleteMemberDialog from "../forms/DeleteMemberDialog";
-import EditMemberDialog from "../forms/EditMemberDialog";
+import DeleteMemberDialog from "../dialogs/DeleteMemberDialog";
+import EditMemberDialog from "../dialogs/EditMemberDialog";
 
 type MemberColumnProps = {
   columnData: CurrentInventoryMembers;

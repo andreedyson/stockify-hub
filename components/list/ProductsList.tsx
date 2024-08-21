@@ -26,7 +26,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
-import DeleteProductDialog from "../forms/DeleteProductDialog";
+import DeleteProductDialog from "../dialogs/DeleteProductDialog";
 
 export type ProductWithCategory = Product & {
   Category?: Category;

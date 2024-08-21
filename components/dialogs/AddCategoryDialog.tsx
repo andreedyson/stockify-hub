@@ -1,9 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,13 +18,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Input } from "@/components/ui/input";
+import { BASE_URL } from "@/constants";
 import { categorySchema } from "@/types/validations";
+import { Layers3 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import { BASE_URL } from "@/constants";
-import { Layers3 } from "lucide-react";
 
 type CategoryProps = {
   inventoryId: string;

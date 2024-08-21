@@ -1,8 +1,8 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { InventoryMemberColumns as columns } from "@/components//tables/members/inventory-members-columns";
-import AddCategoryDialog from "@/components/forms/AddCategoryDialog";
-import AddMemberDialog from "@/components/forms/AddMemberDialog";
-import EditInventoryForm from "@/components/forms/EditInventoryForm";
+import AddCategoryDialog from "@/components/dialogs/AddCategoryDialog";
+import AddMemberDialog from "@/components/dialogs/AddMemberDialog";
+import EditInventoryForm from "@/components/dialogs/EditInventoryForm";
 import CategoryList from "@/components/list/CategoryList";
 import ProductsList from "@/components/list/ProductsList";
 import BackButton from "@/components/navigations/BackButton";
