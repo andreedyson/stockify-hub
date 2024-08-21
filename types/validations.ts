@@ -1,3 +1,4 @@
+import { Status } from "@prisma/client";
 import { z } from "zod";
 
 export const registerSchema = z.object({
@@ -60,4 +61,12 @@ export const categorySchema = z.object({
     .string()
     .min(2, { message: "Category name should be atleast 2 characters." })
     .max(50, { message: "Category name should be less than 50 characters." }),
+});
+
+export const transactionSchema = z.object({
+  quantity: z.coerce
+    .number()
+    .min(1, { message: "Stock should be more than 0" }),
+  date: z.coerce.date(),
+  status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]),
 });

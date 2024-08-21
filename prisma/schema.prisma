@@ -56,6 +56,7 @@ model Transaction {
   quantity   Int
   totalPrice Float
   status     Status
+  date       DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

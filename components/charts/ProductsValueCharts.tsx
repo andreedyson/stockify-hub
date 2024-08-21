@@ -64,7 +64,10 @@ export function ProductsValueCharts({ productsData }: ProductsValueChartsType) {
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
           />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent indicator="dashed" />}
+          />
           <Line
             dataKey="value"
             type="natural"

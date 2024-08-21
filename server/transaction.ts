@@ -54,12 +54,12 @@ export async function getTransactionTableData(
         },
       },
       orderBy: {
-        createdAt: "asc",
+        date: "asc",
       },
     });
 
     const results = transactions.map((transaction) => ({
-      date: transaction.createdAt,
+      date: transaction.date,
       status: transaction.status,
       product: transaction.product.name,
       quantity: transaction.quantity,
