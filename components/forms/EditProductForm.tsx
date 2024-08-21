@@ -18,16 +18,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BASE_URL } from "@/constants";
+import { getCategories } from "@/data/category";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
-import { useCategoryStore } from "@/store/categoryStore";
+import { UserCategories } from "@/types/server/category";
 import { productSchema } from "@/types/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import BackButton from "../navigations/BackButton";
@@ -64,20 +66,10 @@ function EditProductForm({ userId, product }: EditProductProps) {
     data: categories,
     isLoading,
     error,
-    fetchCategories,
-  } = useCategoryStore();
-
-  useEffect(() => {
-    fetchCategories(userId);
-  }, [fetchCategories, userId]);
-
-  if (isLoading)
-    return (
-      <>
-        <ProductFormSkeletons />
-      </>
-    );
-  if (error) return <div>{error}</div>;
+  } = useQuery<UserCategories>({
+    queryFn: () => getCategories(userId),
+    queryKey: ["category"],
+  });
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
@@ -116,7 +108,7 @@ function EditProductForm({ userId, product }: EditProductProps) {
         }
       }
 
-      const inventoryId = categories.results.find(
+      const inventoryId = categories?.results.find(
         (category) => category.id === values.categoryId,
       )?.inventoryId;
 
@@ -162,6 +154,14 @@ function EditProductForm({ userId, product }: EditProductProps) {
       throw new Error(error);
     }
   }
+
+  if (isLoading)
+    return (
+      <>
+        <ProductFormSkeletons />
+      </>
+    );
+  if (error) return <div>{error.message}</div>;
   return (
     <Form {...form}>
       <form
@@ -249,7 +249,7 @@ function EditProductForm({ userId, product }: EditProductProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.results.map((category) => (
+                      {categories?.results.map((category) => (
                         <SelectItem
                           key={category.id}
                           value={category.id}

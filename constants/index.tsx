@@ -37,3 +37,22 @@ export const sidebarLinks = [
 ];
 
 export const userRole = [{ name: "USER" }, { name: "ADMIN" }];
+
+export const transactionStatus = [
+  {
+    name: "Pending",
+    value: "PENDING",
+  },
+  {
+    name: "In Progress",
+    value: "IN_PROGRESS",
+  },
+  {
+    name: "Completed",
+    value: "COMPLETED",
+  },
+  {
+    name: "Cancelled",
+    value: "CANCELLED",
+  },
+];

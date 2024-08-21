@@ -64,6 +64,7 @@ export const categorySchema = z.object({
 });
 
 export const transactionSchema = z.object({
+  productId: z.string().min(1, { message: "You must select a product" }),
   quantity: z.coerce
     .number()
     .min(1, { message: "Stock should be more than 0" }),

@@ -21,7 +21,7 @@ function InventoryCard({ inventoryData }: InventoryCardProps) {
             width={0}
             alt="Card Decor"
             priority
-            className="h-[90px] w-[150px]"
+            className="h-[90px] w-[150px] invert dark:invert-0"
           />
         </div>
         <div className="flex flex-col gap-5">

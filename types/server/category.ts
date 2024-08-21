@@ -16,3 +16,7 @@ export type InventoriesCategoriesChartDataType = {
   totalCategories: number;
   chartData: InventoryCategoriesChartData[];
 };
+
+export type UserCategories = {
+  results: CategoriesByUserType[];
+};

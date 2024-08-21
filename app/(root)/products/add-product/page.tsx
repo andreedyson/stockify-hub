@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import AddProductForm from "@/components/dialogs/AddProductForm";
+import AddProductForm from "@/components/forms/AddProductForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

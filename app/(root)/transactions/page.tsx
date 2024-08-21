@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog";
 import TransactionSummaryList from "@/components/list/TransactionSummaryList";
 import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
 import { DataTable } from "@/components/ui/data-table";
@@ -28,7 +29,9 @@ async function TransactionsPage() {
 
   return (
     <section className="space-y-6">
-      <div></div>
+      <div>
+        <AddTransactionDialog />
+      </div>
       <div className="grid grid-cols-1">
         <div className="bg-main-card space-y-4 rounded-md p-6 md:col-span-1 lg:col-span-9">
           <div>

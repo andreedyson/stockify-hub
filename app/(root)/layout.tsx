@@ -5,6 +5,7 @@ import Sidebar from "@/components/navigations/Sidebar";
 import Header from "@/components/navigations/Header";
 import MobileNav from "@/components/navigations/MobileNav";
 import { ThemeProvider } from "@/components/theme-provider";
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +29,7 @@ export default function DashboardLayout({
             <MobileNav />
             <div className="py-6 max-md:px-4">
               <ThemeProvider attribute="class" defaultTheme="dark">
-                {children}
+                <ReactQueryProvider>{children}</ReactQueryProvider>
               </ThemeProvider>
             </div>
           </div>
