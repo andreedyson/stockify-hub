@@ -13,9 +13,13 @@ import { BASE_URL } from "@/constants";
 
 type DeleteProductDialog = {
   productId: string;
+  onSubmitSuccess: () => void;
 };
 
-function DeleteProductDialog({ productId }: DeleteProductDialog) {
+function DeleteProductDialog({
+  productId,
+  onSubmitSuccess,
+}: DeleteProductDialog) {
   const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
@@ -49,6 +53,7 @@ function DeleteProductDialog({ productId }: DeleteProductDialog) {
           description: data.message,
           variant: "success",
         });
+        onSubmitSuccess();
         router.refresh();
       }
     } catch (error: any) {
@@ -65,7 +70,9 @@ function DeleteProductDialog({ productId }: DeleteProductDialog) {
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="justify-end">
-        <DialogClose className="w-[100px] rounded-sm">Cancel</DialogClose>
+        <DialogClose className="w-[100px] rounded-sm underline">
+          Cancel
+        </DialogClose>
         <Button
           disabled={submitting}
           onClick={handleDelete}

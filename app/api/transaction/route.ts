@@ -78,7 +78,6 @@ export async function POST(req: NextRequest) {
       { status: 200 },
     );
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ message: `${error}` }, { status: 500 });
   }
 }
@@ -114,6 +113,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const response = transactionSchema.safeParse({
+      productId,
       quantity,
       date,
       status,
@@ -148,11 +148,28 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const totalPrice = quantity * product.price;
-    const qtyDiff = quantity - transaction.quantity;
+    // Current edited status is not Cancelled and changed to Cancelled,
+    // or the product changes, increase back the transaction product stock
+    if (
+      (transaction.status !== "CANCELLED" && status === "CANCELLED") ||
+      transaction.productId !== productId
+    ) {
+      await prisma.product.update({
+        where: {
+          id: transaction.productId,
+        },
+        data: {
+          stock: { increment: transaction.quantity },
+        },
+      });
+    }
 
-    // Current edited status is Cancelled and changed to other, decrement the product stock
-    if (transaction.status === "CANCELLED" && status !== "CANCELLED") {
+    // Current edited status is Cancelled and changed to other,
+    // or the product changes, decrease the new product stock
+    if (
+      (transaction.status === "CANCELLED" && status !== "CANCELLED") ||
+      transaction.productId !== productId
+    ) {
       await prisma.product.update({
         where: {
           id: productId,
@@ -163,17 +180,8 @@ export async function PUT(req: NextRequest) {
       });
     }
 
-    // Current edited status is not Cancelled and changed to Cancelled, add back the product stock
-    if (transaction.status !== "CANCELLED" && status === "CANCELLED") {
-      await prisma.product.update({
-        where: {
-          id: productId,
-        },
-        data: {
-          stock: { increment: transaction.quantity },
-        },
-      });
-    }
+    const totalPrice = quantity * product.price;
+    const qtyDiff = quantity - transaction.quantity;
 
     if (qtyDiff !== 0 && status !== "CANCELLED") {
       await prisma.product.update({

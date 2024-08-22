@@ -13,21 +13,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { CurrentInventoryMembers } from "@/types/server/inventory";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import DeleteMemberDialog from "../dialogs/DeleteMemberDialog";
-import EditMemberDialog from "../dialogs/EditMemberDialog";
+import { TransactionsTableType } from "@/types/server/transaction";
+import EditTransactionDialog from "../dialogs/EditTransactionDialog";
+import { useRouter } from "next/navigation";
+import DeleteTransactionDialog from "../dialogs/DeleteTransactionDialog";
 
-type MemberColumnProps = {
-  columnData: CurrentInventoryMembers;
+type TransactionColumnActionType = {
+  columnData: TransactionsTableType;
 };
 
-function ColumnAction({ columnData }: MemberColumnProps) {
+function TransactionColumnAction({ columnData }: TransactionColumnActionType) {
   const [openDialog, setOpenDialog] = useState(false);
   const [action, setAction] = useState("");
 
+  const router = useRouter();
+
   const handleSubmitSuccess = () => {
     setOpenDialog(false);
+    router.refresh();
   };
 
   return (
@@ -42,10 +46,10 @@ function ColumnAction({ columnData }: MemberColumnProps) {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {columnData.currentUserRole === "OWNER" && (
+          {columnData.currentUserRole !== "USER" && (
             <DialogTrigger asChild onClick={() => setAction("edit")}>
               <DropdownMenuItem className="flex items-center gap-2">
-                <Pencil className="h-4 w-4" /> Edit Member
+                <Pencil className="h-4 w-4" /> Edit Transaction
               </DropdownMenuItem>
             </DialogTrigger>
           )}
@@ -53,7 +57,7 @@ function ColumnAction({ columnData }: MemberColumnProps) {
             <DialogTrigger asChild onClick={() => setAction("delete")}>
               <DropdownMenuItem className="flex items-center gap-2">
                 <Trash2 className="h-4 w-4" color="red" />
-                Delete Member
+                Delete Transaction
               </DropdownMenuItem>
             </DialogTrigger>
           )}
@@ -61,13 +65,13 @@ function ColumnAction({ columnData }: MemberColumnProps) {
       </DropdownMenu>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
         {action === "delete" ? (
-          <DeleteMemberDialog
-            userData={columnData}
+          <DeleteTransactionDialog
+            transactionData={columnData}
             onSubmitSuccess={handleSubmitSuccess}
           />
         ) : (
-          <EditMemberDialog
-            userData={columnData}
+          <EditTransactionDialog
+            transactionData={columnData}
             onSubmitSuccess={handleSubmitSuccess}
           />
         )}
@@ -76,4 +80,4 @@ function ColumnAction({ columnData }: MemberColumnProps) {
   );
 }
 
-export default ColumnAction;
+export default TransactionColumnAction;

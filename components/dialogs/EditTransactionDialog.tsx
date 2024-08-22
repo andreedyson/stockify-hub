@@ -2,13 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -38,44 +36,49 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { BASE_URL, transactionStatus } from "@/constants";
 import { transactionSchema } from "@/types/validations";
-import { ArrowLeftRight, CalendarIcon } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getProducts } from "@/data/product-data";
 import { UserProducts } from "@/types/server/product";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
-import { Skeleton } from "../ui/skeleton";
+import { TransactionsTableType } from "@/types/server/transaction";
 
 type TransactionFormProps = {
-  userId: string;
+  transactionData: TransactionsTableType;
+  onSubmitSuccess: () => void;
 };
 
-function AddTransactionDialog({ userId }: TransactionFormProps) {
+function EditTransactionDialog({
+  transactionData,
+  onSubmitSuccess,
+}: TransactionFormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
 
   const router = useRouter();
   const { toast } = useToast();
+
+  const queryClient = useQueryClient();
 
   const {
     data: products,
     isLoading,
     error,
   } = useQuery<UserProducts>({
-    queryFn: () => getProducts(userId),
     queryKey: ["product"],
+    queryFn: () => getProducts(transactionData.userId),
   });
 
   const form = useForm<z.infer<typeof transactionSchema>>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      productId: "",
-      quantity: 0,
-      date: new Date(),
-      status: undefined,
+      productId: transactionData.productId,
+      quantity: transactionData.quantity,
+      date: new Date(transactionData.date),
+      status: transactionData.status,
     },
   });
 
@@ -84,11 +87,12 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
 
     try {
       const res = await fetch(`${BASE_URL}/api/transaction`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          transactionId: transactionData.id,
           productId: values.productId,
           quantity: values.quantity,
           status: values.status,
@@ -106,15 +110,15 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
           variant: "destructive",
         });
       } else {
-        setOpen(false);
         setSubmitting(false);
         toast({
           title: "Success 🎉",
           description: data.message,
           variant: "success",
         });
-        form.reset();
+        onSubmitSuccess();
         router.refresh();
+        queryClient.invalidateQueries({ queryKey: ["product"] });
       }
     } catch (error: any) {
       setSubmitting(false);
@@ -122,30 +126,17 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
     }
   }
 
-  if (isLoading)
-    return (
-      <div>
-        <Skeleton className="h-10 max-w-[180px] md:w-[150px]" />
-      </div>
-    );
+  if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          size={"sm"}
-          className="flex items-center gap-2 bg-main-700 text-xs text-white duration-200 hover:bg-main-500 xl:text-sm"
-        >
-          <ArrowLeftRight size={16} />
-          Add Transaction
-        </Button>
-      </DialogTrigger>
+    <div>
       <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new Transaction</DialogTitle>
+          <DialogTitle>Edit a Transaction</DialogTitle>
           <DialogDescription>
-            Please fill in the following details to add a transaction.
+            Please fill in the following details to edit an existing
+            transaction.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -281,14 +272,14 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
                 disabled={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add Category"}
+                {submitting ? "Editing..." : "Edit Category"}
               </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
-    </Dialog>
+    </div>
   );
 }
 
-export default AddTransactionDialog;
+export default EditTransactionDialog;

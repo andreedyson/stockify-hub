@@ -1,6 +1,5 @@
 "use client";
 
-import ColumnAction from "@/components/tables/ColumnAction";
 import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader";
 import { cn, formatDate } from "@/lib/utils";
 import { CurrentInventoryMembers } from "@/types/server/inventory";
@@ -8,6 +7,7 @@ import { userRole } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Crown } from "lucide-react";
 import Image from "next/image";
+import MemberColumnAction from "../MemberColumnAction";
 
 export type Member = {
   id: string;
@@ -73,13 +73,12 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
     ),
     enableHiding: false,
   },
-
   {
     id: "actions",
     cell: ({ row }) => {
       const data = row.original;
 
-      const shouldShowColumnAction =
+      const hideColumnAction =
         data.role === "OWNER" ||
         data.currentUserRole === "USER" ||
         data.currentUserEmail === data.email ||
@@ -87,7 +86,7 @@ export const InventoryMemberColumns: ColumnDef<CurrentInventoryMembers>[] = [
 
       return (
         <>
-          {shouldShowColumnAction ? null : <ColumnAction columnData={data} />}
+          {hideColumnAction ? null : <MemberColumnAction columnData={data} />}
         </>
       );
     },

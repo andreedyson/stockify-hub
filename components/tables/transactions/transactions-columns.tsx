@@ -5,6 +5,8 @@ import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader
 import { currencyFormatterIDR, formatDate } from "@/lib/utils";
 import { TransactionsTableType } from "@/types/server/transaction";
 import StatusBadge from "@/components/StatusBadge";
+import ColumnAction from "../MemberColumnAction";
+import TransactionColumnAction from "../TransactionColumnAction";
 
 export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [
   {
@@ -47,6 +49,22 @@ export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [
         <div className="font-bold">
           {currencyFormatterIDR(row.original.total)}
         </div>
+      );
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const data = row.original;
+
+      const hideColumnAction = data.currentUserRole === "USER";
+
+      return (
+        <>
+          {hideColumnAction ? null : (
+            <TransactionColumnAction columnData={data} />
+          )}
+        </>
       );
     },
   },

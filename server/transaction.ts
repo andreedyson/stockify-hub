@@ -33,6 +33,23 @@ export async function getTransactionTableData(
   userId: string,
 ): Promise<TransactionsTableType[]> {
   try {
+    const userHasAccess = await prisma.inventoryMember.findFirst({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: {
+          select: {
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!userHasAccess) {
+      throw new Error("User not found");
+    }
+
     const transactions = await prisma.transaction.findMany({
       where: {
         product: {
@@ -59,11 +76,15 @@ export async function getTransactionTableData(
     });
 
     const results = transactions.map((transaction) => ({
+      id: transaction.id,
       date: transaction.date,
       status: transaction.status,
       product: transaction.product.name,
+      productId: transaction.productId,
       quantity: transaction.quantity,
       total: transaction.totalPrice,
+      userId: userHasAccess.id,
+      currentUserRole: userHasAccess.role ?? "USER",
     }));
 
     return results;

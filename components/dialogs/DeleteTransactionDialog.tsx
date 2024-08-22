@@ -10,17 +10,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
-import { Member } from "@/components/tables/members/inventory-members-columns";
+import { TransactionsTableType } from "@/types/server/transaction";
 
-type DeleteInventoryProps = {
-  userData: Member;
+type DeleteTransactionDialogType = {
+  transactionData: TransactionsTableType;
   onSubmitSuccess: () => void;
 };
 
-function DeleteMemberDialog({
-  userData,
+function DeleteTransactionDialog({
+  transactionData,
   onSubmitSuccess,
-}: DeleteInventoryProps) {
+}: DeleteTransactionDialogType) {
   const [submitting, setSubmitting] = useState(false);
 
   const router = useRouter();
@@ -29,14 +29,14 @@ function DeleteMemberDialog({
   const handleDelete = async () => {
     setSubmitting(true);
     try {
-      const res = await fetch(`${BASE_URL}/api/member`, {
+      const res = await fetch(`${BASE_URL}/api/transaction`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userData.userId,
-          inventoryId: userData.inventoryId,
+          transactionId: transactionData.id,
+          productId: transactionData.productId,
         }),
       });
 
@@ -68,11 +68,13 @@ function DeleteMemberDialog({
       <DialogHeader>
         <DialogTitle>Are you absolutely sure?</DialogTitle>
         <DialogDescription>
-          Deleting this user will remove their access from this inventory.
+          Deleting this transaction will remove it&apos;s data from our server.
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="justify-end">
-        <DialogClose className="w-[100px] rounded-sm">Cancel</DialogClose>
+        <DialogClose className="w-[100px] rounded-sm hover:underline">
+          Cancel
+        </DialogClose>
         <Button
           disabled={submitting}
           onClick={handleDelete}
@@ -85,4 +87,4 @@ function DeleteMemberDialog({
   );
 }
 
-export default DeleteMemberDialog;
+export default DeleteTransactionDialog;

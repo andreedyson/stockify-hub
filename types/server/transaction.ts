@@ -8,9 +8,13 @@ export type TransactionsCountType = {
 };
 
 export type TransactionsTableType = {
+  id: string;
   date: Date;
   status: Status;
   product: string;
+  productId: string;
   quantity: number;
   total: number;
+  userId: string;
+  currentUserRole: string;
 };
