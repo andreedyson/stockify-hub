@@ -24,7 +24,7 @@ async function TransactionsPage() {
 
   const userId = session.user.id;
 
-  const transactionSummary = await getTotalTransactionsByStatus();
+  const transactionSummary = await getTotalTransactionsByStatus(userId);
   const transactionsTableData = await getTransactionTableData(userId);
 
   return (

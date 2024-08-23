@@ -4,12 +4,23 @@ import {
   TransactionsTableType,
 } from "@/types/server/transaction";
 
-export async function getTotalTransactionsByStatus() {
+export async function getTotalTransactionsByStatus(userId: string) {
   try {
     const totalTransactionByStatus = await prisma.transaction.groupBy({
       by: ["status"],
       _count: {
         id: true,
+      },
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId: userId,
+              },
+            },
+          },
+        },
       },
     });
 
