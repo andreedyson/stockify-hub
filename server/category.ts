@@ -113,8 +113,8 @@ export async function getInventoriesCategoriesChartData(
     const results = inventories.map((inventory) => {
       const categoryData = inventory.categories.map((category) => {
         return {
-          Category: category.name,
-          Products: category.products.length,
+          category: category.name,
+          products: category.products.length,
           fill: `var(--color-${inventory.name.slice(0, 3)})`,
         };
       });

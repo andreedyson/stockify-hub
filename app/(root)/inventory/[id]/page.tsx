@@ -14,8 +14,9 @@ import {
   getInventoryById,
 } from "@/server/inventory";
 import { getProductsByInventory } from "@/server/product";
-import { Crown } from "lucide-react";
+import { ChevronRight, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 async function InventoryDetailsPage({
@@ -141,8 +142,15 @@ async function InventoryDetailsPage({
       <div className="grid grid-cols-1 gap-4 max-md:gap-y-6 lg:grid-cols-12">
         {/* Product List */}
         <div className="bg-main-card col-span-1 w-full rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
-          <div>
-            <h3 className="section-header">Products</h3>
+          <div className="section-header flex items-center justify-between">
+            <h3>Products</h3>
+            <Link
+              href={"/products/add-product"}
+              className="flex items-center text-sm text-main-500 duration-200 hover:text-main-300 hover:underline"
+            >
+              Add Product
+              <ChevronRight size={16} />
+            </Link>
           </div>
           <div className="mt-2 w-full">
             <ProductsList products={inventoryProducts} />

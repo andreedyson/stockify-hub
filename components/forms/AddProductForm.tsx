@@ -139,9 +139,9 @@ function AddProductForm({ userId }: { userId: string }) {
           description: data.message,
           variant: "success",
         });
-        form.reset();
         router.push("/products");
         router.refresh();
+        form.reset();
       }
     } catch (error: any) {
       setSubmitting(false);

@@ -74,7 +74,7 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
     defaultValues: {
       productId: "",
       quantity: 0,
-      date: new Date(),
+      date: undefined,
       status: undefined,
     },
   });

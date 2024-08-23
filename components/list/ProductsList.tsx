@@ -16,7 +16,6 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 
 import { currencyFormatterIDR } from "@/lib/utils";
-import { Category, Inventory, Product } from "@prisma/client";
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,12 +26,7 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 import DeleteProductDialog from "../dialogs/DeleteProductDialog";
-
-export type ProductWithCategory = Product & {
-  Category?: Category;
-  Inventory?: Inventory;
-  currentUserRole: "USER" | "ADMIN" | "OWNER";
-};
+import { ProductWithCategory } from "@/types/server/product";
 
 type ProductListProps = {
   products: ProductWithCategory[];
@@ -47,8 +41,12 @@ function ProductsList({ products, size }: ProductListProps) {
   const [openDialog, setOpenDialog] = useState(false);
   const [action, setAction] = useState("");
 
+  const handleSubmitSuccess = () => {
+    setOpenDialog(false);
+  };
+
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex h-full w-full flex-col gap-4">
       {products.length > 0 ? (
         <>
           <div className="flex flex-col gap-3 overflow-x-auto">
@@ -142,7 +140,10 @@ function ProductsList({ products, size }: ProductListProps) {
                       </DropdownMenu>
                       {action === "delete" && (
                         <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
-                          <DeleteProductDialog productId={product.id} />
+                          <DeleteProductDialog
+                            productId={product.id}
+                            onSubmitSuccess={handleSubmitSuccess}
+                          />
                         </DialogContent>
                       )}
                     </Dialog>
@@ -191,16 +192,23 @@ function ProductsList({ products, size }: ProductListProps) {
           </Pagination>
         </>
       ) : (
-        <div className="flex w-full flex-col items-center gap-4 py-4">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 py-4 text-center">
           <Image
             src={"/assets/product-not-found.svg"}
             width={200}
             height={400}
             alt="Product Not Found"
-            className="h-1/2 w-1/2"
+            className="size-[80%] lg:size-[350px]"
             priority
           />
-          No products found
+          <div className="space-y-1">
+            <h4 className="text-sm font-semibold md:text-base">
+              No Products Found
+            </h4>
+            <p className="text-[10px] text-desc md:text-sm">
+              Your list of products from each inventory will show here.
+            </p>
+          </div>
         </div>
       )}
     </div>

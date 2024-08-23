@@ -5,6 +5,7 @@ import {
   LowStockProductsType,
   ProductsInUserInventoriesType,
   ProductsValueType,
+  ProductWithCategory,
 } from "@/types/server/product";
 import { Product } from "@prisma/client";
 
@@ -63,7 +64,7 @@ export async function getProductById(
 
 export async function getProductsInUserInventories(
   userId: string,
-): Promise<ProductsInUserInventoriesType[]> {
+): Promise<ProductWithCategory[]> {
   try {
     const inventoryIds = await getUserInventoryIds(userId);
 
@@ -305,6 +306,9 @@ export async function getInventoriesProductsValue(
             price: true,
           },
         },
+      },
+      orderBy: {
+        name: "asc",
       },
     });
 

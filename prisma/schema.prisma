@@ -45,9 +45,11 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  Inventory   Inventory     @relation(fields: [inventoryId], references: [id], onDelete: Restrict)
-  Category    Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  Inventory   Inventory     @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  Category    Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   Transaction Transaction[]
+
+  @@index([inventoryId, categoryId])
 }
 
 model Transaction {

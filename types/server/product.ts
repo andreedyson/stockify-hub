@@ -1,4 +1,4 @@
-import { Inventory, Product } from "@prisma/client";
+import { Category, Inventory, Product } from "@prisma/client";
 
 export type ProductsInUserInventoriesType = Product & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
@@ -28,4 +28,10 @@ export type ProductsValueType = {
 
 export type UserProducts = {
   results: ProductsInUserInventoriesType[];
+};
+
+export type ProductWithCategory = Product & {
+  Category?: { name: string };
+  Inventory?: { name: string };
+  currentUserRole: "USER" | "ADMIN" | "OWNER";
 };

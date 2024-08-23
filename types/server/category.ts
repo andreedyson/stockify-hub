@@ -5,8 +5,8 @@ export type CategoriesByUserType = Omit<Category, "createdAt" | "updatedAt"> & {
 };
 
 export type InventoryCategoriesChartData = {
-  Category: string;
-  Products: number;
+  category: string;
+  products: number;
   fill: string;
 };
 

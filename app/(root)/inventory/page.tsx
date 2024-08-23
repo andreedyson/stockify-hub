@@ -1,10 +1,9 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { InventoryCategoryCharts } from "@/components/charts/InventoryCategoryCharts";
 import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import InventorySearch from "@/components/forms/InventorySearch";
-import InventoryCategoryList from "@/components/list/InventoryCategoryList";
-import UserRolesList from "@/components/list/UserRolesList";
+import InventoryCategoryData from "@/components/InventoryCategoryData";
 import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
+import UserRoleData from "@/components/UserRoleData";
 import { getInventoriesCategoriesChartData } from "@/server/category";
 import {
   currentUserInventoriesRoles,
@@ -44,36 +43,30 @@ async function InventoryPage() {
         />
       </Suspense>
 
-      {/* Inventory Activity & User Role Cards */}
+      {/* Total Products & User Role Lists */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">
-        <div className="bg-main-card rounded-md p-6 md:col-span-2 xl:col-span-9">
-          <div>
-            <h4 className="section-header">Activity</h4>
-          </div>
-        </div>
-        <div className="bg-main-card space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-3">
-          <div>
-            <h4 className="section-header">Your Role</h4>
-          </div>
-          <div className="grid grid-cols-1 gap-3 sm:max-md:grid-cols-2">
-            {userRoles.map((user) => (
-              <UserRolesList key={user.userId} data={user} />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/*  */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="bg-main-card space-y-4 rounded-md p-6">
+        <div className="bg-main-card space-y-4 rounded-md p-6 md:col-span-2 xl:col-span-9">
           <div>
             <h4 className="section-header">Inventory Categories</h4>
           </div>
           <div>
-            <InventoryCategoryList categoryData={inventoriesCategoriesData} />
+            <InventoryCategoryData categoryData={inventoriesCategoriesData} />
           </div>
         </div>
-        <div className="bg-main-card h-full rounded-md p-6">
+
+        <div className="bg-main-card space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-3">
+          <div>
+            <h4 className="section-header">Your Role</h4>
+          </div>
+          <div className="h-[80%]">
+            <UserRoleData userRoleData={userRoles} />
+          </div>
+        </div>
+      </div>
+
+      {/* Inventory Categories */}
+      <div className="w-full">
+        <div className="bg-main-card rounded-md p-6">
           <div>
             <h4 className="section-header">Total Products</h4>
           </div>
@@ -81,6 +74,7 @@ async function InventoryPage() {
             <TotalProductsCharts
               productsData={totalProductsChartData}
               inventoriesData={userInventories}
+              align="row"
             />
           </div>
         </div>

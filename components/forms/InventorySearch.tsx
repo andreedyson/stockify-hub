@@ -46,14 +46,22 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
             </div>
           ))
         ) : (
-          <div className="col-span-full flex h-[350px] flex-col items-center justify-center gap-5 text-center font-light">
+          <div className="col-span-full flex h-full flex-col items-center justify-center gap-5 text-center font-light lg:h-[350px]">
             <Image
               src={"/assets/data-not-found.svg"}
               width={400}
               height={500}
               alt="Data Not Found"
             />
-            No inventory found.
+            <div className="space-y-1">
+              <h4 className="text-sm font-semibold md:text-base">
+                No Inventory Found
+              </h4>
+              <p className="text-[10px] text-desc md:text-sm">
+                This is where you&apos;ll see a list of all the inventories you
+                own or have been added to.
+              </p>
+            </div>
           </div>
         )}
       </div>

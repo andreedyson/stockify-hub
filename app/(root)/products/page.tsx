@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { LowStocksProductsCharts } from "@/components/charts/LowStockProductsCharts";
 import { ProductsValueCharts } from "@/components/charts/ProductsValueCharts";
 import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
-import HighestSellingList from "@/components/list/HighestSellingList";
+import HighestSellingData from "@/components/HighestSellingData";
 import ProductsList from "@/components/list/ProductsList";
 import { getUserInventories } from "@/server/inventory";
 import {
@@ -53,8 +53,8 @@ async function ProductsPage() {
               <ChevronRight size={16} />
             </Link>
           </div>
-          <div className="w-full overflow-hidden">
-            <ProductsList products={products} size={8} />
+          <div className="h-[90%] w-full overflow-hidden">
+            <ProductsList products={products} size={6} />
           </div>
         </div>
 
@@ -63,18 +63,10 @@ async function ProductsPage() {
           <div>
             <h4 className="section-header">Low on Stocks</h4>
           </div>
-          <div className="flex w-full flex-col items-center space-y-2 text-center text-sm">
-            <div className="flex items-center gap-2 font-medium leading-none">
-              <ChartColumnDecreasing color="red" className="size-4" />
-              {lowStocksProducts.length}{" "}
-              {lowStocksProducts.length > 1 ? "products" : "product"} are low on
-              stocks
-            </div>
-            <div className="leading-none text-muted-foreground">
-              Showing the products that have less than 5 stocks
-            </div>
+
+          <div className="flex h-[90%] items-center justify-center">
+            <LowStocksProductsCharts productsData={lowStocksProducts} />
           </div>
-          <LowStocksProductsCharts productsData={lowStocksProducts} />
         </div>
 
         {/* Highest Selling */}
@@ -82,11 +74,8 @@ async function ProductsPage() {
           <div>
             <h4 className="section-header">Highest Selling</h4>
           </div>
-          <div className="space-y-4">
-            {/* TODO: Add empty state */}
-            {highestSellingProducts.map((product) => (
-              <HighestSellingList key={product.id} productData={product} />
-            ))}
+          <div>
+            <HighestSellingData productsData={highestSellingProducts} />
           </div>
         </div>
       </div>

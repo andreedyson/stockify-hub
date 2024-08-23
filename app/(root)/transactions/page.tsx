@@ -28,7 +28,7 @@ async function TransactionsPage() {
   const transactionsTableData = await getTransactionTableData(userId);
 
   return (
-    <section className="space-y-6">
+    <section className="h-full w-full space-y-6">
       <div>
         <AddTransactionDialog userId={userId} />
       </div>

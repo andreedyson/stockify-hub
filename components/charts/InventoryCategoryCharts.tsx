@@ -20,7 +20,7 @@ type InventoryCategoryChartsType = {
 export function InventoryCategoryCharts({
   categoryData,
 }: InventoryCategoryChartsType) {
-  // Define a list of colors or generate them dynamically
+  console.log(categoryData);
   const colors = [
     "hsl(var(--chart-1))",
     "hsl(var(--chart-2))",
@@ -35,12 +35,12 @@ export function InventoryCategoryCharts({
   }));
 
   const chartConfig = {
-    Products: {
+    products: {
       label: "Products",
     },
     ...categoryData.reduce((acc, category, index) => {
-      acc[category.Category] = {
-        label: category.Category,
+      acc[category.category] = {
+        label: category.category,
         color: colors[index % colors.length],
       };
       return acc;
@@ -48,7 +48,7 @@ export function InventoryCategoryCharts({
   };
 
   const totalProducts = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.Products, 0);
+    return chartData.reduce((acc, curr) => acc + curr.products, 0);
   }, [chartData]);
 
   return (
@@ -66,8 +66,8 @@ export function InventoryCategoryCharts({
         />
         <Pie
           data={chartData}
-          dataKey="Products"
-          nameKey="Category"
+          dataKey="products"
+          nameKey="category"
           innerRadius={60}
           strokeWidth={5}
         >

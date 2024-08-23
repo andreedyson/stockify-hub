@@ -134,15 +134,7 @@ function AddInventoryDialog({ userId }: { userId: string }) {
               )}
             />
 
-            <DialogFooter className="flex gap-2">
-              <Button
-                variant={"outline"}
-                type="button"
-                className="w-full border-card-foreground"
-                onClick={() => setOpen(false)}
-              >
-                Close
-              </Button>
+            <DialogFooter>
               <Button
                 type="submit"
                 disabled={submitting}

@@ -29,11 +29,6 @@ export const sidebarLinks = [
     path: "/transactions",
     icon: <Receipt size={20} />,
   },
-  {
-    title: "Reports",
-    path: "/reports",
-    icon: <ChartColumnIncreasing size={20} />,
-  },
 ];
 
 export const userRole = [{ name: "USER" }, { name: "ADMIN" }];

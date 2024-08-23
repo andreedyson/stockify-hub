@@ -46,10 +46,6 @@ export async function getTransactionTableData(
       },
     });
 
-    if (!userHasAccess) {
-      throw new Error("User not found");
-    }
-
     const transactions = await prisma.transaction.findMany({
       where: {
         product: {
@@ -83,8 +79,8 @@ export async function getTransactionTableData(
       productId: transaction.productId,
       quantity: transaction.quantity,
       total: transaction.totalPrice,
-      userId: userHasAccess.id,
-      currentUserRole: userHasAccess.role ?? "USER",
+      userId: userHasAccess?.id as string,
+      currentUserRole: userHasAccess?.role ?? "USER",
     }));
 
     return results;
