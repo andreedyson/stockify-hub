@@ -203,7 +203,7 @@ function ProductsList({ products, size }: ProductListProps) {
           />
           <div className="space-y-1">
             <h4 className="text-sm font-semibold md:text-base">
-              No Products Found
+              No products data found
             </h4>
             <p className="text-[10px] text-desc md:text-sm">
               Your list of products from each inventory will show here.

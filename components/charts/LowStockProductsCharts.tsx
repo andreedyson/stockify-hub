@@ -90,7 +90,7 @@ export function LowStocksProductsCharts({
           />
           <div className="space-y-1">
             <h4 className="text-sm font-semibold md:text-base">
-              No Low Stocks Product Found
+              No products are low in stocks
             </h4>
             <p className="text-[10px] text-desc md:text-sm">
               Your list of products from each inventory will show here.

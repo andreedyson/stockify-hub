@@ -7,7 +7,6 @@ type HighestSellingListType = {
 };
 
 function HighestSellingList({ productData }: HighestSellingListType) {
-  console.log(productData);
   return (
     <article className="h-full w-full">
       <div

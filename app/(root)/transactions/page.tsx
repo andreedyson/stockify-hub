@@ -1,4 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import { TransactionInsightCharts } from "@/components/charts/TransactionInsightCharts";
 import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog";
 import TransactionSummaryList from "@/components/list/TransactionSummaryList";
 import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
@@ -54,9 +55,12 @@ async function TransactionsPage() {
           </div>
           <TransactionSummaryList total={transactionSummary} />
         </div>
-        <div className="bg-main-card rounded-md p-6 md:col-span-1 xl:col-span-6">
+        <div className="bg-main-card space-y-4 rounded-md p-6 md:col-span-1 xl:col-span-6">
           <div>
             <h4 className="section-header">Insights</h4>
+          </div>
+          <div>
+            <TransactionInsightCharts />
           </div>
         </div>
         <div className="bg-main-card rounded-md p-6 sm:col-span-2 xl:col-span-3">

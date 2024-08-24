@@ -27,7 +27,7 @@ function UserRoleData({ userRoleData }: UserRolesDataType) {
           />
           <div className="space-y-1">
             <h4 className="text-sm font-semibold md:text-base">
-              No Roles Found
+              You don&apos;t have any roles
             </h4>
             <p className="text-[10px] text-desc md:text-sm">
               You are not part of an inventory yet.

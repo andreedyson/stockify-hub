@@ -18,3 +18,8 @@ export type TransactionsTableType = {
   userId: string;
   currentUserRole: string;
 };
+
+export type TransactionsInsightsType = {
+  date: Date;
+  total: number;
+};

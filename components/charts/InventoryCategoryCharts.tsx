@@ -20,7 +20,6 @@ type InventoryCategoryChartsType = {
 export function InventoryCategoryCharts({
   categoryData,
 }: InventoryCategoryChartsType) {
-  console.log(categoryData);
   const colors = [
     "hsl(var(--chart-1))",
     "hsl(var(--chart-2))",

@@ -105,7 +105,7 @@ export function ProductsValueCharts({ productsData }: ProductsValueChartsType) {
           />
           <div className="space-y-1">
             <h4 className="text-sm font-semibold md:text-base">
-              No Products Value Found
+              Products value data unavailable
             </h4>
             <p className="max-w-md text-[10px] text-desc md:text-sm">
               Showing total products value / price from each inventory that you

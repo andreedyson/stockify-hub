@@ -1,8 +1,10 @@
 import prisma from "@/lib/db";
 import {
   TransactionsCountType,
+  TransactionsInsightsType,
   TransactionsTableType,
 } from "@/types/server/transaction";
+import { Transaction } from "@prisma/client";
 
 export async function getTotalTransactionsByStatus(userId: string) {
   try {
@@ -36,7 +38,7 @@ export async function getTotalTransactionsByStatus(userId: string) {
 
     return result;
   } catch (error: any) {
-    throw new Error(error.message || "An error occured");
+    throw new Error(error.message || "An error occurred");
   }
 }
 
@@ -96,6 +98,87 @@ export async function getTransactionTableData(
 
     return results;
   } catch (error: any) {
-    throw new Error(error.message || "An error occured");
+    throw new Error(error.message || "An error occurred");
+  }
+}
+
+export async function getTransactionsByTimeSpan(
+  userId: string,
+  span: string = "all",
+): Promise<TransactionsInsightsType[]> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const currentDate = new Date();
+    let startDate, endDate;
+
+    switch (span) {
+      case "week":
+        startDate = new Date(currentDate);
+        startDate.setDate(currentDate.getDate() - 6);
+
+        endDate = currentDate;
+        break;
+      case "month":
+        startDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          1,
+        );
+        endDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1,
+          0,
+        );
+        break;
+      case "all":
+        startDate = new Date(0);
+        endDate = new Date();
+        break;
+      default:
+        throw new Error("Invalid timespan specified");
+    }
+
+    const transactions = await prisma.transaction.groupBy({
+      by: ["date"],
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId: userId,
+              },
+            },
+          },
+        },
+        date: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      _sum: {
+        totalPrice: true,
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+
+    const totalSums = transactions.map((transaction) => ({
+      date: transaction.date, // Get only the date part
+      total: transaction._sum.totalPrice || 0,
+    }));
+
+    return totalSums;
+  } catch (error: any) {
+    throw new Error(error.message || "An error occurred");
   }
 }

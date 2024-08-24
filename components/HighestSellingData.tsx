@@ -28,7 +28,7 @@ function HighestSellingData({ productsData }: HighestSellingDataType) {
             />
             <div className="space-y-1">
               <h4 className="text-sm font-semibold md:text-base">
-                No Highest Selling List Data
+                No products with highest transactions
               </h4>
               <p className="text-[10px] text-desc md:text-sm">
                 Showing 5 products with the highest transaction count.

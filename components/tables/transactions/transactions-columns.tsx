@@ -32,6 +32,9 @@ export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [
     header: ({ column }) => {
       return <DataTableColumnHeader column={column} title="Product" />;
     },
+    cell: ({ row }) => {
+      return <div className="line-clamp-1">{row.original.product}</div>;
+    },
   },
   {
     accessorKey: "quantity",
