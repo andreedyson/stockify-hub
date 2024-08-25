@@ -227,7 +227,7 @@ export async function getLowStocksProducts(
 
     const result = products.map((product) => {
       return {
-        name: product.name,
+        product: product.name,
         stock: product.stock,
       };
     });

@@ -103,10 +103,9 @@ export function TransactionInsightCharts() {
             <h4 className="text-sm font-semibold md:text-base">
               Your Transaction History is Empty
             </h4>
-            <p className="max-w-md text-[10px] text-desc md:text-sm">
+            <p className="max-w-sm text-[10px] text-desc md:text-sm">
               It seems you haven&apos;t made any transactions during that
-              timespan yet. Transaction insights are available for weekly,
-              monthly, and all-time periods.
+              timespan yet.
             </p>
           </div>
         </div>

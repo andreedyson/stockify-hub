@@ -10,7 +10,10 @@ export type InventoriesProductCountType = {
   products: number;
 };
 
-export type LowStockProductsType = Pick<Product, "name" | "stock">;
+export type LowStockProductsType = {
+  product: string;
+  stock: number;
+};
 
 export type HighestSellingProductsType = {
   id: string;

@@ -36,12 +36,12 @@ export function LowStocksProductsCharts({
   }));
 
   const chartConfig = {
-    name: {
+    product: {
       label: "Products",
     },
     ...productsData.reduce((acc, product, index) => {
-      acc[product.name] = {
-        label: product.name,
+      acc[product.product] = {
+        label: product.product,
         color: colors[index % colors.length],
       };
       return acc;
@@ -49,9 +49,9 @@ export function LowStocksProductsCharts({
   };
 
   return (
-    <ChartContainer config={chartConfig} className="min-h-[300px] w-full">
+    <>
       {chartData.length ? (
-        <div>
+        <div className="w-full">
           <div className="flex w-full flex-col items-center space-y-2 text-center text-sm">
             <div className="flex items-center gap-2 font-medium leading-none">
               <ChartColumnDecreasing color="red" className="size-4" />
@@ -62,21 +62,27 @@ export function LowStocksProductsCharts({
               Showing the products that have less than 5 stocks
             </div>
           </div>
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <ChartLegend
-              content={<ChartLegendContent className="flex flex-wrap" />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="stock"
-              nameKey="name"
-              innerRadius={50}
-            />
-          </PieChart>
+          <ChartContainer
+            config={chartConfig}
+            className="h-[280px] min-h-[300px] w-full"
+          >
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <ChartLegend
+                content={<ChartLegendContent className="flex flex-wrap" />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="stock"
+                nameKey="product"
+                innerRadius={50}
+                strokeWidth={5}
+              />
+            </PieChart>
+          </ChartContainer>
         </div>
       ) : (
         <div className="flex h-full w-full flex-col items-center gap-2 py-4 text-center md:gap-4">
@@ -98,6 +104,6 @@ export function LowStocksProductsCharts({
           </div>
         </div>
       )}
-    </ChartContainer>
+    </>
   );
 }

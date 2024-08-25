@@ -1,4 +1,4 @@
-import { Status } from "@prisma/client";
+import { Status, Transaction } from "@prisma/client";
 
 export type TransactionsCountType = {
   totalPending?: number;
@@ -22,4 +22,12 @@ export type TransactionsTableType = {
 export type TransactionsInsightsType = {
   date: Date;
   total: number;
+};
+
+export type RecentTransactionsType = Omit<
+  Transaction,
+  "createdAt" | "updatedAt" | "productId" | "quantity"
+> & {
+  productName: string;
+  categoryName: string;
 };

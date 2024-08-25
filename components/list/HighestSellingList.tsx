@@ -1,6 +1,5 @@
 import { currencyFormatterIDR } from "@/lib/utils";
 import { HighestSellingProductsType } from "@/types/server/product";
-import Image from "next/image";
 
 type HighestSellingListType = {
   productData: HighestSellingProductsType;

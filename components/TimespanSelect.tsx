@@ -16,7 +16,7 @@ type Props = {
 function TimespanSelect({ onValueChange }: Props) {
   return (
     <Select onValueChange={onValueChange} defaultValue="all">
-      <SelectTrigger className="h-10 w-[120px] rounded-sm bg-zinc-700">
+      <SelectTrigger className="h-10 w-[120px] rounded-sm dark:bg-zinc-700">
         <SelectValue placeholder="Select timespan for transactions data" />
       </SelectTrigger>
       <SelectContent>

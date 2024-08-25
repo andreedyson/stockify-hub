@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import {
+  RecentTransactionsType,
   TransactionsCountType,
   TransactionsInsightsType,
   TransactionsTableType,
@@ -178,6 +179,66 @@ export async function getTransactionsByTimeSpan(
     }));
 
     return totalSums;
+  } catch (error: any) {
+    throw new Error(error.message || "An error occurred");
+  }
+}
+
+export async function getRecentTransactions(
+  userId: string,
+): Promise<RecentTransactionsType[]> {
+  try {
+    const currentDate = new Date();
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - 6);
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId: userId,
+              },
+            },
+          },
+        },
+        date: {
+          gte: startDate,
+          lte: currentDate,
+        },
+        status: {
+          not: "CANCELLED",
+        },
+      },
+      include: {
+        product: {
+          select: {
+            name: true,
+            Category: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        date: "desc",
+      },
+      take: 5,
+    });
+
+    const results = transactions.map((transaction) => ({
+      id: transaction.id,
+      status: transaction.status,
+      date: transaction.date,
+      totalPrice: transaction.totalPrice,
+      productName: transaction.product.name,
+      categoryName: transaction.product.Category.name,
+    }));
+
+    return results;
   } catch (error: any) {
     throw new Error(error.message || "An error occurred");
   }
