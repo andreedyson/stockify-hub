@@ -36,6 +36,7 @@ import BackButton from "../navigations/BackButton";
 import ProductFormSkeletons from "../skeletons/ProductFormSkeletons";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "../ui/use-toast";
+import { SubmitButton } from "../SubmitButton";
 
 type EditProductProps = {
   userId: string;
@@ -312,13 +313,12 @@ function EditProductForm({ userId, product }: EditProductProps) {
                 Cancel
               </Button>
             </Link>
-            <Button
-              type="submit"
-              disabled={submitting}
+            <SubmitButton
+              isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              {submitting ? "Editing..." : "Edit"}
-            </Button>
+              Edit
+            </SubmitButton>
           </div>
         </div>
       </form>

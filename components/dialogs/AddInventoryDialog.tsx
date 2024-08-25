@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import { PackageOpen } from "lucide-react";
+import { SubmitButton } from "../SubmitButton";
 
 function AddInventoryDialog({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -135,13 +136,12 @@ function AddInventoryDialog({ userId }: { userId: string }) {
             />
 
             <DialogFooter>
-              <Button
-                type="submit"
-                disabled={submitting}
+              <SubmitButton
+                isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add"}
-              </Button>
+                Add
+              </SubmitButton>
             </DialogFooter>
           </form>
         </Form>

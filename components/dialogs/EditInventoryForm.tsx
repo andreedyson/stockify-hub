@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import DeleteInventoryDialog from "./DeleteInventoryDialog";
+import { SubmitButton } from "../SubmitButton";
 
 type EditInventoryProps = {
   userId: string;
@@ -128,13 +129,12 @@ function EditInventoryForm({ userId, inventoryData }: EditInventoryProps) {
               inventoryId={inventoryData.id}
             />
           )}
-          <Button
-            type="submit"
-            disabled={submitting}
+          <SubmitButton
+            isSubmitting={submitting}
             className="w-[100px] bg-main-700 hover:bg-main-500 dark:text-foreground md:w-[120px]"
           >
-            {submitting ? "Editing..." : "Edit"}
-          </Button>
+            Edit
+          </SubmitButton>
         </div>
       </form>
     </Form>

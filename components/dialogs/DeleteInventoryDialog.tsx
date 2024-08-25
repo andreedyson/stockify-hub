@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
+import { SubmitButton } from "../SubmitButton";
 
 type DeleteInventoryProps = {
   userId: string;
@@ -78,21 +79,20 @@ function DeleteInventoryDialog({ userId, inventoryId }: DeleteInventoryProps) {
             records, member records, and our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <Button
-            variant={"outline"}
-            className="w-[100px] rounded-sm"
+        <AlertDialogFooter className="flex items-center">
+          <div
             onClick={() => setOpenDialog(false)}
+            className="flex w-[100px] cursor-pointer items-center justify-center rounded-sm duration-200 hover:underline"
           >
             Cancel
-          </Button>
-          <Button
-            disabled={submitting}
+          </div>
+          <SubmitButton
+            isSubmitting={submitting}
             onClick={handleDelete}
             className="w-[100px] rounded-sm bg-red-500 text-white duration-200 hover:bg-red-300"
           >
-            {submitting ? "Deleting..." : "Continue"}
-          </Button>
+            Delete
+          </SubmitButton>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

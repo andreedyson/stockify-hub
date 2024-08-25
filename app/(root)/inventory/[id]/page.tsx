@@ -137,7 +137,7 @@ async function InventoryDetailsPage({
 
       <div className="grid grid-cols-1 gap-4 max-md:gap-y-6 lg:grid-cols-12">
         {/* Product List */}
-        <div className="bg-main-card col-span-1 w-full rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
+        <div className="bg-main-card col-span-1 w-full space-y-4 rounded-md px-4 py-6 md:px-6 md:py-8 lg:col-span-8">
           <div className="section-header flex items-center justify-between">
             <h3>Products</h3>
             <Link

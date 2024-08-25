@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import { Category } from "@prisma/client";
+import { SubmitButton } from "../SubmitButton";
 
 type EditCategoryProps = {
   categoryData: Category;
@@ -120,21 +121,12 @@ function EditCategoryDialog({
           />
 
           <DialogFooter className="flex gap-2">
-            <Button
-              variant={"outline"}
-              type="button"
-              className="w-full border-card-foreground"
-              onClick={onSubmitSuccess}
-            >
-              Close
-            </Button>
-            <Button
-              type="submit"
-              disabled={submitting}
+            <SubmitButton
+              isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              {submitting ? "Editing..." : "Edit Category"}
-            </Button>
+              Edit Category
+            </SubmitButton>
           </DialogFooter>
         </form>
       </Form>

@@ -46,6 +46,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { TransactionsTableType } from "@/types/server/transaction";
+import { SubmitButton } from "../SubmitButton";
 
 type TransactionFormProps = {
   transactionData: TransactionsTableType;
@@ -267,13 +268,12 @@ function EditTransactionDialog({
             />
 
             <DialogFooter>
-              <Button
-                type="submit"
-                disabled={submitting}
+              <SubmitButton
+                isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Editing..." : "Edit Category"}
-              </Button>
+                Edit Transaction
+              </SubmitButton>
             </DialogFooter>
           </form>
         </Form>

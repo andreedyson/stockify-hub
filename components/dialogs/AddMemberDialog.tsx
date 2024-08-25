@@ -36,6 +36,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL, userRole } from "@/constants";
 import { UserCheck } from "lucide-react";
+import { SubmitButton } from "../SubmitButton";
 
 type AddMemberProps = {
   inventoryId: string;
@@ -167,22 +168,13 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
               )}
             />
 
-            <DialogFooter className="flex gap-2">
-              <Button
-                variant={"outline"}
-                type="button"
-                className="w-full border-card-foreground"
-                onClick={() => setOpen(false)}
-              >
-                Close
-              </Button>
-              <Button
-                type="submit"
-                disabled={submitting}
+            <DialogFooter>
+              <SubmitButton
+                isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add Member"}
-              </Button>
+                Add Member
+              </SubmitButton>
             </DialogFooter>
           </form>
         </Form>

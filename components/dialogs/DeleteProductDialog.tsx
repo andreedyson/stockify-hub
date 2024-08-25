@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
+import { SubmitButton } from "../SubmitButton";
 
 type DeleteProductDialog = {
   productId: string;
@@ -70,16 +71,16 @@ function DeleteProductDialog({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="justify-end">
-        <DialogClose className="w-[100px] rounded-sm underline">
+        <DialogClose className="w-[100px] rounded-sm duration-200 hover:underline">
           Cancel
         </DialogClose>
-        <Button
-          disabled={submitting}
+        <SubmitButton
           onClick={handleDelete}
+          isSubmitting={submitting}
           className="w-[100px] rounded-sm bg-red-500 text-white duration-200 hover:bg-red-300"
         >
-          {submitting ? "Deleting..." : "Continue"}
-        </Button>
+          Delete
+        </SubmitButton>
       </DialogFooter>
     </div>
   );

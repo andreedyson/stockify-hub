@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL, userRole } from "@/constants";
 import { Member } from "@/components//tables/members/inventory-members-columns";
+import { SubmitButton } from "../SubmitButton";
 
 type AddMemberProps = {
   userData: Member;
@@ -154,22 +155,13 @@ function EditMemberDialog({ userData, onSubmitSuccess }: AddMemberProps) {
             )}
           />
 
-          <DialogFooter className="flex gap-2">
-            <Button
-              variant={"outline"}
-              type="button"
-              className="w-full border-card-foreground"
-              onClick={() => onSubmitSuccess()} // Handler to set the open sate to false
-            >
-              Close
-            </Button>
-            <Button
-              type="submit"
-              disabled={submitting}
+          <DialogFooter>
+            <SubmitButton
+              isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              {submitting ? "Editing..." : "Edit Member"}
-            </Button>
+              Edit Member
+            </SubmitButton>
           </DialogFooter>
         </form>
       </Form>

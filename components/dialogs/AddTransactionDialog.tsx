@@ -48,6 +48,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { Skeleton } from "../ui/skeleton";
+import { SubmitButton } from "../SubmitButton";
 
 type TransactionFormProps = {
   userId: string;
@@ -276,13 +277,12 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
             />
 
             <DialogFooter>
-              <Button
-                type="submit"
-                disabled={submitting}
+              <SubmitButton
+                isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add Category"}
-              </Button>
+                Add Transaction
+              </SubmitButton>
             </DialogFooter>
           </form>
         </Form>

@@ -29,6 +29,7 @@ import { categorySchema } from "@/types/validations";
 import { Layers3 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
+import { SubmitButton } from "../SubmitButton";
 
 type CategoryProps = {
   inventoryId: string;
@@ -127,21 +128,12 @@ function AddCategoryDialog({ inventoryId }: CategoryProps) {
             />
 
             <DialogFooter className="flex gap-2">
-              <Button
-                variant={"outline"}
-                type="button"
-                className="w-full border-card-foreground"
-                onClick={() => setOpen(false)}
-              >
-                Close
-              </Button>
-              <Button
-                type="submit"
-                disabled={submitting}
+              <SubmitButton
+                isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                {submitting ? "Adding..." : "Add Category"}
-              </Button>
+                Add Category
+              </SubmitButton>
             </DialogFooter>
           </form>
         </Form>

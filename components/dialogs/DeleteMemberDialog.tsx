@@ -11,6 +11,7 @@ import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
 import { Member } from "@/components/tables/members/inventory-members-columns";
+import { SubmitButton } from "../SubmitButton";
 
 type DeleteInventoryProps = {
   userData: Member;
@@ -72,14 +73,16 @@ function DeleteMemberDialog({
         </DialogDescription>
       </DialogHeader>
       <DialogFooter className="justify-end">
-        <DialogClose className="w-[100px] rounded-sm">Cancel</DialogClose>
-        <Button
-          disabled={submitting}
+        <DialogClose className="w-[100px] rounded-sm duration-200 hover:underline">
+          Cancel
+        </DialogClose>
+        <SubmitButton
+          isSubmitting={submitting}
           onClick={handleDelete}
           className="w-[100px] rounded-sm bg-red-500 text-white duration-200 hover:bg-red-300"
         >
-          {submitting ? "Deleting..." : "Continue"}
-        </Button>
+          Delete
+        </SubmitButton>
       </DialogFooter>
     </div>
   );

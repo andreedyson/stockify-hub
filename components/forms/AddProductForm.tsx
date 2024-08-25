@@ -35,6 +35,7 @@ import BackButton from "../navigations/BackButton";
 import ProductFormSkeletons from "../skeletons/ProductFormSkeletons";
 import { Textarea } from "../ui/textarea";
 import { useToast } from "../ui/use-toast";
+import { SubmitButton } from "../SubmitButton";
 
 function AddProductForm({ userId }: { userId: string }) {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -308,13 +309,12 @@ function AddProductForm({ userId }: { userId: string }) {
                 Cancel
               </Button>
             </Link>
-            <Button
-              type="submit"
-              disabled={submitting}
+            <SubmitButton
+              isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              {submitting ? "Adding..." : "Add"}
-            </Button>
+              Add
+            </SubmitButton>
           </div>
         </div>
       </form>
