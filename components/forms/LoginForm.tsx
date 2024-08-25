@@ -84,7 +84,7 @@ function LoginForm() {
           <section className="mb-2 space-y-2 text-center md:text-start">
             <Link
               href={"/"}
-              className="mb-4 flex items-center gap-1 text-sm text-desc hover:text-slate-600"
+              className="desc-2 mb-4 flex items-center gap-1 text-sm hover:text-slate-600"
             >
               <ArrowLeft size={16} />
               Return to Homepage
@@ -93,7 +93,7 @@ function LoginForm() {
               <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
             </div>
             <h2 className="header-2">Welcome back!👋</h2>
-            <p className="desc-2">
+            <p className="desc-2 text-sm md:text-base">
               Enter your credentials to access the application.
             </p>
           </section>
@@ -136,7 +136,7 @@ function LoginForm() {
                     />
                   </FormControl>
                   <div
-                    className="absolute right-3 cursor-pointer text-desc"
+                    className="desc-2 absolute right-3 cursor-pointer"
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -185,7 +185,7 @@ function LoginForm() {
               Sign Up
             </span>
           </Link>
-          <div className="mt-12 flex flex-col items-center gap-2 text-sm text-desc md:flex-row md:justify-between">
+          <div className="desc-2 mt-12 flex flex-col items-center gap-2 text-sm md:flex-row md:justify-between">
             <p>© 2024 StockifyHub</p>
             <Link href={"/"} className="font-semibold text-main-500">
               Admin

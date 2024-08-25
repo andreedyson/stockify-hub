@@ -8,12 +8,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { cn } from "@/lib/utils";
 import { InventoryCardType } from "@/types";
 import { InventoriesProductCountType } from "@/types/server/product";
-import React from "react";
-import { cn } from "@/lib/utils";
 import { Package, PackageSearch } from "lucide-react";
 import Image from "next/image";
+import React from "react";
 
 type TotalProductChartsProps = {
   productsData: InventoriesProductCountType[];
@@ -69,13 +69,13 @@ export function TotalProductsCharts({
               <p className="flex items-center gap-1 text-xl font-bold md:text-2xl">
                 <PackageSearch size={24} />
                 {totalProducts}
-                <span className="text-sm text-desc">Products</span>
+                <span className="desc-2 text-sm">Products</span>
               </p>
-              <p className="text-xl md:text-2xl">/</p>
+              <p className="desc-2 text-sm font-semibold">out of</p>
               <p className="flex items-center gap-1 text-xl font-bold md:text-2xl">
                 <Package size={24} />
                 {totalProducts}
-                <span className="text-sm text-desc">Inventories</span>
+                <span className="desc-2 text-sm">Inventories</span>
               </p>
             </div>
           </div>
@@ -124,7 +124,7 @@ export function TotalProductsCharts({
             <h4 className="text-sm font-semibold md:text-base">
               No products data found
             </h4>
-            <p className="text-[10px] text-desc md:text-sm">
+            <p className="desc-2 text-[10px] md:text-sm">
               Showing total products from each inventory that you are part of.
             </p>
           </div>

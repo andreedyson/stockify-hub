@@ -29,7 +29,7 @@ function UserRoleData({ userRoleData }: UserRolesDataType) {
             <h4 className="text-sm font-semibold md:text-base">
               You don&apos;t have any roles
             </h4>
-            <p className="text-[10px] text-desc md:text-sm">
+            <p className="desc-2 text-[10px] md:text-sm">
               You are not part of an inventory yet.
             </p>
           </div>

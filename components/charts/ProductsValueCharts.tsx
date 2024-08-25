@@ -45,7 +45,7 @@ export function ProductsValueCharts({ productsData }: ProductsValueChartsType) {
               <Banknote size={32} />
               {currencyFormatterIDR(totalProductsValue || 0)}
             </h5>
-            <p className="text-sm tracking-wide text-desc">
+            <p className="desc-2 text-sm tracking-wide">
               Total Products value in{" "}
               <span className="font-semibold leading-none text-foreground">
                 {productsData.length || 0}
@@ -107,7 +107,7 @@ export function ProductsValueCharts({ productsData }: ProductsValueChartsType) {
             <h4 className="text-sm font-semibold md:text-base">
               Products value data unavailable
             </h4>
-            <p className="max-w-md text-[10px] text-desc md:text-sm">
+            <p className="desc-2 max-w-md text-[10px] md:text-sm">
               Showing total products value / price from each inventory that you
               are part of.
             </p>

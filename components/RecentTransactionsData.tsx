@@ -34,7 +34,7 @@ function RecentTransactionsData({
             <h4 className="text-sm font-semibold md:text-base">
               Recent transactions unavailable
             </h4>
-            <p className="text-[10px] text-desc md:text-sm">
+            <p className="desc-2 text-[10px] md:text-sm">
               There are currently no recent transactions. We&apos;ll show you
               transactions from the past week.
             </p>

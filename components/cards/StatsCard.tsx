@@ -10,9 +10,7 @@ function StatsCard({ title, amount, color, icon }: StatsCardProps) {
     <article className="bg-main-card rounded-md px-4 py-6 md:px-6">
       <div className="flex items-center justify-between">
         <div className="space-y-3">
-          <span className="text-xs font-medium uppercase text-desc">
-            {title}
-          </span>
+          <span className="desc-2 text-xs font-medium uppercase">{title}</span>
           <p className="text-lg font-semibold tracking-wide lg:text-xl">
             {amount}{" "}
             <span className="text-base font-light">{title.split(" ")[1]}</span>

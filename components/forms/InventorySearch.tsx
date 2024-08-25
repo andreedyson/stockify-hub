@@ -57,7 +57,7 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
               <h4 className="text-sm font-semibold md:text-base">
                 No inventory data found
               </h4>
-              <p className="max-w-md text-[10px] text-desc md:text-sm">
+              <p className="desc-2 max-w-md text-[10px] md:text-sm">
                 This is where you&apos;ll see a list of all the inventories you
                 own or have been added to.
               </p>

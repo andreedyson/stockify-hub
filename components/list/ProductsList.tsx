@@ -71,7 +71,7 @@ function ProductsList({ products, size }: ProductListProps) {
                       <h4 className="line-clamp-1 text-base font-bold md:text-lg">
                         {product.name}
                       </h4>
-                      <p className="line-clamp-1 text-xs text-desc md:text-sm">
+                      <p className="desc-2 line-clamp-1 text-xs md:text-sm">
                         <span>{product.Category?.name}</span>
                         {" | "}
                         <span>{product.stock} Items</span>
@@ -83,7 +83,7 @@ function ProductsList({ products, size }: ProductListProps) {
                 {/* Product Details */}
                 <div className="flex w-80 flex-col justify-between md:flex-row md:items-center">
                   <div className="w-[150px] space-y-1 border-l-2 border-input py-1.5 pl-3.5 max-md:py-3">
-                    <p className="text-[10px] font-medium uppercase text-desc md:text-xs">
+                    <p className="desc-2 text-[10px] font-medium uppercase md:text-xs">
                       Price
                     </p>
                     <p className="line-clamp-1 text-xs font-semibold md:text-sm">
@@ -91,7 +91,7 @@ function ProductsList({ products, size }: ProductListProps) {
                     </p>
                   </div>
                   <div className="w-[150px] space-y-1 border-l-2 border-input py-1.5 pl-3.5 max-md:py-3">
-                    <p className="text-[10px] font-medium uppercase text-desc md:text-xs">
+                    <p className="desc-2 text-[10px] font-medium uppercase md:text-xs">
                       Inventory
                     </p>
                     <p className="line-clamp-1 text-xs font-semibold md:text-sm">
@@ -205,7 +205,7 @@ function ProductsList({ products, size }: ProductListProps) {
             <h4 className="text-sm font-semibold md:text-base">
               No products data found
             </h4>
-            <p className="text-[10px] text-desc md:text-sm">
+            <p className="desc-2 text-[10px] md:text-sm">
               Your list of products from each inventory will show here.
             </p>
           </div>

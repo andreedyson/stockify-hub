@@ -93,7 +93,7 @@
   }
 
   .desc-2 {
-    @apply text-sm text-zinc-500 dark:text-desc md:text-base;
+    @apply text-zinc-500 dark:text-desc;
   }
 
   .bg-main-card {

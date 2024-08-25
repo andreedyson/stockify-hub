@@ -99,7 +99,7 @@ function RegisterForm() {
           <section className="mb-2 space-y-2 text-center md:text-start">
             <Link
               href={"/"}
-              className="mb-4 flex items-center gap-1 text-sm text-desc hover:text-slate-600"
+              className="desc-2 mb-4 flex items-center gap-1 text-sm hover:text-slate-600"
             >
               <ArrowLeft size={16} />
               Return to Homepage
@@ -108,7 +108,7 @@ function RegisterForm() {
               <h2 className="logo mb-3 text-3xl md:mb-6">StockifyHub</h2>
             </div>
             <h2 className="header-2">Create an account 📦</h2>
-            <p className="desc-2">
+            <p className="desc-2 text-sm md:text-base">
               Fill out the form below to create your account and start managing
               your inventory with ease.
             </p>
@@ -173,7 +173,7 @@ function RegisterForm() {
                     />
                   </FormControl>
                   <div
-                    className="absolute right-3 cursor-pointer text-desc"
+                    className="desc-2 absolute right-3 cursor-pointer"
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
                     {!showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
@@ -196,7 +196,7 @@ function RegisterForm() {
               Sign In
             </span>
           </Link>
-          <div className="mt-6 text-center text-sm text-desc md:mt-12 md:text-start">
+          <div className="desc-2 mt-6 text-center text-sm md:mt-12 md:text-start">
             <p>© 2024 StockifyHub</p>
           </div>
         </form>

@@ -205,15 +205,17 @@ function EditProfileForm({ userId }: EditProfileProps) {
               </h3>
               <div className="flex w-full flex-col gap-4 md:text-base">
                 <div className="space-y-1 font-semibold">
-                  <h4 className="desc-2">Full Name</h4>
+                  <h4 className="desc-2 text-sm md:text-base">Full Name</h4>
                   <p className="text-sm md:text-base">{data.user.fullname}</p>
                 </div>
                 <div className="space-y-1 font-semibold">
-                  <h4 className="desc-2">Email</h4>
+                  <h4 className="desc-2 text-sm md:text-base">Email</h4>
                   <p className="text-sm md:text-base">{data.user.email}</p>
                 </div>
                 <div className="space-y-1 font-semibold">
-                  <h4 className="desc-2 line-clamp-1">Acccount Created</h4>
+                  <h4 className="desc-2 line-clamp-1 text-sm md:text-base">
+                    Acccount Created
+                  </h4>
                   <p className="text-sm md:text-base">
                     {formatDate(new Date(data.user.createdAt))}
                   </p>

@@ -54,22 +54,20 @@ async function InventoryDetailsPage({
             <div className="space-y-2">
               <div className="border-b-2 py-4 max-lg:space-y-3.5 lg:max-xl:grid lg:max-xl:grid-cols-4 lg:max-xl:content-center xl:space-y-4">
                 <div className="space-y-1 lg:space-y-2">
-                  <p className="text-xs text-desc md:text-sm">
-                    Inventory Owner
-                  </p>
+                  <p className="desc-2 text-xs md:text-sm">Inventory Owner</p>
                   <h4 className="flex items-center gap-2 text-sm font-semibold text-orange-500 dark:text-yellow-500 md:text-base">
                     <Crown size={16} />
                     {inventoryOwner?.name}
                   </h4>
                 </div>
                 <div className="space-y-1 lg:space-y-2">
-                  <p className="text-xs text-desc md:text-sm">Inventory Name</p>
+                  <p className="desc-2 text-xs md:text-sm">Inventory Name</p>
                   <h4 className="line-clamp-1 text-sm font-semibold md:text-base">
                     {inventory.name}
                   </h4>
                 </div>
                 <div className="space-y-1 lg:space-y-2">
-                  <p className="text-xs text-desc md:text-sm">Total Members</p>
+                  <p className="desc-2 text-xs md:text-sm">Total Members</p>
                   <p className="text-sm font-semibold md:text-base">
                     {inventory.memberCount}{" "}
                     {(inventory.memberCount as number) > 1
@@ -78,7 +76,7 @@ async function InventoryDetailsPage({
                   </p>
                 </div>
                 <div className="space-y-1 lg:space-y-2">
-                  <p className="text-xs text-desc md:text-sm">Created</p>
+                  <p className="desc-2 text-xs md:text-sm">Created</p>
                   <p className="text-sm font-semibold md:text-base">
                     {formatDate(inventory.createdAt)}
                   </p>
@@ -86,15 +84,13 @@ async function InventoryDetailsPage({
                 {currentUserRole === "USER" && (
                   <>
                     <div className="space-y-1 lg:space-y-2">
-                      <p className="text-xs text-desc md:text-sm">
-                        Last Updated
-                      </p>
+                      <p className="desc-2 text-xs md:text-sm">Last Updated</p>
                       <p className="text-sm font-semibold md:text-base">
                         {formatDate(inventory.updatedAt)}
                       </p>
                     </div>
                     <div className="space-y-1 lg:space-y-2">
-                      <p className="text-xs text-desc md:text-sm">
+                      <p className="desc-2 text-xs md:text-sm">
                         Your Current Role
                       </p>
                       <h4 className="line-clamp-1 text-sm font-semibold md:text-base">

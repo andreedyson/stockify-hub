@@ -26,26 +26,26 @@ function InventoryCard({ inventoryData }: InventoryCardProps) {
         </div>
         <div className="flex flex-col gap-5">
           <div>
-            <span className="text-xs font-semibold text-desc">Name</span>
+            <span className="desc-2 text-xs font-semibold">Name</span>
             <p className="line-clamp-1 text-lg font-bold">
               {inventoryData.name}
             </p>
           </div>
           <div className="flex items-center justify-between">
             <div className="flex flex-col font-semibold">
-              <span className="text-xs text-desc">Created</span>
+              <span className="desc-2 text-xs">Created</span>
               <span className="text-sm">
                 {formatDate(inventoryData.createdAt)}
               </span>
             </div>
             <div className="flex flex-col font-semibold">
-              <span className="text-xs text-desc">Last Update</span>
+              <span className="desc-2 text-xs">Last Update</span>
               <span className="text-sm">
                 {formatDate(inventoryData.updatedAt)}
               </span>
             </div>
             <div className="flex flex-col font-semibold">
-              <span className="text-xs text-desc">Members</span>
+              <span className="desc-2 text-xs">Members</span>
               <span className="text-sm">{inventoryData.memberCount}</span>
             </div>
           </div>
