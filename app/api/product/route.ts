@@ -96,6 +96,16 @@ export async function PUT(req: Request) {
       );
     }
 
+    if (product.inventoryId !== inventory.id) {
+      return NextResponse.json(
+        {
+          message:
+            "You can't change the category for a product from a different inventory",
+        },
+        { status: 400 },
+      );
+    }
+
     const response = productSchema.safeParse({
       name,
       description,

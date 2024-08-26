@@ -68,8 +68,8 @@ function EditProductForm({ userId, product }: EditProductProps) {
     isLoading,
     error,
   } = useQuery<UserCategories>({
-    queryFn: () => getCategories(userId),
     queryKey: ["category"],
+    queryFn: () => getCategories(userId),
   });
 
   const handleImage = (
@@ -119,6 +119,7 @@ function EditProductForm({ userId, product }: EditProductProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          userId: userId,
           productId: product.id,
           name: values.name,
           price: values.price,
