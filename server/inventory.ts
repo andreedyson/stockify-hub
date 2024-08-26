@@ -52,6 +52,23 @@ export async function getInventoryById(
   }
 }
 
+export async function getUserInventoryIds(userId: string): Promise<string[]> {
+  // Search inventories the user is a part of
+  const userInventories = await prisma.inventoryMember.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      inventoryId: true,
+    },
+  });
+
+  // Extract all of the inventory IDs
+  const inventoryIds = userInventories.map((member) => member.inventoryId);
+
+  return inventoryIds;
+}
+
 export async function getUserInventories(
   userId: string,
 ): Promise<UserInventoriesPromise[]> {

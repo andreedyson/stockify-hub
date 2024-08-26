@@ -8,23 +8,7 @@ import {
   ProductWithCategory,
 } from "@/types/server/product";
 import { Product } from "@prisma/client";
-
-async function getUserInventoryIds(userId: string): Promise<string[]> {
-  // Search inventories the user is a part of
-  const userInventories = await prisma.inventoryMember.findMany({
-    where: {
-      userId: userId,
-    },
-    select: {
-      inventoryId: true,
-    },
-  });
-
-  // Extract all of the inventory IDs
-  const inventoryIds = userInventories.map((member) => member.inventoryId);
-
-  return inventoryIds;
-}
+import { getUserInventoryIds } from "./inventory";
 
 export async function getProductById(
   userId: string,

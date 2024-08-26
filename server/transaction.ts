@@ -5,7 +5,7 @@ import {
   TransactionsInsightsType,
   TransactionsTableType,
 } from "@/types/server/transaction";
-import { Transaction } from "@prisma/client";
+import { getUserInventoryIds } from "./inventory";
 
 export async function getTotalTransactionsByStatus(userId: string) {
   try {
@@ -47,18 +47,7 @@ export async function getTransactionTableData(
   userId: string,
 ): Promise<TransactionsTableType[]> {
   try {
-    const userHasAccess = await prisma.inventoryMember.findFirst({
-      where: {
-        userId: userId,
-      },
-      include: {
-        user: {
-          select: {
-            email: true,
-          },
-        },
-      },
-    });
+    const inventoryIds = await getUserInventoryIds(userId);
 
     const transactions = await prisma.transaction.findMany({
       where: {
@@ -77,6 +66,7 @@ export async function getTransactionTableData(
           select: {
             id: true,
             name: true,
+            Inventory: true,
           },
         },
       },
@@ -85,17 +75,28 @@ export async function getTransactionTableData(
       },
     });
 
-    const results = transactions.map((transaction) => ({
-      id: transaction.id,
-      date: transaction.date,
-      status: transaction.status,
-      product: transaction.product.name,
-      productId: transaction.productId,
-      quantity: transaction.quantity,
-      total: transaction.totalPrice,
-      userId: userHasAccess?.userId as string,
-      currentUserRole: userHasAccess?.role ?? "USER",
-    }));
+    const results = await Promise.all(
+      transactions.map(async (transaction) => {
+        const userAccess = await prisma.inventoryMember.findFirst({
+          where: {
+            userId: userId,
+            inventoryId: transaction.product.Inventory.id,
+          },
+        });
+
+        return {
+          id: transaction.id,
+          date: transaction.date,
+          status: transaction.status,
+          product: transaction.product.name,
+          productId: transaction.productId,
+          quantity: transaction.quantity,
+          total: transaction.totalPrice,
+          userId: userAccess?.userId as string,
+          currentUserRole: userAccess?.role ?? "USER",
+        };
+      }),
+    );
 
     return results;
   } catch (error: any) {
@@ -111,6 +112,7 @@ export async function getTransactionTableByInventories(
     const userHasAccess = await prisma.inventoryMember.findFirst({
       where: {
         userId: userId,
+        inventoryId: inventoryId,
       },
       include: {
         user: {
