@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { InventoryMemberColumns as columns } from "@/components//tables/members/inventory-members-columns";
+import { InventoryMemberColumns as memberColumns } from "@/components//tables/members/inventory-members-columns";
+import { TransactionsColumns as transactionColumns } from "@/components/tables/transactions/transactions-columns";
 import AddCategoryDialog from "@/components/dialogs/AddCategoryDialog";
 import AddMemberDialog from "@/components/dialogs/AddMemberDialog";
 import EditInventoryForm from "@/components/dialogs/EditInventoryForm";
@@ -14,6 +15,7 @@ import {
   getInventoryById,
 } from "@/server/inventory";
 import { getProductsByInventory } from "@/server/product";
+import { getTransactionTableByInventories } from "@/server/transaction";
 import { ChevronRight, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -34,11 +36,15 @@ async function InventoryDetailsPage({
 
   const userId = session.user.id;
   const inventory = await getInventoryById(userId, id);
-  const tableData = await getCurrentInventoryMembers(userId, id);
-  const inventoryOwner = tableData.find((user) => user.role === "OWNER");
-  const currentUserRole = tableData.find((user) => user)?.currentUserRole;
+  const memberTableData = await getCurrentInventoryMembers(userId, id);
+  const inventoryOwner = memberTableData.find((user) => user.role === "OWNER");
+  const currentUserRole = memberTableData.find((user) => user)?.currentUserRole;
   const currentInventoryCategory = await getInventoryCategories(inventory.id);
   const inventoryProducts = await getProductsByInventory(userId, id);
+  const transactionsTableData = await getTransactionTableByInventories(
+    userId,
+    id,
+  );
 
   return (
     <section className="space-y-6">
@@ -125,8 +131,8 @@ async function InventoryDetailsPage({
           </div>
           <div className="mt-4">
             <DataTable
-              columns={columns}
-              data={tableData}
+              columns={memberColumns}
+              data={memberTableData}
               className="border-none"
               dataPerPage={4}
               showSearch
@@ -169,6 +175,19 @@ async function InventoryDetailsPage({
               />
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="bg-main-card space-y-4 rounded-md p-6">
+        <div>
+          <h4 className="section-header">Transactions</h4>
+        </div>
+        <div>
+          <DataTable
+            columns={transactionColumns}
+            data={transactionsTableData}
+            className="border-none"
+          />
         </div>
       </div>
     </section>

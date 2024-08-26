@@ -5,7 +5,6 @@ import { DataTableColumnHeader } from "@/components/tables/DataTableColumnHeader
 import { currencyFormatterIDR, formatDate } from "@/lib/utils";
 import { TransactionsTableType } from "@/types/server/transaction";
 import StatusBadge from "@/components/StatusBadge";
-import ColumnAction from "../MemberColumnAction";
 import TransactionColumnAction from "../TransactionColumnAction";
 
 export const TransactionsColumns: ColumnDef<TransactionsTableType>[] = [

@@ -93,7 +93,62 @@ export async function getTransactionTableData(
       productId: transaction.productId,
       quantity: transaction.quantity,
       total: transaction.totalPrice,
-      userId: userHasAccess?.id as string,
+      userId: userHasAccess?.userId as string,
+      currentUserRole: userHasAccess?.role ?? "USER",
+    }));
+
+    return results;
+  } catch (error: any) {
+    throw new Error(error.message || "An error occurred");
+  }
+}
+
+export async function getTransactionTableByInventories(
+  userId: string,
+  inventoryId: string,
+): Promise<TransactionsTableType[]> {
+  try {
+    const userHasAccess = await prisma.inventoryMember.findFirst({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: {
+          select: {
+            email: true,
+          },
+        },
+      },
+    });
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        product: {
+          inventoryId: inventoryId,
+        },
+      },
+      include: {
+        product: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+      },
+    });
+
+    const results = transactions.map((transaction) => ({
+      id: transaction.id,
+      date: transaction.date,
+      status: transaction.status,
+      product: transaction.product.name,
+      productId: transaction.productId,
+      quantity: transaction.quantity,
+      total: transaction.totalPrice,
+      userId: userHasAccess?.userId as string,
       currentUserRole: userHasAccess?.role ?? "USER",
     }));
 

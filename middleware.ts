@@ -17,6 +17,5 @@ export const config = {
     "/inventory/:path*",
     "/products",
     "/transactions",
-    "/api/:path*",
   ],
 };
