@@ -90,6 +90,13 @@ export async function PUT(req: NextRequest) {
       where: {
         id: transactionId,
       },
+      include: {
+        product: {
+          include: {
+            Inventory: true,
+          },
+        },
+      },
     });
 
     const product = await prisma.product.findUnique({
@@ -123,6 +130,15 @@ export async function PUT(req: NextRequest) {
       const { errors } = response.error;
 
       return NextResponse.json({ message: errors[0].message }, { status: 400 });
+    }
+
+    if (product.inventoryId !== transaction.product.Inventory.id) {
+      return NextResponse.json(
+        {
+          message: "You can't change the product from another inventory.",
+        },
+        { status: 400 },
+      );
     }
 
     // Check if the quantity is bigger than the current product stock added by the current transaction quantity

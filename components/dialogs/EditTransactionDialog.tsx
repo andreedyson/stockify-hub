@@ -117,9 +117,9 @@ function EditTransactionDialog({
           description: data.message,
           variant: "success",
         });
-        onSubmitSuccess();
-        router.refresh();
         queryClient.invalidateQueries({ queryKey: ["product"] });
+        onSubmitSuccess();
+        router.push("/transactions");
       }
     } catch (error: any) {
       setSubmitting(false);
