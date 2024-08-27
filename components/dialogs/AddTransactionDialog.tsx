@@ -281,7 +281,7 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
                 isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                Add Transaction
+                {submitting ? "Adding" : "Add Transaction"}
               </SubmitButton>
             </DialogFooter>
           </form>

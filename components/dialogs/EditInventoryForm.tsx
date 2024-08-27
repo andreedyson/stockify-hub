@@ -133,7 +133,7 @@ function EditInventoryForm({ userId, inventoryData }: EditInventoryProps) {
             isSubmitting={submitting}
             className="w-[100px] bg-main-700 hover:bg-main-500 dark:text-foreground md:w-[120px]"
           >
-            Edit
+            {submitting ? "Editing" : "Edit"}
           </SubmitButton>
         </div>
       </form>

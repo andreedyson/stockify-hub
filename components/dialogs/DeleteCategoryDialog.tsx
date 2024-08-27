@@ -81,7 +81,7 @@ function DeleteCategoryDialog({
           isSubmitting={submitting}
           className="w-[100px] rounded-sm bg-red-500 text-white duration-200 hover:bg-red-300"
         >
-          Delete
+          {submitting ? "Deleting" : "Delete"}
         </SubmitButton>
       </DialogFooter>
     </div>

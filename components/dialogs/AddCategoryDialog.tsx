@@ -132,7 +132,7 @@ function AddCategoryDialog({ inventoryId }: CategoryProps) {
                 isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                Add Category
+                {submitting ? "Adding" : "Add Category"}
               </SubmitButton>
             </DialogFooter>
           </form>

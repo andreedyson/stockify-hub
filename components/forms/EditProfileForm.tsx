@@ -27,6 +27,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
 import Loader from "../ui/loader";
 import { useToast } from "../ui/use-toast";
+import { SubmitButton } from "../SubmitButton";
 
 type EditProfileProps = {
   userId: string;
@@ -272,13 +273,12 @@ function EditProfileForm({ userId }: EditProfileProps) {
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                disabled={submitting}
+              <SubmitButton
+                isSubmitting={submitting}
                 className="mt-6 w-full max-w-[600px] bg-main-500 text-white hover:bg-main-400"
               >
-                {submitting ? "Saving..." : "Save Changes"}
-              </Button>
+                {submitting ? "Saving" : "Save Changes"}
+              </SubmitButton>
             </div>
           </div>
         </div>

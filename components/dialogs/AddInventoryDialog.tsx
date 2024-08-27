@@ -140,7 +140,7 @@ function AddInventoryDialog({ userId }: { userId: string }) {
                 isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                Add
+                {submitting ? "Adding" : "Add"}
               </SubmitButton>
             </DialogFooter>
           </form>

@@ -173,7 +173,7 @@ function AddMemberDialog({ inventoryId }: AddMemberProps) {
                 isSubmitting={submitting}
                 className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
               >
-                Add Member
+                {submitting ? "Adding" : "Add Member"}
               </SubmitButton>
             </DialogFooter>
           </form>

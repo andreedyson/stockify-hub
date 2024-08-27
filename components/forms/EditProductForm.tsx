@@ -318,7 +318,7 @@ function EditProductForm({ userId, product }: EditProductProps) {
               isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              Edit
+              {submitting ? "Editing" : "Edit"}
             </SubmitButton>
           </div>
         </div>

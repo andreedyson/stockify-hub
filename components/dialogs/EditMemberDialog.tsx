@@ -160,7 +160,7 @@ function EditMemberDialog({ userData, onSubmitSuccess }: AddMemberProps) {
               isSubmitting={submitting}
               className="w-full bg-main-700 hover:bg-main-500 dark:text-foreground"
             >
-              Edit Member
+              {submitting ? "Editing" : "Edit Member"}
             </SubmitButton>
           </DialogFooter>
         </form>
