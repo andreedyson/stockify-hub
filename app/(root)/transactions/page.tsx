@@ -56,7 +56,7 @@ async function TransactionsPage() {
           <div>
             <h4 className="section-header">Recent Transactions</h4>
           </div>
-          <div className="h-[90%]">
+          <div className="h-[70%]">
             <RecentTransactionsData transactionsData={recentTransactions} />
           </div>
         </div>

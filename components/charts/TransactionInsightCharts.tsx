@@ -31,11 +31,9 @@ export function TransactionInsightCharts() {
     },
   } satisfies ChartConfig;
 
-  const {
-    data: chartData = [],
-    isLoading,
-    refetch,
-  } = useQuery<TransactionsInsightsType[]>({
+  const { data: chartData = [], isLoading } = useQuery<
+    TransactionsInsightsType[]
+  >({
     queryKey: ["transactionData", timespan, userId],
     queryFn: async () => {
       const res = await fetch(
@@ -47,7 +45,7 @@ export function TransactionInsightCharts() {
     enabled: !!userId, // Only run query if userId is available
   });
 
-  if (status === "loading") return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <div className="flex w-full flex-col gap-4">
       <div className="flex justify-end">
@@ -62,8 +60,8 @@ export function TransactionInsightCharts() {
             accessibilityLayer
             data={chartData}
             margin={{
-              left: 12,
-              right: 12,
+              left: 20,
+              right: 20,
             }}
           >
             <CartesianGrid vertical={false} />
@@ -71,8 +69,10 @@ export function TransactionInsightCharts() {
               dataKey="date"
               tickLine={false}
               axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => formatDate(value)}
+              tickMargin={5}
+              tickFormatter={(value) => formatDate(new Date(value))}
+              interval={0}
+              padding={{ left: 20, right: 20 }}
             />
             <ChartTooltip
               cursor={false}

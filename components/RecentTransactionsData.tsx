@@ -12,7 +12,7 @@ function RecentTransactionsData({
   return (
     <>
       {transactionsData.length ? (
-        <div className="grid grid-cols-1 gap-3 sm:max-md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:max-md:grid-cols-2">
           {transactionsData.map((transaction) => (
             <RecentTransactionsList
               key={transaction.id}

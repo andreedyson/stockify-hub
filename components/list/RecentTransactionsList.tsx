@@ -26,7 +26,7 @@ function RecentTransactionsList({
         <div className="flex items-center gap-4">
           <div
             className={cn(
-              "flex size-10 items-center justify-center rounded-md bg-muted md:size-[52px]",
+              "flex size-10 items-center justify-center rounded-md bg-input dark:bg-muted md:size-[52px]",
               statusColor,
             )}
           >
@@ -41,10 +41,10 @@ function RecentTransactionsList({
             )}
           </div>
           <div className="space-y-1">
-            <h5 className="line-clamp-1 max-w-[200px] text-sm md:text-base">
+            <h5 className="line-clamp-1 max-w-[200px] text-sm max-md:max-w-[120px] md:text-base">
               {transactionData.productName}
             </h5>
-            <p className="line-clamp-1 w-fit max-w-[200px] rounded-full bg-gradient-to-r from-zinc-600 to-zinc-800 px-3 py-1 text-[10px]/[13px] md:text-xs">
+            <p className="bg-pill-sm line-clamp-1 w-fit max-w-[200px] rounded-full px-3 py-1 text-[10px]/[13px] md:text-xs">
               {transactionData.categoryName}
             </p>
           </div>
