@@ -14,6 +14,7 @@ export type TransactionsTableType = {
   product: string;
   productId: string;
   quantity: number;
+  inventoryId: string;
   total: number;
   userId: string;
   currentUserRole: string;

@@ -40,7 +40,7 @@ import { CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getProducts } from "@/data/product-data";
+import { getProducts, getProductsByInventoryId } from "@/data/product-data";
 import { UserProducts } from "@/types/server/product";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
@@ -69,8 +69,17 @@ function EditTransactionDialog({
     isLoading,
     error,
   } = useQuery<UserProducts>({
-    queryKey: ["product"],
-    queryFn: () => getProducts(transactionData.userId),
+    queryKey: ["product", transactionData.userId, transactionData.inventoryId],
+    queryFn: () => {
+      if (!transactionData.inventoryId) {
+        return getProducts(transactionData.userId);
+      } else {
+        return getProductsByInventoryId(
+          transactionData.userId,
+          transactionData.inventoryId,
+        );
+      }
+    },
   });
 
   const form = useForm<z.infer<typeof transactionSchema>>({

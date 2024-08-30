@@ -47,8 +47,6 @@ export async function getTransactionTableData(
   userId: string,
 ): Promise<TransactionsTableType[]> {
   try {
-    const inventoryIds = await getUserInventoryIds(userId);
-
     const transactions = await prisma.transaction.findMany({
       where: {
         product: {
@@ -66,7 +64,7 @@ export async function getTransactionTableData(
           select: {
             id: true,
             name: true,
-            Inventory: true,
+            inventoryId: true,
           },
         },
       },
@@ -80,7 +78,7 @@ export async function getTransactionTableData(
         const userAccess = await prisma.inventoryMember.findFirst({
           where: {
             userId: userId,
-            inventoryId: transaction.product.Inventory.id,
+            inventoryId: transaction.product.inventoryId,
           },
         });
 
@@ -91,6 +89,7 @@ export async function getTransactionTableData(
           product: transaction.product.name,
           productId: transaction.productId,
           quantity: transaction.quantity,
+          inventoryId: transaction.product.inventoryId,
           total: transaction.totalPrice,
           userId: userAccess?.userId as string,
           currentUserRole: userAccess?.role ?? "USER",
@@ -134,6 +133,7 @@ export async function getTransactionTableByInventories(
           select: {
             id: true,
             name: true,
+            inventoryId: true,
           },
         },
       },
@@ -150,6 +150,7 @@ export async function getTransactionTableByInventories(
       productId: transaction.productId,
       quantity: transaction.quantity,
       total: transaction.totalPrice,
+      inventoryId: transaction.product.inventoryId,
       userId: userHasAccess?.userId as string,
       currentUserRole: userHasAccess?.role ?? "USER",
     }));

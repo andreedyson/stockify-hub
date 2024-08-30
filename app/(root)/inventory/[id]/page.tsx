@@ -20,6 +20,7 @@ import { ChevronRight, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog";
 
 async function InventoryDetailsPage({
   params: { id },
@@ -179,8 +180,9 @@ async function InventoryDetailsPage({
       </div>
 
       <div className="bg-main-card space-y-4 rounded-md p-6">
-        <div>
-          <h4 className="section-header">Transactions</h4>
+        <div className="section-header flex items-center justify-between">
+          <h4>Transactions</h4>
+          <AddTransactionDialog userId={userId} inventoryId={id} />
         </div>
         <div>
           <DataTable

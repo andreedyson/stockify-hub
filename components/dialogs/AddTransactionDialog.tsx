@@ -42,7 +42,7 @@ import { ArrowLeftRight, CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useToast } from "../ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
-import { getProducts } from "@/data/product-data";
+import { getProducts, getProductsByInventoryId } from "@/data/product-data";
 import { UserProducts } from "@/types/server/product";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
@@ -52,9 +52,10 @@ import { SubmitButton } from "../SubmitButton";
 
 type TransactionFormProps = {
   userId: string;
+  inventoryId?: string;
 };
 
-function AddTransactionDialog({ userId }: TransactionFormProps) {
+function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -66,8 +67,14 @@ function AddTransactionDialog({ userId }: TransactionFormProps) {
     isLoading,
     error,
   } = useQuery<UserProducts>({
-    queryFn: () => getProducts(userId),
-    queryKey: ["product"],
+    queryKey: ["product", userId, inventoryId],
+    queryFn: () => {
+      if (!inventoryId) {
+        return getProducts(userId);
+      } else {
+        return getProductsByInventoryId(userId, inventoryId);
+      }
+    },
   });
 
   const form = useForm<z.infer<typeof transactionSchema>>({

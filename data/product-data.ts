@@ -7,3 +7,15 @@ export async function getProducts(userId: string): Promise<UserProducts> {
 
   return data;
 }
+
+export async function getProductsByInventoryId(
+  userId: string,
+  inventoryId: string,
+) {
+  const response = await fetch(
+    `${BASE_URL}/api/product/inventory?userId=${userId}&inventoryId=${inventoryId}`,
+  );
+  const data = await response.json();
+
+  return data;
+}
