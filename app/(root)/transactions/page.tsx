@@ -33,7 +33,7 @@ async function TransactionsPage() {
 
   return (
     <section className="h-full w-full space-y-6">
-      <div>
+      <div className="flex justify-end">
         <AddTransactionDialog userId={userId} />
       </div>
 

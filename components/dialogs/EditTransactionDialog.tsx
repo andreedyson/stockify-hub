@@ -119,7 +119,7 @@ function EditTransactionDialog({
         });
         queryClient.invalidateQueries({ queryKey: ["product"] });
         onSubmitSuccess();
-        router.push("/transactions");
+        router.refresh();
       }
     } catch (error: any) {
       setSubmitting(false);

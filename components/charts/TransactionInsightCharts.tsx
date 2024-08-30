@@ -14,9 +14,9 @@ import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import TimespanSelect from "../TimespanSelect";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
 
 export function TransactionInsightCharts() {
-  const [chartData, setChartData] = useState<TransactionsInsightsType[]>([]);
   const [timespan, setTimespan] = useState<string>("all");
   const { data: session, status } = useSession();
   const userId = session?.user?.id ?? "";
@@ -31,18 +31,21 @@ export function TransactionInsightCharts() {
     },
   } satisfies ChartConfig;
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const {
+    data: chartData = [],
+    isLoading,
+    refetch,
+  } = useQuery<TransactionsInsightsType[]>({
+    queryKey: ["transactionData", timespan, userId],
+    queryFn: async () => {
       const res = await fetch(
         `${BASE_URL}/api/transaction/timespan?span=${timespan}&userId=${userId}`,
       );
-
-      const data = await res.json();
-      setChartData(data);
-    };
-
-    fetchData();
-  }, [timespan, userId]);
+      if (!res.ok) throw new Error("Network response was not ok");
+      return res.json();
+    },
+    enabled: !!userId, // Only run query if userId is available
+  });
 
   if (status === "loading") return <div>Loading...</div>;
   return (
