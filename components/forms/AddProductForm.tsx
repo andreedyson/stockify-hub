@@ -62,8 +62,8 @@ function AddProductForm({ userId }: { userId: string }) {
     isLoading,
     error,
   } = useQuery<UserCategories>({
-    queryFn: () => getCategories(userId),
     queryKey: ["category"],
+    queryFn: () => getCategories(userId),
   });
 
   const handleImage = (

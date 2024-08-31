@@ -1,17 +1,20 @@
 import prisma from "@/lib/db";
 import {
+  CategoriesByInventoryType,
   CategoriesByUserType,
   InventoriesCategoriesChartDataType,
 } from "@/types/server/category";
-import { Category } from "@prisma/client";
 
 export async function getInventoryCategories(
   inventoryId: string,
-): Promise<Category[]> {
+): Promise<CategoriesByInventoryType[]> {
   try {
     const inventoryCategory = await prisma.category.findMany({
       where: {
         inventoryId: inventoryId,
+      },
+      include: {
+        Inventory: true,
       },
     });
 
@@ -19,7 +22,14 @@ export async function getInventoryCategories(
       throw new Error("Categories not found");
     }
 
-    return inventoryCategory;
+    const results = inventoryCategory.map((category) => ({
+      id: category.id,
+      name: category.name,
+      inventoryId: category.inventoryId,
+      inventoryName: category.Inventory.name,
+    }));
+
+    return results;
   } catch (error: any) {
     throw new Error(`${error.message}`);
   }

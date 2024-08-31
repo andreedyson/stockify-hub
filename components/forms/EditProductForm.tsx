@@ -18,7 +18,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BASE_URL } from "@/constants";
-import { getCategories } from "@/data/category-data";
+import {
+  getCategories,
+  getCategoriesByInventoryId,
+} from "@/data/category-data";
 import { useUploadThing } from "@/lib/uploadthing";
 import { isBase64Image } from "@/lib/utils";
 import { UserCategories } from "@/types/server/category";
@@ -40,10 +43,11 @@ import { SubmitButton } from "../SubmitButton";
 
 type EditProductProps = {
   userId: string;
+  inventoryId: string;
   product: Product;
 };
 
-function EditProductForm({ userId, product }: EditProductProps) {
+function EditProductForm({ userId, inventoryId, product }: EditProductProps) {
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -68,8 +72,8 @@ function EditProductForm({ userId, product }: EditProductProps) {
     isLoading,
     error,
   } = useQuery<UserCategories>({
-    queryKey: ["category"],
-    queryFn: () => getCategories(userId),
+    queryKey: ["inventoryCategory", inventoryId],
+    queryFn: () => getCategoriesByInventoryId(inventoryId),
   });
 
   const handleImage = (

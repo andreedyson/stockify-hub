@@ -22,7 +22,11 @@ async function EditProductPage({
 
   return (
     <div>
-      <EditProductForm userId={userId} product={productDetails} />
+      <EditProductForm
+        userId={userId}
+        product={productDetails}
+        inventoryId={productDetails.inventoryId}
+      />
     </div>
   );
 }
