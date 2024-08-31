@@ -164,6 +164,7 @@ export async function getTransactionTableByInventories(
 export async function getTransactionsByTimeSpan(
   userId: string,
   span: string = "all",
+  inventoryId?: string,
 ): Promise<TransactionsInsightsType[]> {
   try {
     const user = await prisma.user.findUnique({
@@ -216,6 +217,7 @@ export async function getTransactionsByTimeSpan(
                 userId: userId,
               },
             },
+            ...(inventoryId && { id: inventoryId }),
           },
         },
         date: {

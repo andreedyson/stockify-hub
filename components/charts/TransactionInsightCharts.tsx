@@ -9,35 +9,51 @@ import {
 import { BASE_URL } from "@/constants";
 import { formatDate } from "@/lib/utils";
 import { TransactionsInsightsType } from "@/types/server/transaction";
+import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import TimespanSelect from "../TimespanSelect";
-import Image from "next/image";
-import { useQuery } from "@tanstack/react-query";
 
-export function TransactionInsightCharts() {
+export function TransactionInsightCharts({
+  inventoryId,
+}: {
+  inventoryId?: string;
+}) {
   const [timespan, setTimespan] = useState<string>("all");
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const userId = session?.user?.id ?? "";
 
   const chartConfig = {
     date: {
       label: "Date",
-      color: "hsl(var(--chart-3))",
+      color: "hsl(var(--chart-4))",
     },
     total: {
       label: "Total",
     },
   } satisfies ChartConfig;
 
-  const { data: chartData = [], isLoading } = useQuery<
-    TransactionsInsightsType[]
-  >({
-    queryKey: ["transactionData", timespan, userId],
+  const {
+    data: chartData = [],
+    isLoading,
+    refetch,
+  } = useQuery<TransactionsInsightsType[]>({
+    queryKey: ["transactionData", userId],
     queryFn: async () => {
+      const queryParams = new URLSearchParams({
+        span: timespan,
+        userId: userId,
+      });
+
+      // Conditionally add inventoryId to the query parameters
+      if (inventoryId) {
+        queryParams.append("inventoryId", inventoryId);
+      }
+
       const res = await fetch(
-        `${BASE_URL}/api/transaction/timespan?span=${timespan}&userId=${userId}`,
+        `${BASE_URL}/api/transaction/timespan?${queryParams.toString()}`,
       );
       if (!res.ok) throw new Error("Network response was not ok");
       return res.json();
@@ -45,16 +61,22 @@ export function TransactionInsightCharts() {
     enabled: !!userId, // Only run query if userId is available
   });
 
+  useEffect(() => {
+    if (userId) {
+      refetch();
+    }
+  }, [timespan, userId, refetch]);
+
   if (isLoading) return <div>Loading...</div>;
   return (
-    <div className="flex w-full flex-col gap-4">
+    <div className="flex h-full w-full flex-col gap-4">
       <div className="flex justify-end">
         <TimespanSelect onValueChange={(value: string) => setTimespan(value)} />
       </div>
       {chartData.length ? (
         <ChartContainer
           config={chartConfig}
-          className="max-h-[300px] min-h-[200px] w-full"
+          className="h-full max-h-[300px] min-h-[200px] w-full"
         >
           <LineChart
             accessibilityLayer
@@ -81,10 +103,10 @@ export function TransactionInsightCharts() {
             <Line
               dataKey="total"
               type="bump"
-              stroke="hsl(var(--chart-3))"
+              stroke="hsl(var(--chart-4))"
               strokeWidth={2}
               dot={{
-                fill: "hsl(var(--chart-3))",
+                fill: "hsl(var(--chart-4))",
               }}
               activeDot={{
                 r: 6,

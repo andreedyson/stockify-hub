@@ -182,7 +182,9 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
                             className="w-full font-semibold"
                           >
                             <div className="flex w-full items-center gap-2">
-                              <p>{product.name}</p>
+                              <p className="line-clamp-1 max-md:max-w-[120px]">
+                                {product.name}
+                              </p>
                               <p>({product.Inventory?.name})</p>
                             </div>
                           </SelectItem>

@@ -31,10 +31,9 @@ export function ProductsValueCharts({ productsData }: ProductsValueChartsType) {
     },
   } satisfies ChartConfig;
 
-  const totalProductsValue =
-    useMemo(() => {
-      return chartData.reduce((acc, curr) => acc + curr.value, 0);
-    }, [chartData]) || 0;
+  const totalProductsValue = useMemo(() => {
+    return chartData.reduce((acc, curr) => acc + curr.value, 0);
+  }, [chartData]);
 
   return (
     <>

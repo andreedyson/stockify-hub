@@ -4,10 +4,11 @@ import {
   CategoriesByUserType,
   InventoriesCategoriesChartDataType,
 } from "@/types/server/category";
+import { Category } from "@prisma/client";
 
 export async function getInventoryCategories(
   inventoryId: string,
-): Promise<CategoriesByInventoryType[]> {
+): Promise<Category[]> {
   try {
     const inventoryCategory = await prisma.category.findMany({
       where: {
@@ -25,6 +26,8 @@ export async function getInventoryCategories(
     const results = inventoryCategory.map((category) => ({
       id: category.id,
       name: category.name,
+      createdAt: category.createdAt,
+      updatedAt: category.updatedAt,
       inventoryId: category.inventoryId,
       inventoryName: category.Inventory.name,
     }));

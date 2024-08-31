@@ -6,6 +6,7 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const query = url.searchParams.get("span");
     const userId = url.searchParams.get("userId");
+    const inventoryId = url.searchParams.get("inventoryId");
 
     if (!query || !userId) {
       return NextResponse.json(
@@ -14,7 +15,11 @@ export async function GET(req: Request) {
       );
     }
 
-    const res = await getTransactionsByTimeSpan(userId, query);
+    const res = await getTransactionsByTimeSpan(
+      userId,
+      query,
+      inventoryId || undefined,
+    );
 
     return NextResponse.json(res, { status: 200 });
   } catch (error) {

@@ -1,12 +1,14 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { InventoryMemberColumns as memberColumns } from "@/components//tables/members/inventory-members-columns";
-import { TransactionsColumns as transactionColumns } from "@/components/tables/transactions/transactions-columns";
+import { TransactionInsightCharts } from "@/components/charts/TransactionInsightCharts";
 import AddCategoryDialog from "@/components/dialogs/AddCategoryDialog";
 import AddMemberDialog from "@/components/dialogs/AddMemberDialog";
+import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog";
 import EditInventoryForm from "@/components/dialogs/EditInventoryForm";
 import CategoryList from "@/components/list/CategoryList";
 import ProductsList from "@/components/list/ProductsList";
 import BackButton from "@/components/navigations/BackButton";
+import { TransactionsColumns as transactionColumns } from "@/components/tables/transactions/transactions-columns";
 import { DataTable } from "@/components/ui/data-table";
 import { formatDate } from "@/lib/utils";
 import { getInventoryCategories } from "@/server/category";
@@ -20,7 +22,6 @@ import { ChevronRight, Crown } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog";
 
 async function InventoryDetailsPage({
   params: { id },
@@ -160,7 +161,7 @@ async function InventoryDetailsPage({
           </div>
         </div>
         {/* Category List */}
-        <div className="bg-main-card rounded-md px-4 py-6 md:px-6 lg:col-span-4">
+        <div className="bg-main-card col-span-1 w-full rounded-md px-4 py-6 md:px-6 lg:col-span-4">
           <div className="section-header flex items-center justify-between">
             <h3>Categories</h3>
             {currentUserRole !== "USER" && (
@@ -179,17 +180,28 @@ async function InventoryDetailsPage({
         </div>
       </div>
 
-      <div className="bg-main-card space-y-4 rounded-md p-6">
-        <div className="section-header flex items-center justify-between">
-          <h4>Transactions</h4>
-          <AddTransactionDialog userId={userId} inventoryId={id} />
+      <div className="grid grid-cols-1 gap-4 max-md:gap-y-6 lg:grid-cols-12">
+        <div className="bg-main-card col-span-1 w-full space-y-4 rounded-md p-6 lg:col-span-4">
+          <div>
+            <h4 className="section-header">Insights</h4>
+          </div>
+          <div className="h-[85%]">
+            <TransactionInsightCharts inventoryId={id} />
+          </div>
         </div>
-        <div>
-          <DataTable
-            columns={transactionColumns}
-            data={transactionsTableData}
-            className="border-none"
-          />
+        {/* Transactions Table */}
+        <div className="bg-main-card col-span-1 w-full space-y-4 rounded-md p-6 lg:col-span-8">
+          <div className="section-header flex items-center justify-between">
+            <h4>Transactions</h4>
+            <AddTransactionDialog userId={userId} inventoryId={id} />
+          </div>
+          <div>
+            <DataTable
+              columns={transactionColumns}
+              data={transactionsTableData}
+              className="border-none"
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -24,7 +24,7 @@ function StatusBadge({ status }: { status: Status }) {
   return (
     <div
       className={cn(
-        "flex w-fit items-center gap-2 rounded-full px-3 py-2",
+        "flex items-center gap-1 rounded-full py-2 max-md:px-3 md:w-[135px] md:justify-center",
         bgStyle,
         textStyle,
       )}
@@ -40,7 +40,7 @@ function StatusBadge({ status }: { status: Status }) {
           <Ban size={20} />
         )}
       </div>
-      <p className="line-clamp-1 text-[10px] font-semibold md:text-xs">
+      <p className="text-[10px] font-semibold max-md:line-clamp-1 md:text-xs">
         {status.split("_").join(" ")}
       </p>
     </div>
