@@ -1,8 +1,9 @@
-import { Category, Inventory, Product } from "@prisma/client";
+import { Inventory, Product } from "@prisma/client";
 
 export type ProductsInUserInventoriesType = Product & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
   Inventory?: Pick<Inventory, "name">;
+  currentUserId: string;
 };
 
 export type InventoriesProductCountType = {
@@ -37,4 +38,5 @@ export type ProductWithCategory = Product & {
   Category?: { name: string };
   Inventory?: { name: string };
   currentUserRole: "USER" | "ADMIN" | "OWNER";
+  currentUserId: string;
 };

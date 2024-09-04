@@ -71,3 +71,7 @@ export const transactionSchema = z.object({
   date: z.coerce.date(),
   status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"]),
 });
+
+export const addStockSchema = z.object({
+  stock: z.coerce.number().min(1, { message: "Stock should be more than 0" }),
+});

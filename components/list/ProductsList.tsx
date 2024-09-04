@@ -16,17 +16,19 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 
 import { currencyFormatterIDR } from "@/lib/utils";
+import { ProductWithCategory } from "@/types/server/product";
 import {
   ChevronLeft,
   ChevronRight,
   MoreHorizontal,
   Pencil,
+  Plus,
   Trash2,
 } from "lucide-react";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import AddStocksDialog from "../dialogs/AddStocksDialog";
 import DeleteProductDialog from "../dialogs/DeleteProductDialog";
-import { ProductWithCategory } from "@/types/server/product";
 
 type ProductListProps = {
   products: ProductWithCategory[];
@@ -38,8 +40,12 @@ function ProductsList({ products, size }: ProductListProps) {
   const [startIndex, setStartIndex] = useState<number>(0);
   const [endIndex, setEndIndex] = useState<number>(size || dataPerPage);
 
-  const [openDialog, setOpenDialog] = useState(false);
-  const [action, setAction] = useState("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [action, setAction] = useState<"edit" | "delete" | "add" | "">("");
+  const [deleteProductId, setDeleteProductId] = useState<string | null>(null);
+  const [addStockProductId, setAddStockProductId] = useState<string | null>(
+    null,
+  );
 
   const handleSubmitSuccess = () => {
     setOpenDialog(false);
@@ -112,10 +118,7 @@ function ProductsList({ products, size }: ProductListProps) {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DialogTrigger
-                            asChild
-                            onClick={() => setAction("edit")}
-                          >
+                          <DialogTrigger asChild>
                             <DropdownMenuItem>
                               <Link
                                 href={`/products/edit-product/${product.id}`}
@@ -128,7 +131,10 @@ function ProductsList({ products, size }: ProductListProps) {
                           {product.currentUserRole === "OWNER" && (
                             <DialogTrigger
                               asChild
-                              onClick={() => setAction("delete")}
+                              onClick={() => {
+                                setAction("delete");
+                                setDeleteProductId(product.id);
+                              }}
                             >
                               <DropdownMenuItem className="flex items-center gap-2">
                                 <Trash2 className="h-4 w-4" color="red" />
@@ -136,12 +142,35 @@ function ProductsList({ products, size }: ProductListProps) {
                               </DropdownMenuItem>
                             </DialogTrigger>
                           )}
+                          <DialogTrigger
+                            asChild
+                            onClick={() => {
+                              setAction("add");
+                              setAddStockProductId(product.id);
+                            }}
+                          >
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Plus className="h-4 w-4" color="aqua" />
+                              Add Stocks
+                            </DropdownMenuItem>
+                          </DialogTrigger>
                         </DropdownMenuContent>
                       </DropdownMenu>
+
                       {action === "delete" && (
                         <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
                           <DeleteProductDialog
-                            productId={product.id}
+                            productId={deleteProductId || ""}
+                            onSubmitSuccess={handleSubmitSuccess}
+                          />
+                        </DialogContent>
+                      )}
+
+                      {action === "add" && (
+                        <DialogContent className="max-w-[350px] rounded-md sm:max-w-[425px]">
+                          <AddStocksDialog
+                            productId={addStockProductId || ""}
+                            userId={product.currentUserId}
                             onSubmitSuccess={handleSubmitSuccess}
                           />
                         </DialogContent>

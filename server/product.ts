@@ -87,6 +87,7 @@ export async function getProductsInUserInventories(
         return {
           ...product,
           currentUserRole: user?.role ?? "USER",
+          currentUserId: user?.userId as string,
         };
       }),
     );
@@ -141,8 +142,8 @@ export async function getProductsByInventory(
 
         return {
           ...product,
-          userId: user?.id as string,
           currentUserRole: user?.role ?? "USER",
+          currentUserId: user?.id as string,
         };
       }),
     );
