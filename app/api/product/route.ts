@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: errors[0].message }, { status: 400 });
     }
 
-    await prisma.product.create({
+    const product = await prisma.product.create({
       data: {
         name: name,
         description: description,
@@ -49,7 +49,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Product created successfully" },
+      { message: "Product created successfully", data: product },
       { status: 200 },
     );
   } catch (error) {
@@ -154,22 +154,7 @@ export async function PUT(req: Request) {
     }
 
     // Update the product if the image changed
-    await prisma.product.update({
-      where: {
-        id: productId,
-      },
-      data: {
-        name: name,
-        description: description,
-        price: price,
-        stock: stock,
-        image: image,
-        categoryId: categoryId,
-        inventoryId: inventoryId,
-      },
-    });
-
-    await prisma.product.update({
+    const updatedProduct = await prisma.product.update({
       where: {
         id: productId,
       },
@@ -185,7 +170,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Product successfully updated" },
+      { message: "Product successfully updated", data: updatedProduct },
       { status: 200 },
     );
   } catch (error) {

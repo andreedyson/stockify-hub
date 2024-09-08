@@ -43,7 +43,7 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.category.create({
+    const category = await prisma.category.create({
       data: {
         name: name,
         inventoryId: inventoryId,
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Category created successfully" },
+      { message: "Category created successfully", data: category },
       { status: 200 },
     );
   } catch (error) {
@@ -101,7 +101,7 @@ export async function PUT(req: Request) {
       );
     }
 
-    await prisma.category.update({
+    const updatedCategory = await prisma.category.update({
       where: {
         id: categoryId,
       },
@@ -111,7 +111,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Category edited successfully" },
+      { message: "Category edited successfully", data: updatedCategory },
       { status: 200 },
     );
   } catch (error) {

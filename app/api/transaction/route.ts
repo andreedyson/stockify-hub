@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await prisma.transaction.create({
+    const transaction = await prisma.transaction.create({
       data: {
         productId: productId,
         quantity: quantity,
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Transaction added successfully" },
+      { message: "Transaction added successfully", data: transaction },
       { status: 200 },
     );
   } catch (error) {
@@ -211,7 +211,7 @@ export async function PUT(req: NextRequest) {
     }
 
     // Update the transaction regardless of whether the quantity changed
-    await prisma.transaction.update({
+    const updatedTransaction = await prisma.transaction.update({
       where: {
         id: transactionId,
       },
@@ -225,7 +225,7 @@ export async function PUT(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Transaction edited successfully" },
+      { message: "Transaction edited successfully", data: updatedTransaction },
       { status: 200 },
     );
   } catch (error) {

@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.inventory.create({
+    const inventory = await prisma.inventory.create({
       data: {
         name: name,
         color: color,
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Inventory successfully created" },
+      { message: "Inventory successfully created", data: inventory },
       { status: 200 },
     );
   } catch (error) {
@@ -87,7 +87,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    await prisma.inventory.update({
+    const updatedInventory = await prisma.inventory.update({
       where: {
         id: inventoryId,
       },
@@ -98,7 +98,7 @@ export async function PUT(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: "Inventory successfully updated" },
+      { message: "Inventory successfully updated", data: updatedInventory },
       { status: 200 },
     );
   } catch (error) {

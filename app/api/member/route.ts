@@ -58,7 +58,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: errors[0].message }, { status: 400 });
     }
 
-    await prisma.inventoryMember.create({
+    const addedMember = await prisma.inventoryMember.create({
       data: {
         userId: userExist.id,
         inventoryId: inventoryId,
@@ -67,7 +67,10 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Member added to the inventory successfully" },
+      {
+        message: "Member added to the inventory successfully",
+        data: addedMember,
+      },
       { status: 200 },
     );
   } catch (error) {
@@ -104,7 +107,7 @@ export async function PUT(req: Request) {
     if (!userExist)
       return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-    await prisma.inventoryMember.updateMany({
+    const editedMember = await prisma.inventoryMember.updateMany({
       where: {
         userId: userId,
         inventoryId: inventoryId,
@@ -113,7 +116,7 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Member role edited successfully" },
+      { message: "Member role edited successfully", data: editedMember },
       { status: 200 },
     );
   } catch (error) {
