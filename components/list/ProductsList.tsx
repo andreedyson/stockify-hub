@@ -118,6 +118,19 @@ function ProductsList({ products, size }: ProductListProps) {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                          <DialogTrigger
+                            asChild
+                            onClick={() => {
+                              setAction("add");
+                              setAddStockProductId(product.id);
+                            }}
+                            className="cursor-pointer"
+                          >
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Plus className="h-4 w-4" color="aqua" />
+                              Add Stocks
+                            </DropdownMenuItem>
+                          </DialogTrigger>
                           <DialogTrigger asChild>
                             <DropdownMenuItem>
                               <Link
@@ -135,6 +148,7 @@ function ProductsList({ products, size }: ProductListProps) {
                                 setAction("delete");
                                 setDeleteProductId(product.id);
                               }}
+                              className="cursor-pointer"
                             >
                               <DropdownMenuItem className="flex items-center gap-2">
                                 <Trash2 className="h-4 w-4" color="red" />
@@ -142,18 +156,6 @@ function ProductsList({ products, size }: ProductListProps) {
                               </DropdownMenuItem>
                             </DialogTrigger>
                           )}
-                          <DialogTrigger
-                            asChild
-                            onClick={() => {
-                              setAction("add");
-                              setAddStockProductId(product.id);
-                            }}
-                          >
-                            <DropdownMenuItem className="flex items-center gap-2">
-                              <Plus className="h-4 w-4" color="aqua" />
-                              Add Stocks
-                            </DropdownMenuItem>
-                          </DialogTrigger>
                         </DropdownMenuContent>
                       </DropdownMenu>
 

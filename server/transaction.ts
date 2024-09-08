@@ -5,7 +5,6 @@ import {
   TransactionsInsightsType,
   TransactionsTableType,
 } from "@/types/server/transaction";
-import { getUserInventoryIds } from "./inventory";
 
 export async function getTotalTransactionsByStatus(userId: string) {
   try {

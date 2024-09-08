@@ -1,9 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import {
   DialogDescription,
   DialogFooter,
@@ -19,11 +15,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addStockSchema } from "@/types/validations";
-import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
 import { BASE_URL } from "@/constants";
+import { addStockSchema } from "@/types/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { SubmitButton } from "../SubmitButton";
+import { useToast } from "../ui/use-toast";
 
 type AddStocksDialogType = {
   userId: string;
@@ -91,7 +91,7 @@ function AddStocksDialog({
     }
   }
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <DialogHeader>
         <DialogTitle>Add a stock</DialogTitle>
         <DialogDescription>

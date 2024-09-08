@@ -18,7 +18,6 @@ model User {
   updatedAt DateTime @updatedAt
 
   inventories InventoryMember[]
-  Activity    Activity[]
 }
 
 model Inventory {
@@ -99,27 +98,4 @@ enum userRole {
   OWNER
   ADMIN
   USER
-}
-
-model Activity {
-  id         String     @id @default(cuid())
-  userId     String
-  action     Action
-  targetId   String
-  targetType TargetType
-  createdAt  DateTime   @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Restrict)
-}
-
-enum Action {
-  CREATE
-  UPDATE
-  DELETE
-}
-
-enum TargetType {
-  INVENTORY
-  INVENTORY_MEMBER
-  PRODUCT
 }
