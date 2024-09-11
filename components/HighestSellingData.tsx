@@ -9,7 +9,7 @@ type HighestSellingDataType = {
 function HighestSellingData({ productsData }: HighestSellingDataType) {
   return (
     <article className="h-full w-full">
-      <div>
+      <div className="space-y-3">
         {productsData.length ? (
           <>
             {productsData.map((product) => (

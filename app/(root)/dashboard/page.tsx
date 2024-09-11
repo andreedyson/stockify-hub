@@ -15,6 +15,8 @@ import {
 } from "@/server/transaction";
 import TotalAssetsList from "@/components/list/TotalAssetsList";
 import TransactionByStatusData from "@/components/TransactionByStatusData";
+import HighestSellingData from "@/components/HighestSellingData";
+import { getHighestSellingProducts } from "@/server/product";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -32,9 +34,11 @@ async function DashboardPage() {
   const transactionsTableData = await getTransactionTableData(userId);
   const totalAssetsForUser = await getTotalAssetsForUser(userId);
   const transactionByStatus = await getTransactionByStatusChartData(userId);
+  const highestSellingProducts = await getHighestSellingProducts(userId);
 
   return (
     <div className="space-y-6">
+      {/* Dashboard Statistics Card */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-4">
         {dashboardStatsData.map((card) => (
           <div key={card.title}>
@@ -48,6 +52,7 @@ async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">
+        {/* Transactions Table */}
         <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-9">
           <div>
             <h4 className="section-header">Transactions</h4>
@@ -57,9 +62,12 @@ async function DashboardPage() {
               columns={columns}
               data={transactionsTableData}
               className="border-none"
+              dataPerPage={5}
             />
           </div>
         </div>
+
+        {/* Total Assets Overview */}
         <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-3">
           <div>
             <h4 className="section-header">Total Assets</h4>
@@ -71,6 +79,7 @@ async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {/* Transaction By Status Bar Chart */}
         <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6">
           <div>
             <h4 className="section-header">Transaction By Status</h4>
@@ -79,9 +88,14 @@ async function DashboardPage() {
             <TransactionByStatusData transactionsData={transactionByStatus} />
           </div>
         </div>
-        <div className="bg-main-card col-span-1 rounded-md p-6">
+
+        {/* Top Selling Product List */}
+        <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6">
           <div>
             <h4 className="section-header">Top Selling</h4>
+          </div>
+          <div>
+            <HighestSellingData productsData={highestSellingProducts} />
           </div>
         </div>
       </div>

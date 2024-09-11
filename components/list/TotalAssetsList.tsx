@@ -11,11 +11,16 @@ function TotalAssetsList({ assets }: TotalAssetsListProps) {
     <article className="h-full">
       {assets.distribution.length ? (
         <>
-          <div className="space-y-2 pb-5 pt-2">
-            <p className="text-[12px] text-desc">
-              Total Product Assets From {assets.distribution.length || 0}{" "}
-              Inventories
-            </p>
+          <div className="space-y-3 pb-5 pt-2">
+            <div className="space-y-1">
+              <p className="font-medium">
+                Assets From {assets.distribution.length || 0} Inventories
+              </p>
+              <p className="text-xs text-desc">
+                Showing total assets from all the inventories that you are a
+                part of
+              </p>
+            </div>
             <h2 className="text-2xl font-bold xl:text-3xl">
               {currencyFormatterIDR(assets.totalAssets)}
             </h2>
