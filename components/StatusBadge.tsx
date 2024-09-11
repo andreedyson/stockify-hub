@@ -24,7 +24,7 @@ function StatusBadge({ status }: { status: Status }) {
   return (
     <div
       className={cn(
-        "flex items-center gap-1 rounded-full py-2 max-md:px-3 md:w-[135px] md:justify-center",
+        "flex items-center gap-1 rounded-full py-2 max-md:px-3 md:w-[125px] md:justify-center",
         bgStyle,
         textStyle,
       )}

@@ -2,7 +2,9 @@ import prisma from "@/lib/db";
 import {
   CurrentUserPromise,
   DashboardStatisticProps,
+  UserProductsTotalAssetsProps,
 } from "@/types/server/user";
+import { getInventoriesProductsValue } from "./product";
 
 export async function getCurrentUser(
   userId: string,
@@ -121,5 +123,47 @@ export async function getUserDashboardStatistics(
     return results;
   } catch (error) {
     throw new Error("There was a problem getting dashboard data");
+  }
+}
+
+export async function getTotalAssetsForUser(
+  userId: string,
+): Promise<UserProductsTotalAssetsProps> {
+  try {
+    const products = await prisma.product.findMany({
+      where: {
+        Inventory: {
+          users: {
+            some: {
+              userId: userId,
+            },
+          },
+        },
+      },
+    });
+
+    const totalAssets = products.reduce((acc, curr) => {
+      return acc + curr.price * curr.stock;
+    }, 0);
+
+    const inventoriesAssets = await getInventoriesProductsValue(userId);
+
+    const distributedAssetPercentage = inventoriesAssets.map((data) => {
+      const inventoryPct = (data.value / totalAssets) * 100;
+
+      return {
+        ...data,
+        percentage: inventoryPct.toFixed(2),
+      };
+    });
+
+    const results = {
+      totalAssets: totalAssets,
+      distribution: distributedAssetPercentage.slice(0, 5),
+    };
+
+    return results;
+  } catch (error) {
+    throw new Error("There was a problem getting assets data");
   }
 }

@@ -289,6 +289,7 @@ export async function getInventoriesProductsValue(
         products: {
           select: {
             price: true,
+            stock: true,
           },
         },
       },
@@ -298,9 +299,9 @@ export async function getInventoriesProductsValue(
     });
 
     const results = inventoryData.map((inventory) => {
-      const productsPrice = inventory.products.map((product) => product.price);
+      const productsPrice = inventory.products.map((product) => product);
       const productsValue = productsPrice.reduce((acc, curr) => {
-        return acc + curr;
+        return acc + curr.price * curr.stock;
       }, 0);
 
       return {
@@ -308,6 +309,8 @@ export async function getInventoriesProductsValue(
         value: productsValue,
       };
     });
+
+    results.sort((a, b) => b.value - a.value);
 
     return results;
   } catch (error: any) {

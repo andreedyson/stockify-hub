@@ -6,7 +6,7 @@ type StatsCardProps = {
   color: string;
 };
 
-function StatsCard({ title, amount, color }: StatsCardProps) {
+function StatsCard({ title, amount = 0, color }: StatsCardProps) {
   const icon =
     title === "Products" ? (
       <Package size={28} />

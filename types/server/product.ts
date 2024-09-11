@@ -1,4 +1,5 @@
 import { Inventory, Product } from "@prisma/client";
+import { number } from "zod";
 
 export type ProductsInUserInventoriesType = Product & {
   currentUserRole: "USER" | "ADMIN" | "OWNER";
@@ -28,6 +29,10 @@ export type HighestSellingProductsType = {
 export type ProductsValueType = {
   inventory: string;
   value: number;
+};
+
+export type ProductsValueWithPctProps = ProductsValueType & {
+  percentage: string;
 };
 
 export type UserProducts = {
