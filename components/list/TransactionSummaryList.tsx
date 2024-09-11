@@ -1,5 +1,5 @@
 import { TransactionsCountType } from "@/types/server/transaction";
-import { BadgeCheck, Ban, Hourglass, Loader, ReceiptText } from "lucide-react";
+import { BadgeCheck, Ban, Hourglass, Loader } from "lucide-react";
 
 type TransactionSummaryListType = {
   total: TransactionsCountType;

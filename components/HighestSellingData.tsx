@@ -1,6 +1,6 @@
-import { HighestSellingProductsType } from "@/types/server/product";
 import Image from "next/image";
 import HighestSellingList from "./list/HighestSellingList";
+import { HighestSellingProductsType } from "@/types/server/product";
 
 type HighestSellingDataType = {
   productsData: HighestSellingProductsType[];

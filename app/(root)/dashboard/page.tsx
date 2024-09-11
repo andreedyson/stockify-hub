@@ -9,8 +9,12 @@ import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
-import { getTransactionTableData } from "@/server/transaction";
+import {
+  getTransactionByStatusChartData,
+  getTransactionTableData,
+} from "@/server/transaction";
 import TotalAssetsList from "@/components/list/TotalAssetsList";
+import TransactionByStatusData from "@/components/TransactionByStatusData";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -27,6 +31,7 @@ async function DashboardPage() {
   const dashboardStatsData = await getUserDashboardStatistics(userId);
   const transactionsTableData = await getTransactionTableData(userId);
   const totalAssetsForUser = await getTotalAssetsForUser(userId);
+  const transactionByStatus = await getTransactionByStatusChartData(userId);
 
   return (
     <div className="space-y-6">
@@ -66,9 +71,12 @@ async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="bg-main-card col-span-1 rounded-md p-6">
+        <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6">
           <div>
             <h4 className="section-header">Transaction By Status</h4>
+          </div>
+          <div>
+            <TransactionByStatusData transactionsData={transactionByStatus} />
           </div>
         </div>
         <div className="bg-main-card col-span-1 rounded-md p-6">

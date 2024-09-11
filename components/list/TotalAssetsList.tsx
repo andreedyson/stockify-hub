@@ -22,7 +22,7 @@ function TotalAssetsList({ assets }: TotalAssetsListProps) {
           </div>
 
           <div>
-            <h5 className="text-lg font-semibold">Top Inventories</h5>
+            <h5 className="font-semibold">Top Inventories</h5>
             <div className="flex flex-col gap-2">
               {assets.distribution.map((data, i) => (
                 <div key={i}>
@@ -36,7 +36,7 @@ function TotalAssetsList({ assets }: TotalAssetsListProps) {
                       <p className="line-clamp-1 max-w-[150px] text-sm font-semibold">
                         {data.inventory}
                       </p>
-                      <span className="text-xs text-zinc-400">
+                      <span className="text-sm text-zinc-400">
                         {data.percentage}%
                       </span>
                     </div>
@@ -61,7 +61,7 @@ function TotalAssetsList({ assets }: TotalAssetsListProps) {
           />
           <div className="space-y-1">
             <h4 className="text-sm font-semibold md:text-base">
-              No Total Assets To Show
+              No total assets to show
             </h4>
             <p className="desc-2 text-[10px] md:text-sm">
               The inventories that you are a part of doesn&apos;t have any

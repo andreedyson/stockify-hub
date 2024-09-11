@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import {
   RecentTransactionsType,
+  TotalTransactionByStatusChartProps,
   TransactionsCountType,
   TransactionsInsightsType,
   TransactionsTableType,
@@ -296,6 +297,75 @@ export async function getRecentTransactions(
       productName: transaction.product.name,
       categoryName: transaction.product.Category.name,
     }));
+
+    return results;
+  } catch (error: any) {
+    throw new Error(error.message || "An error occurred");
+  }
+}
+
+export async function getTransactionByStatusChartData(
+  userId: string,
+): Promise<TotalTransactionByStatusChartProps> {
+  try {
+    const currentDate = new Date();
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - 6);
+    const allStatuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELLED"];
+
+    const totalTransactionByStatus = await prisma.transaction.groupBy({
+      by: ["status"],
+      _count: {
+        id: true,
+      },
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId: userId,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const transactionStatusData = allStatuses.map((status) => {
+      const transaction = totalTransactionByStatus.find(
+        (t) => t.status === status,
+      );
+      return {
+        status: status,
+        total: transaction ? transaction._count.id : 0, // default to 0 if no transaction
+      };
+    });
+
+    const thisWeekTransactions = await prisma.transaction.findMany({
+      where: {
+        product: {
+          Inventory: {
+            users: {
+              some: {
+                userId: userId,
+              },
+            },
+          },
+        },
+        date: {
+          gte: startDate,
+          lte: currentDate,
+        },
+        status: {
+          not: "CANCELLED",
+        },
+      },
+    });
+
+    const results = {
+      thisWeekTransactions: thisWeekTransactions.length,
+      chartData: transactionStatusData,
+    };
 
     return results;
   } catch (error: any) {

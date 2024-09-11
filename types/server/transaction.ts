@@ -32,3 +32,13 @@ export type RecentTransactionsType = Omit<
   productName: string;
   categoryName: string;
 };
+
+export type TotalTransactionChartsDataProps = {
+  status: string;
+  total: number;
+};
+
+export type TotalTransactionByStatusChartProps = {
+  thisWeekTransactions: number;
+  chartData: TotalTransactionChartsDataProps[];
+};
