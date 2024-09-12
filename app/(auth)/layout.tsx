@@ -15,7 +15,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main lang="en" className="dark">
+    <main className="dark">
       <AuthProvider>
         <div>
           {children}

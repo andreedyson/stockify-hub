@@ -51,3 +51,22 @@ export const transactionStatus = [
     value: "CANCELLED",
   },
 ];
+
+export const landingPageNavbarLinks = [
+  {
+    title: "Home",
+    path: "#",
+  },
+  {
+    title: "About",
+    path: "#about",
+  },
+  {
+    title: "Features",
+    path: "#features",
+  },
+  {
+    title: "FAQ",
+    path: "#faq",
+  },
+];

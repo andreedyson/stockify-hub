@@ -16,13 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { loginSchema } from "@/types/validations";
-import { useEffect, useState } from "react";
-import { useToast } from "../ui/use-toast";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useToast } from "../ui/use-toast";
 
 function LoginForm() {
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -187,9 +187,6 @@ function LoginForm() {
           </Link>
           <div className="desc-2 mt-12 flex flex-col items-center gap-2 text-sm md:flex-row md:justify-between">
             <p>© 2024 StockifyHub</p>
-            <Link href={"/"} className="font-semibold text-main-500">
-              Admin
-            </Link>
           </div>
         </form>
       </Form>
