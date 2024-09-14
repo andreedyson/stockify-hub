@@ -5,7 +5,7 @@ import Image from "next/image";
 function Banner() {
   return (
     <section className="section-margin">
-      <div className="flex items-center justify-between gap-y-6 rounded-md bg-gradient-to-tr from-gray-800 to-zinc-700 p-10 max-lg:flex-col">
+      <div className="flex items-center justify-between gap-y-6 rounded-md bg-gradient-to-tr from-gray-800 to-zinc-700 p-6 max-lg:flex-col md:p-8 lg:p-10">
         {/* Banner Header */}
         <div className="flex flex-col gap-2 md:gap-3">
           <h3 className="landing-section-title">

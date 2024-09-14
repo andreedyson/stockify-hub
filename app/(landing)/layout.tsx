@@ -1,3 +1,4 @@
+import Footer from "@/components/landing/Footer";
 import LandingPageNavbar from "@/components/navigations/LandingPageNavbar";
 import ScrollToTop from "@/components/ScrollToTop";
 import type { Metadata } from "next";
@@ -20,6 +21,9 @@ export default function LandingLayout({
         <div className="mx-6 md:mx-20 lg:mx-24 xl:mx-36">
           {children}
           <ScrollToTop />
+        </div>
+        <div>
+          <Footer />
         </div>
       </div>
     </main>
