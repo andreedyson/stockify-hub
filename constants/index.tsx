@@ -12,6 +12,7 @@ import {
   User,
   Users,
 } from "lucide-react";
+import Link from "next/link";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
@@ -110,6 +111,73 @@ export const featuresList = [
     title: "Automated Alerts",
     description: "Receive automated notifications for low stock.",
     icon: <Bell size={24} />,
+  },
+];
+
+export const faqList = [
+  {
+    id: "Q1",
+    question: "What is the purpose StockifyHub?",
+    answer:
+      "Our goal is to help users efficiently organize and monitor their stocks, while providing a clear overview of their inventories.",
+  },
+  {
+    id: "Q2",
+    question: "Is there a mobile apps, on Android / iOS?",
+    answer:
+      "At the moment, we only offer a web app. However, we're excited to develop a mobile version for Android and iOS in the near future!",
+  },
+  {
+    id: "Q3",
+    question: "How do I sign up for the web app?",
+    answer: (
+      <p>
+        Register your account at{" "}
+        <Link href={"/register"} className="text-main-500 underline">
+          this link
+        </Link>
+        .
+      </p>
+    ),
+  },
+  {
+    id: "Q4",
+    question: "Who’s the creator of StockifyHub?",
+    answer: (
+      <div>
+        <p>
+          Hello, my name is{" "}
+          <span className="font-bold text-main-500">Andre Edyson</span>.
+          Checkout my{" "}
+          <Link
+            href={"https://github.com/andreedyson"}
+            target="_blank"
+            className="underline"
+          >
+            GitHub{" "}
+          </Link>
+          or{" "}
+          <Link
+            href={"https://instagram.com/andreedyson"}
+            target="_blank"
+            className="underline"
+          >
+            Instagram
+          </Link>
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: "Q5",
+    question: "How many organizations can I create?",
+    answer: "As many as you want!",
+  },
+  {
+    id: "Q5",
+    question: "How many members can you add to an inventory?",
+    answer:
+      "Multiple users can be granted access to an inventory and each user will have their own account and role-based permissions within the system.",
   },
 ];
 
