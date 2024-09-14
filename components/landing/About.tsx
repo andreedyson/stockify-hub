@@ -37,7 +37,7 @@ function About() {
                   key={about.title}
                   className="flex flex-col items-center gap-3 lg:flex-row"
                 >
-                  <div className="bg-accent-orange flex size-14 items-center justify-center rounded-lg md:size-20">
+                  <div className="bg-accent-orange flex size-14 items-center justify-center rounded-lg lg:size-20">
                     {about.icon}
                   </div>
                   <div className="space-y-1">
