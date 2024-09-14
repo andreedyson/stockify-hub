@@ -22,10 +22,10 @@ function FAQ() {
         </div>
 
         {/* FAQ Questions */}
-        <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+        <div className="grid gap-x-12 gap-y-4 md:grid-cols-2 md:gap-y-8">
           {faqList.map((faq) => (
             <Accordion type="single" collapsible key={faq.id}>
-              <AccordionItem value="item-1">
+              <AccordionItem value={faq.id}>
                 <AccordionTrigger className="text-start">
                   {faq.question}
                 </AccordionTrigger>

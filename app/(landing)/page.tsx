@@ -5,6 +5,7 @@ import Hero from "@/components/landing/Hero";
 import About from "@/components/landing/About";
 import Features from "@/components/landing/Features";
 import FAQ from "@/components/landing/FAQ";
+import Banner from "@/components/landing/Banner";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -19,6 +20,7 @@ export default async function Home() {
       <About />
       <Features />
       <FAQ />
+      <Banner />
     </>
   );
 }
