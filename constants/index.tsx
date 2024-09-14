@@ -174,7 +174,7 @@ export const faqList = [
     answer: "As many as you want!",
   },
   {
-    id: "Q5",
+    id: "Q6",
     question: "How many members can you add to an inventory?",
     answer:
       "Multiple users can be granted access to an inventory and each user will have their own account and role-based permissions within the system.",

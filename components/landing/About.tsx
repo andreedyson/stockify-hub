@@ -4,7 +4,7 @@ import Image from "next/image";
 function About() {
   return (
     <section id="about" className="section-margin">
-      <div className="grid items-center gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 max-lg:place-items-center lg:grid-cols-2">
         {/* About Image */}
         <div className="order-2 lg:order-1">
           <Image
@@ -12,7 +12,7 @@ function About() {
             width={500}
             height={500}
             alt="About Image"
-            className="md:size-500px] lg:size-[600px]"
+            className="md:size-[500px] lg:size-[600px]"
           />
         </div>
 
@@ -35,7 +35,7 @@ function About() {
                   key={about.title}
                   className="flex flex-col items-center gap-3 lg:flex-row"
                 >
-                  <div className="bg-accent-orange flex size-14 items-center justify-center rounded-lg lg:size-20">
+                  <div className="flex size-14 items-center justify-center rounded-lg bg-accent-orange lg:size-20">
                     {about.icon}
                   </div>
                   <div className="space-y-1">
