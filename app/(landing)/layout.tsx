@@ -12,7 +12,7 @@ export default function LandingLayout({
 }>) {
   return (
     <main>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col max-md:gap-4">
         <div>
           <LandingPageNavbar />
         </div>

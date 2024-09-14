@@ -111,4 +111,8 @@
   .bg-pill-sm {
     @apply bg-gradient-to-r from-slate-300 to-zinc-400 dark:from-zinc-600 dark:to-zinc-800;
   }
+
+  .section-margin {
+    @apply my-[60px] md:my-[100px] xl:my-[120px];
+  }
 }
