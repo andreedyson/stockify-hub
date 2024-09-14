@@ -16,13 +16,11 @@ function About() {
           />
         </div>
 
-        {/* About Description */}
+        {/* About Header */}
         <div className="order-1 flex flex-col gap-6 max-lg:items-center max-lg:text-center lg:order-2">
           <div className="space-y-2 md:space-y-3">
-            <h3 className="text-2xl font-bold md:text-4xl lg:text-5xl">
-              About
-            </h3>
-            <p className="text-center text-sm font-medium text-desc max-lg:max-w-[600px] md:text-base lg:text-justify lg:text-lg">
+            <h3 className="landing-section-title">About</h3>
+            <p className="landing-section-description text-center lg:text-justify">
               StockifyHub is an inventory management web app to streamlines your
               stock tracking process, ensuring you have complete control over
               your inventory with ease and efficiency.

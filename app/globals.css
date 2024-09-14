@@ -118,4 +118,12 @@
   .section-margin {
     @apply my-[60px] md:my-[100px] xl:my-[120px];
   }
+
+  .landing-section-title {
+    @apply text-2xl font-bold md:text-4xl lg:text-5xl;
+  }
+
+  .landing-section-description {
+    @apply text-sm font-medium text-desc max-lg:max-w-[600px] md:text-base lg:text-lg;
+  }
 }

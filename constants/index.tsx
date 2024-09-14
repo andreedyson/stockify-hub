@@ -1,12 +1,16 @@
 import {
-  ChartColumnIncreasing,
+  Bell,
+  ChartColumn,
   Container,
   LayoutDashboardIcon,
   Package,
   Package2,
+  PackageOpen,
   PackageSearch,
   Receipt,
+  TabletSmartphone,
   User,
+  Users,
 } from "lucide-react";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
@@ -70,6 +74,42 @@ export const aboutWalkthrough = [
     description:
       "Start adding products to track with an insightful charts and tables.",
     icon: <Package2 size={28} stroke="#222222" />,
+  },
+];
+
+export const featuresList = [
+  {
+    title: "Inventory Tracking",
+    description: "Keep your inventory data up-to-date with real-time tracking.",
+    icon: <PackageOpen size={24} />,
+  },
+  {
+    title: "Role-Based Management",
+    description:
+      "Multiple users to access the inventory with role-based permissions.",
+    icon: <Users size={24} />,
+  },
+  {
+    title: "Insightful Dashboard",
+    description:
+      "Dashboard to display the most relevant information at a glance.",
+    icon: <LayoutDashboardIcon size={24} />,
+  },
+  {
+    title: "Mobile Accessibility",
+    description:
+      "Access your inventory data on the go with our mobile-friendly design.",
+    icon: <TabletSmartphone size={24} />,
+  },
+  {
+    title: "Charts Overview",
+    description: "View charts of transactions by all, weekly, and monthly.",
+    icon: <ChartColumn size={24} />,
+  },
+  {
+    title: "Automated Alerts",
+    description: "Receive automated notifications for low stock.",
+    icon: <Bell size={24} />,
   },
 ];
 
