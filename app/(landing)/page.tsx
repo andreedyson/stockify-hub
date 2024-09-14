@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/options";
 import Hero from "@/components/landing/Hero";
+import About from "@/components/landing/About";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -13,6 +14,7 @@ export default async function Home() {
   return (
     <div>
       <Hero />
+      <About />
     </div>
   );
 }

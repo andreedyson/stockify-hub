@@ -1,15 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import Image from "next/image";
 
 function Hero() {
   return (
-    <section className="section-margin">
+    <section id="#home" className="section-margin">
       <div className="flex flex-col items-center max-lg:gap-16 lg:flex-row lg:justify-between">
         {/* Hero Header */}
         <div className="flex flex-col justify-center max-lg:items-center max-lg:text-center">
           <div className="flex flex-col gap-3 md:gap-4 lg:gap-5">
-            <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-[56px] xl:leading-none">
+            <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-[56px]/none">
               Manage stocks <br />{" "}
               <span className="inline-block bg-gradient-to-r from-main-600 via-main-600 to-main-700 bg-clip-text text-transparent">
                 anyone, anywhere

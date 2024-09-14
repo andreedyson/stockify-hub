@@ -1,4 +1,5 @@
 import LandingPageNavbar from "@/components/navigations/LandingPageNavbar";
+import ScrollToTop from "@/components/ScrollToTop";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +17,10 @@ export default function LandingLayout({
         <div>
           <LandingPageNavbar />
         </div>
-        <div className="mx-6 md:mx-20 lg:mx-24 xl:mx-36">{children}</div>
+        <div className="mx-6 md:mx-20 lg:mx-24 xl:mx-36">
+          {children}
+          <ScrollToTop />
+        </div>
       </div>
     </main>
   );

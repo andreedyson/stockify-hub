@@ -28,7 +28,7 @@ function LandingPageNavbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 md:mx-20 md:mt-16 lg:mx-24 lg:mt-20 xl:mx-36">
+    <header className="md:mx-20 md:mt-16 lg:mx-24 lg:mt-20 xl:mx-36">
       <nav className="relative flex items-center justify-between max-md:bg-[#2f2f2f] max-md:px-6 max-md:py-3">
         {/* Stockify Logo */}
         <div>
