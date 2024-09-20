@@ -47,6 +47,7 @@ import { Calendar } from "../ui/calendar";
 import { format } from "date-fns";
 import { TransactionsTableType } from "@/types/server/transaction";
 import { SubmitButton } from "../SubmitButton";
+import TransactionFormSkeletons from "../skeletons/TransactionFormSkeletons";
 
 type TransactionFormProps = {
   transactionData: TransactionsTableType;
@@ -136,7 +137,12 @@ function EditTransactionDialog({
     }
   }
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <>
+        <TransactionFormSkeletons />
+      </>
+    );
   if (error) return <div>{error.message}</div>;
 
   return (

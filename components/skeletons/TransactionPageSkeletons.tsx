@@ -14,7 +14,7 @@ function TransactionPageSkeletons() {
       </div>
 
       <div>
-        <Skeleton className="h-80 w-full" />
+        <Skeleton className="h-80 w-full lg:h-[450px]" />
       </div>
     </div>
   );
