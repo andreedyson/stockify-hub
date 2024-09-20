@@ -9,7 +9,7 @@ function Hero() {
         {/* Hero Header */}
         <div className="flex flex-col justify-center max-lg:items-center max-lg:text-center">
           <div className="flex flex-col gap-3 md:gap-4 lg:gap-5">
-            <h2 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-[56px]/none">
+            <h2 className="header-1">
               Manage stocks <br />{" "}
               <span className="inline-block bg-gradient-to-r from-main-600 via-main-600 to-main-700 bg-clip-text text-transparent">
                 anyone, anywhere

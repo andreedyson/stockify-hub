@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { InventoryCategoryCharts } from "./charts/InventoryCategoryCharts";
 import { InventoriesCategoriesChartDataType } from "@/types/server/category";
-import Image from "next/image";
 import { Layers3, Package } from "lucide-react";
+import Image from "next/image";
+import { InventoryCategoryCharts } from "./charts/InventoryCategoryCharts";
 
 type InventoryCategoryDataProps = {
   categoryData: InventoriesCategoriesChartDataType[];

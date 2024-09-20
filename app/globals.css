@@ -80,7 +80,7 @@
   }
 
   .header-1 {
-    @apply text-3xl font-bold md:text-4xl lg:text-[56px];
+    @apply text-3xl font-bold md:text-4xl lg:text-5xl xl:text-[56px]/none;
   }
 
   .header-2 {

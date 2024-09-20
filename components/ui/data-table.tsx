@@ -26,6 +26,7 @@ import { Button } from "./button";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DataTableViewOptions } from "../tables/DataTableViewOptions";
+import Image from "next/image";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -132,7 +133,24 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-4 py-4 text-center">
+                    <Image
+                      src={"/assets/table-empty.svg"}
+                      width={200}
+                      height={400}
+                      alt="User Roles Not Found"
+                      className="size-[50%]"
+                      priority
+                    />
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-semibold md:text-base">
+                        No results found
+                      </h4>
+                      <p className="desc-2 text-[10px] md:text-sm">
+                        There are no table data yet.
+                      </p>
+                    </div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

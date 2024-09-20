@@ -1,11 +1,11 @@
+import About from "@/components/landing/About";
+import Banner from "@/components/landing/Banner";
+import FAQ from "@/components/landing/FAQ";
+import Features from "@/components/landing/Features";
+import Hero from "@/components/landing/Hero";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/options";
-import Hero from "@/components/landing/Hero";
-import About from "@/components/landing/About";
-import Features from "@/components/landing/Features";
-import FAQ from "@/components/landing/FAQ";
-import Banner from "@/components/landing/Banner";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

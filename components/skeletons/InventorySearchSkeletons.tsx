@@ -3,6 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function InventorySearchSkeletons() {
   return (
     <div className="space-y-6">
+      {/* Inventory Search Input */}
       <div className="flex gap-4">
         <Skeleton className="h-10 flex-1 rounded-md" />
         <Skeleton className="h-10 w-[150px] rounded-md" />
