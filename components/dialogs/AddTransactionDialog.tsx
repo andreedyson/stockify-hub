@@ -133,7 +133,7 @@ function AddTransactionDialog({ userId, inventoryId }: TransactionFormProps) {
   if (isLoading)
     return (
       <div>
-        <Skeleton className="h-10 max-w-[180px] md:w-[150px]" />
+        <Skeleton className="h-10 w-[150px]" />
       </div>
     );
   if (error) return <div>{error.message}</div>;
