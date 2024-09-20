@@ -2,7 +2,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { TotalProductsCharts } from "@/components/charts/TotalProductsCharts";
 import InventorySearch from "@/components/forms/InventorySearch";
 import InventoryCategoryData from "@/components/InventoryCategoryData";
-import InventorySearchSkeletons from "@/components/skeletons/InventorySearchSkeletons";
 import UserRoleData from "@/components/UserRoleData";
 import { getInventoriesCategoriesChartData } from "@/server/category";
 import {
@@ -36,12 +35,10 @@ async function InventoryPage() {
   return (
     <section className="space-y-6">
       {/* Inventory Card, Search, Add Inventory */}
-      <Suspense fallback={<InventorySearchSkeletons />}>
-        <InventorySearch
-          userId={session?.user.id as string}
-          inventoryData={userInventories}
-        />
-      </Suspense>
+      <InventorySearch
+        userId={session?.user.id as string}
+        inventoryData={userInventories}
+      />
 
       {/* Total Products & User Role Lists */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">
