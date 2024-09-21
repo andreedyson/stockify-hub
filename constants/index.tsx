@@ -1,5 +1,4 @@
 import {
-  Bell,
   ChartColumn,
   Container,
   LayoutDashboardIcon,
@@ -8,6 +7,7 @@ import {
   PackageOpen,
   PackageSearch,
   Receipt,
+  SquareStack,
   TabletSmartphone,
   User,
   Users,
@@ -108,9 +108,10 @@ export const featuresList = [
     icon: <ChartColumn size={24} />,
   },
   {
-    title: "Automated Alerts",
-    description: "Receive automated notifications for low stock.",
-    icon: <Bell size={24} />,
+    title: "Categorized Products",
+    description:
+      "Keep your products organized by category to avoid any confusion.",
+    icon: <SquareStack size={24} />,
   },
 ];
 
