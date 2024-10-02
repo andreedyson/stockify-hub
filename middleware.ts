@@ -5,7 +5,7 @@ export { default } from "next-auth/middleware";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("next-auth.session-token");
+  const token = req.cookies.get("__Secure-next-auth.session-token");
 
   if (pathname.startsWith("/api/uploadthing")) {
     return NextResponse.next();
