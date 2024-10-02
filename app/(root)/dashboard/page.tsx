@@ -1,6 +1,15 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import StatsCard from "@/components/cards/StatsCard";
+import HighestSellingData from "@/components/HighestSellingData";
+import TotalAssetsList from "@/components/list/TotalAssetsList";
+import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
+import TransactionByStatusData from "@/components/TransactionByStatusData";
 import { DataTable } from "@/components/ui/data-table";
+import { getHighestSellingProducts } from "@/server/product";
+import {
+  getTransactionByStatusChartData,
+  getTransactionTableData,
+} from "@/server/transaction";
 import {
   getTotalAssetsForUser,
   getUserDashboardStatistics,
@@ -8,15 +17,6 @@ import {
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { TransactionsColumns as columns } from "@/components/tables/transactions/transactions-columns";
-import {
-  getTransactionByStatusChartData,
-  getTransactionTableData,
-} from "@/server/transaction";
-import TotalAssetsList from "@/components/list/TotalAssetsList";
-import TransactionByStatusData from "@/components/TransactionByStatusData";
-import HighestSellingData from "@/components/HighestSellingData";
-import { getHighestSellingProducts } from "@/server/product";
 
 export const metadata: Metadata = {
   title: "Dashboard",
