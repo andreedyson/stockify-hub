@@ -106,7 +106,7 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE(req: NextResponse) {
+export async function DELETE(req: NextRequest) {
   try {
     const { userId, inventoryId } = await req.json();
 
