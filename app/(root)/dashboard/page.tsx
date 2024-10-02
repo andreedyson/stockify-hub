@@ -14,8 +14,10 @@ import {
   getTotalAssetsForUser,
   getUserDashboardStatistics,
 } from "@/server/user";
+import { ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
@@ -62,8 +64,15 @@ async function DashboardPage() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">
         {/* Transactions Table */}
         <div className="bg-main-card col-span-1 space-y-3 rounded-md p-6 md:col-span-2 xl:col-span-9">
-          <div>
-            <h4 className="section-header">Transactions</h4>
+          <div className="section-header flex items-center justify-between">
+            <h4>Transactions</h4>
+            <Link
+              href={"/transactions"}
+              className="flex items-center text-sm text-main-500 duration-200 hover:text-main-300 hover:underline"
+            >
+              Add Transaction
+              <ChevronRight size={16} />
+            </Link>
           </div>
           <div>
             <DataTable
