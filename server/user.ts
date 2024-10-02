@@ -151,9 +151,11 @@ export async function getTotalAssetsForUser(
     const distributedAssetPercentage = inventoriesAssets.map((data) => {
       const inventoryPct = (data.value / totalAssets) * 100;
 
+      const percentage = isNaN(inventoryPct) ? 0 : inventoryPct;
+
       return {
         ...data,
-        percentage: inventoryPct.toFixed(2),
+        percentage: percentage.toFixed(2),
       };
     });
 

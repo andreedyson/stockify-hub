@@ -50,8 +50,6 @@ export function InventoryCategoryCharts({
     return chartData.reduce((acc, curr) => acc + curr.products, 0);
   }, [chartData]);
 
-  console.log(totalProducts);
-
   return (
     <ChartContainer
       config={chartConfig}
