@@ -1,3 +1,5 @@
+export const maxDuration = 15;
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { InventoryMemberColumns as memberColumns } from "@/components//tables/members/inventory-members-columns";
 import { TransactionInsightCharts } from "@/components/charts/TransactionInsightCharts";

@@ -12,7 +12,6 @@ import { getInventoriesProductCount } from "@/server/product";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Inventory",

@@ -1,5 +1,3 @@
-export const maxDuration = 15;
-
 import { getUserInventories } from "@/server/inventory";
 import { NextRequest, NextResponse } from "next/server";
 
