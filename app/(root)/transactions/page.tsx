@@ -27,9 +27,12 @@ async function TransactionsPage() {
 
   const userId = session.user.id;
 
-  const transactionSummary = await getTotalTransactionsByStatus(userId);
-  const transactionsTableData = await getTransactionTableData(userId);
-  const recentTransactions = await getRecentTransactions(userId);
+  const [transactionSummary, transactionsTableData, recentTransactions] =
+    await Promise.all([
+      getTotalTransactionsByStatus(userId),
+      getTransactionTableData(userId),
+      getRecentTransactions(userId),
+    ]);
 
   return (
     <section className="h-full w-full space-y-6">

@@ -12,7 +12,7 @@ import {
   getLowStocksProducts,
   getProductsInUserInventories,
 } from "@/server/product";
-import { ChartColumnDecreasing, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -31,12 +31,21 @@ async function ProductsPage() {
 
   const userId = session.user.id;
 
-  const products = await getProductsInUserInventories(userId);
-  const userInventories = await getUserInventories(userId);
-  const totalProductsChartData = await getInventoriesProductCount(userId);
-  const lowStocksProducts = await getLowStocksProducts(userId);
-  const highestSellingProducts = await getHighestSellingProducts(userId);
-  const productsValue = await getInventoriesProductsValue(userId);
+  const [
+    products,
+    userInventories,
+    totalProductsChartData,
+    lowStocksProducts,
+    highestSellingProducts,
+    productsValue,
+  ] = await Promise.all([
+    getProductsInUserInventories(userId),
+    getUserInventories(userId),
+    getInventoriesProductCount(userId),
+    getLowStocksProducts(userId),
+    getHighestSellingProducts(userId),
+    getInventoriesProductsValue(userId),
+  ]);
 
   return (
     <section className="space-y-6">

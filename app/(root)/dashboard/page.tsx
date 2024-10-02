@@ -30,11 +30,19 @@ async function DashboardPage() {
   }
   const userId = session.user.id;
 
-  const dashboardStatsData = await getUserDashboardStatistics(userId);
-  const transactionsTableData = await getTransactionTableData(userId);
-  const totalAssetsForUser = await getTotalAssetsForUser(userId);
-  const transactionByStatus = await getTransactionByStatusChartData(userId);
-  const highestSellingProducts = await getHighestSellingProducts(userId);
+  const [
+    dashboardStatsData,
+    transactionsTableData,
+    totalAssetsForUser,
+    transactionByStatus,
+    highestSellingProducts,
+  ] = await Promise.all([
+    getUserDashboardStatistics(userId),
+    getTransactionTableData(userId),
+    getTotalAssetsForUser(userId),
+    getTransactionByStatusChartData(userId),
+    getHighestSellingProducts(userId),
+  ]);
 
   return (
     <div className="space-y-6">

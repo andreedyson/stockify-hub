@@ -38,15 +38,21 @@ async function InventoryDetailsPage({
 
   const userId = session.user.id;
   const inventory = await getInventoryById(userId, id);
-  const memberTableData = await getCurrentInventoryMembers(userId, id);
+
+  const [
+    memberTableData,
+    currentInventoryCategory,
+    inventoryProducts,
+    transactionsTableData,
+  ] = await Promise.all([
+    getCurrentInventoryMembers(userId, id),
+    getInventoryCategories(inventory.id),
+    getProductsByInventory(userId, id),
+    getTransactionTableByInventories(userId, id),
+  ]);
+
   const inventoryOwner = memberTableData.find((user) => user.role === "OWNER");
   const currentUserRole = memberTableData.find((user) => user)?.currentUserRole;
-  const currentInventoryCategory = await getInventoryCategories(inventory.id);
-  const inventoryProducts = await getProductsByInventory(userId, id);
-  const transactionsTableData = await getTransactionTableByInventories(
-    userId,
-    id,
-  );
 
   return (
     <section className="space-y-6">

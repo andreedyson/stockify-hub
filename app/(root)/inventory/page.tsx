@@ -26,11 +26,17 @@ async function InventoryPage() {
   }
 
   const userId = session.user.id;
-  const userInventories = await getUserInventories(userId);
-  const totalProductsChartData = await getInventoriesProductCount(userId);
-  const userRoles = await currentUserInventoriesRoles(userId);
-  const inventoriesCategoriesData =
-    await getInventoriesCategoriesChartData(userId);
+  const [
+    userInventories,
+    totalProductsChartData,
+    userRoles,
+    inventoriesCategoriesData,
+  ] = await Promise.all([
+    getUserInventories(userId),
+    getInventoriesProductCount(userId),
+    currentUserInventoriesRoles(userId),
+    getInventoriesCategoriesChartData(userId),
+  ]);
 
   return (
     <section className="space-y-6">
