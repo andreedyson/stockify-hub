@@ -9,11 +9,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
-import { InventoryCardType } from "@/types";
 import { InventoriesProductCountType } from "@/types/server/product";
 import { Package, PackageSearch } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import { InventoryCardType } from "@/types/server/inventory";
 
 type TotalProductChartsProps = {
   productsData: InventoriesProductCountType[];

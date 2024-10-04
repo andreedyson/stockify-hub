@@ -1,5 +1,5 @@
 import { formatDate } from "@/lib/utils";
-import { InventoryCardType } from "@/types";
+import { InventoryCardType } from "@/types/server/inventory";
 import Image from "next/image";
 import Link from "next/link";
 
