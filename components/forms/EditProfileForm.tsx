@@ -25,9 +25,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSWRConfig } from "swr";
+import { SubmitButton } from "../SubmitButton";
 import Loader from "../ui/loader";
 import { useToast } from "../ui/use-toast";
-import { SubmitButton } from "../SubmitButton";
 
 type EditProfileProps = {
   userId: string;
@@ -95,6 +95,7 @@ function EditProfileForm({ userId }: EditProfileProps) {
   };
 
   async function onSubmit(values: z.infer<typeof EditProfileSchema>) {
+    console.log(values);
     setSubmitting(true);
 
     try {

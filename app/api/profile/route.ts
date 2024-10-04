@@ -19,33 +19,35 @@ export async function PUT(req: Request) {
       );
     }
 
-    const newImgKey = image.split("https://utfs.io/f/")[1];
-    const userImgKey = userExists.image?.split(
-      "https://utfs.io/f/",
-    )[1] as string;
+    if (image) {
+      const newImgKey = image.split("https://utfs.io/f/")[1];
+      const userImgKey = userExists.image?.split(
+        "https://utfs.io/f/",
+      )[1] as string;
 
-    // If the user image is null, add the image url to the user
-    if (!userImgKey) {
-      await prisma.user.update({
-        where: {
-          email: email,
-        },
-        data: {
-          fullname: fullname,
-          image: image,
-        },
-      });
+      // If the user image is null, add the image url to the user
+      if (!userImgKey) {
+        await prisma.user.update({
+          where: {
+            email: email,
+          },
+          data: {
+            fullname: fullname,
+            image: image,
+          },
+        });
 
-      return NextResponse.json(
-        { message: "User successfully updated" },
-        { status: 200 },
-      );
-    }
+        return NextResponse.json(
+          { message: "User successfully updated" },
+          { status: 200 },
+        );
+      }
 
-    // If the image changed, delete previous image from UploadThing
-    if (newImgKey !== userImgKey) {
-      const utapi = new UTApi();
-      await utapi.deleteFiles(userImgKey);
+      // If the image changed, delete previous image from UploadThing
+      if (newImgKey !== userImgKey) {
+        const utapi = new UTApi();
+        await utapi.deleteFiles(userImgKey);
+      }
     }
 
     // Update the user if it changed the image

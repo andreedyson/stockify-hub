@@ -28,7 +28,7 @@ export const EditProfileSchema = z.object({
     .string()
     .min(1, { message: "Username should be atleast 1 character" })
     .max(50, { message: "Username should be less than 50 characters" }),
-  profile_photo: z.string().url().optional(),
+  profile_photo: z.string().url().nullable(),
 });
 
 export const inventorySchema = z.object({
