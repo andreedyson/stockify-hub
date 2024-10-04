@@ -1,26 +1,45 @@
 "use client";
 
-import { InventoryCardType } from "@/types";
+import { getUserInventoriesData } from "@/data/inventory-data";
+import { UserInventories } from "@/types/server/inventory";
+import { useQuery } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
 import Image from "next/image";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import InventoryCard from "../cards/InventoryCard";
-import { Input } from "../ui/input";
 import AddInventoryDialog from "../dialogs/AddInventoryDialog";
+import InventorySearchSkeletons from "../skeletons/InventorySearchSkeletons";
+import { Input } from "../ui/input";
 
 type InventorySearchProps = {
   userId: string;
-  inventoryData: InventoryCardType[];
 };
 
-function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
+function InventorySearch({ userId }: InventorySearchProps) {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  const {
+    data: inventoryData,
+    isLoading,
+    error,
+  } = useQuery<UserInventories>({
+    queryKey: ["inventoriesData", userId],
+    queryFn: () => getUserInventoriesData(userId),
+  });
+
   const filteredInventories = useMemo(() => {
-    return inventoryData.filter((inventory) =>
+    return inventoryData?.results.filter((inventory) =>
       inventory.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [searchTerm, inventoryData]);
+
+  if (isLoading)
+    return (
+      <div>
+        <InventorySearchSkeletons />
+      </div>
+    );
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div className="space-y-6">
@@ -39,8 +58,8 @@ function InventorySearch({ userId, inventoryData }: InventorySearchProps) {
 
       {/* Inventory Card */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredInventories.length > 0 ? (
-          filteredInventories.map((inv) => (
+        {filteredInventories!.length > 0 ? (
+          filteredInventories?.map((inv) => (
             <div key={inv.id}>
               <InventoryCard inventoryData={inv} />
             </div>

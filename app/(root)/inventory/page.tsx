@@ -40,10 +40,7 @@ async function InventoryPage() {
   return (
     <section className="space-y-6">
       {/* Inventory Card, Search, Add Inventory */}
-      <InventorySearch
-        userId={session?.user.id as string}
-        inventoryData={userInventories}
-      />
+      <InventorySearch userId={session?.user.id as string} />
 
       {/* Total Products & User Role Lists */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-12">

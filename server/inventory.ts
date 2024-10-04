@@ -73,7 +73,6 @@ export async function getUserInventories(
   userId: string,
 ): Promise<UserInventoriesPromise[]> {
   try {
-    // TODO: Follow the userInventories pattern
     const invWithMembers = await prisma.inventory.findMany({
       where: {
         users: { some: { userId } },
