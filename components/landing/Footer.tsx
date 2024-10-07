@@ -1,5 +1,5 @@
 import { landingPageNavbarLinks } from "@/constants";
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -33,7 +33,7 @@ function Footer() {
           {/* Footer Menu */}
           <div className="space-y-4">
             <div>
-              <h5 className="font-semibold">Menu</h5>
+              <h4 className="font-semibold">Menu</h4>
             </div>
             <div className="flex flex-col gap-2">
               {landingPageNavbarLinks.map((link) => (
@@ -51,7 +51,7 @@ function Footer() {
           {/* Footer Social */}
           <div className="space-y-4">
             <div>
-              <h5 className="font-semibold">Socials</h5>
+              <h4 className="font-semibold">Socials</h4>
             </div>
             <div className="flex items-center gap-2">
               <Link
