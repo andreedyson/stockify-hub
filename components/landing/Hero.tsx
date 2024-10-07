@@ -46,6 +46,7 @@ function Hero() {
             height={300}
             alt="Hero illustration"
             className="w-[80%] lg:w-full"
+            priority
           />
         </div>
       </div>
