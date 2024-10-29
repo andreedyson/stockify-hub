@@ -1,37 +1,64 @@
-import { getSession } from "next-auth/react";
-import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
-export { default } from "next-auth/middleware";
-
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token =
-    req.cookies.get("__Secure-next-auth.session-token") ||
-    req.cookies.get("next-auth.session-token");
 
+  // Special case for UploadThing endpoint
   if (pathname.startsWith("/api/uploadthing")) {
     return NextResponse.next();
   }
 
-  if (!token) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  try {
+    const token = await getToken({
+      req,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+
+    // If no token found, user is unauthorized
+    if (!token) {
+      // For API routes, return JSON response
+      if (pathname.startsWith("/api/")) {
+        return NextResponse.json(
+          { error: "Unauthorized access" },
+          { status: 401 },
+        );
+      }
+
+      // For page routes, redirect to login form
+      const url = new URL("/signin", req.url);
+      return NextResponse.redirect(url);
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        { error: "Authentication error" },
+        { status: 403 },
+      );
+    }
+
+    // Redirect to error page for non-API routes
+    return NextResponse.redirect(new URL("/", req.url));
   }
 }
 
 export const config = {
   matcher: [
+    // Protected pages
     "/dashboard",
-    "/inventory",
     "/inventory/:path*",
     "/products",
     "/transactions",
-    "/api/category",
-    "/api/member",
-    "/api/inventory",
-    "/api/transaction",
-    "/api/product",
+
+    // Protected API routes
+    "/api/user/:path*",
+    "/api/category/:path*",
+    "/api/member/:path*",
     "/api/inventory/:path*",
-    "/api/product/:path*",
     "/api/transaction/:path*",
+    "/api/product/:path*",
   ],
 };
