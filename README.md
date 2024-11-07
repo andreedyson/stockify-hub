@@ -52,8 +52,8 @@ To set up StockifyHub locally, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-   git clone https://github.com/andreedyson/StockifyHub.git
-   cd StockifyHub
+   git clone https://github.com/andreedyson/stockify-hub.git
+   cd stockify-hub
     ```
 2. **Install Dependencies**:
     ```bash
