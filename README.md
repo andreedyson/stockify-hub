@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# **Stockify Hub**
 
-First, run the development server:
+![Landing Page](https://github.com/user-attachments/assets/f4ec7ad6-c3e7-4718-9aeb-11d6aa70fd6a)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📋 <a name="table">Table of Contents</a>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. 📰 [Overview](#overview)
+2. ⚙️ [Technology Used](#tech-stack)
+3. 👩‍💻 [Features](#features)
+4. 👟 [Getting Started](#started)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## <a name="overview">📰 Overview</a>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+StockifyHub is a powerful, modern inventory management web application designed for flexibility, ease of use, and seamless stock management. Built with a high-performance tech stack of Next.js, PostgreSQL, Prisma, and Tailwind CSS, StockifyHub streamlines the complexity of inventory tracking with a clean, responsive design and a suite of features tailored to the needs of businesses of all sizes.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## <a name="tech-stack">⚙️ Technology Used</a>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js
+- Typescript
+- PostgreSQL
+- Prisma
+- TailwindCSS
+- Zod
+- NextAuth
+- shadcn
+- UploadThing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  
+## <a name="features">👩‍💻 Features</a>
 
-## Deploy on Vercel
+🔐 **Secure Authentication**: Secure authentication using NextAuth, user can sign up and log in with ease using email/password or Google account.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📦 **Inventory Creation**: Create and manage multiple inventories within StockifyHub, organizing products, categories, and transactions in a structured and easy-to-navigate format.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+🫂 **Role-Based Access**: Control access across three main roles—Owner, Admin, and User.
+
+🧑‍💻 **Add Members to Inventories**: wners can invite members to join an inventory and assign them either Admin or User roles.
+
+🗃️ **Product and Category Management**: Easily add, update, and categorize products within inventories. Users with appropriate permissions can create categories to organize products, assign products to categories, and edit product details as needed.
+
+🧾 **Transaction Tracking**: Track transactions by status (Pending, In Progress, Completed, Cancelled) to get the clarity on stock movement.
+
+⭕ **Real-Time Updates**: Get live updates on stock levels and inventory changes, ensuring your data is always up-to-date and allowing your team to make quick, data-driven decisions.
+
+🖥️ **Modern, Responsive Interface**: With a design powered by Tailwind CSS, StockifyHub provides a seamless user experience across devices, allowing easy management from desktops, tablets, and mobile phones.
+
+##  <a name="started">👟 Getting Started</a>
+
+To set up StockifyHub locally, follow these steps:
+
+1. **Clone the repository**:
+    ```bash
+   git clone https://github.com/andreedyson/StockifyHub.git
+   cd StockifyHub
+    ```
+2. **Install Dependencies**:
+    ```bash
+   npm install
+    ```
+
+3. **Configure environment variables**:
+   Create a .env file in the root directory with the required environment variables. Include your PostgreSQL database credentials, NextAuth configuration (e.g., secret, providers), and any other necessary variables.
+
+4. **Migrate the database**:
+  Initialize your PostgreSQL database schema with Prisma:
+    ```bash
+    npx prisma migrate dev --name init
+    ```
+
+5. **Run the development server**:
+    ```bash
+   npm run dev
+    ```
+
+6. **Access StockifyHub**:
+Open http://localhost:3000 in your browser to start managing your inventory.
+---
+Created by [@andreedyson](https://www.github.com/andreedyson)
+
