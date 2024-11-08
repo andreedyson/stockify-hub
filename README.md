@@ -62,19 +62,43 @@ To set up StockifyHub locally, follow these steps:
 
 3. **Configure environment variables**:
    Create a .env file in the root directory with the required environment variables. Include your PostgreSQL database credentials, NextAuth configuration (e.g., secret, providers), and any other necessary variables.
+   ```env
+   # NextAuth
+    NEXTAUTH_URL =
+    NEXT_PUBLIC_BASE_API_URL=
+    NEXTAUTH_SECRET=
+    
+    # Postgres
+    POSTGRES_URL=
+    POSTGRES_PRISMA_URL=
+    POSTGRES_URL_NO_SSL=
+    POSTGRES_URL_NON_POOLING=
+    POSTGRES_USER=
+    POSTGRES_HOST=
+    POSTGRES_PASSWORD=
+    POSTGRES_DATABASE=
+    
+    # https://uploadthing.com
+    UPLOADTHING_SECRET=
+    UPLOADTHING_APP_ID=
+    
+    # https://console.cloud.google.com
+    GOOGLE_ID=
+    GOOGLE_SECRET=
+    ```
 
-4. **Migrate the database**:
+5. **Migrate the database**:
   Initialize your PostgreSQL database schema with Prisma:
     ```bash
     npx prisma migrate dev --name init
     ```
 
-5. **Run the development server**:
+6. **Run the development server**:
     ```bash
    npm run dev
     ```
 
-6. **Access StockifyHub**:
+7. **Access StockifyHub**:
 Open http://localhost:3000 in your browser to start managing your inventory.
 ---
 Created by [@andreedyson](https://www.github.com/andreedyson)
